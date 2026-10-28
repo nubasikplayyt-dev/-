@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -132,7 +133,7 @@ fun EntryScreen(container: AppContainer, nav: NavHostController, id: String) {
             if (!c.state.suspended) {
                 app.lingvo.ui.components.BigActionButton(
                     "Повторить это слово", app.lingvo.ui.theme.LocalGradients.current.sunrise,
-                    subtitle = "Оно станет первым в занятии курса", icon = androidx.compose.material.icons.Icons.Filled.PlayArrow,
+                    subtitle = "Оно станет первым в занятии курса", icon = Icons.Filled.PlayArrow,
                 ) {
                     scope.launch { repo.queueWord(c.id)?.let { course -> nav.navigate(app.lingvo.ui.Routes.review(course)) } }
                 }
