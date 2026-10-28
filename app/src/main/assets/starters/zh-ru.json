@@ -14,6 +14,7 @@
     "ni hao",
     "nihao"
    ],
+   "gloss_en": "hello",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -34,6 +35,7 @@
    "alternatives": [
     "zaijian"
    ],
+   "gloss_en": "goodbye",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -55,6 +57,7 @@
     "是",
     "dui"
    ],
+   "gloss_en": "yes",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -77,6 +80,7 @@
     "bu"
    ],
    "grammar_notes": "нет; «не являюсь» — 不是 bú shì",
+   "gloss_en": "no",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -97,6 +101,7 @@
    "alternatives": [
     "qing"
    ],
+   "gloss_en": "please",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -117,6 +122,7 @@
    "alternatives": [
     "xiexie"
    ],
+   "gloss_en": "thank you",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -138,6 +144,7 @@
     "不好意思",
     "duibuqi"
    ],
+   "gloss_en": "sorry",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -160,6 +167,7 @@
     "zaoshang hao",
     "zaoshanghao"
    ],
+   "gloss_en": "good morning",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -180,6 +188,7 @@
    "alternatives": [
     "wo"
    ],
+   "gloss_en": "I",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -200,6 +209,7 @@
    "alternatives": [
     "ni"
    ],
+   "gloss_en": "you",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -220,6 +230,7 @@
    "alternatives": [
     "ta"
    ],
+   "gloss_en": "he",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -241,6 +252,7 @@
     "ta"
    ],
    "grammar_notes": "звучит так же, как 他",
+   "gloss_en": "she",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -261,6 +273,7 @@
    "alternatives": [
     "women"
    ],
+   "gloss_en": "we",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -281,6 +294,7 @@
    "alternatives": [
     "shei"
    ],
+   "gloss_en": "who",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -301,6 +315,7 @@
    "alternatives": [
     "shenme"
    ],
+   "gloss_en": "what",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -322,6 +337,7 @@
     "哪儿",
     "nali"
    ],
+   "gloss_en": "where",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -343,6 +359,7 @@
     "shenme shihou",
     "shenmeshihou"
    ],
+   "gloss_en": "when",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -363,6 +380,7 @@
    "alternatives": [
     "zenme"
    ],
+   "gloss_en": "how",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -383,6 +401,7 @@
    "alternatives": [
     "yi"
    ],
+   "gloss_en": "one",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -403,6 +422,7 @@
    "alternatives": [
     "er"
    ],
+   "gloss_en": "two",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -423,6 +443,7 @@
    "alternatives": [
     "san"
    ],
+   "gloss_en": "three",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -443,6 +464,7 @@
    "alternatives": [
     "si"
    ],
+   "gloss_en": "four",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -463,6 +485,7 @@
    "alternatives": [
     "wu"
    ],
+   "gloss_en": "five",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -483,6 +506,7 @@
    "alternatives": [
     "liu"
    ],
+   "gloss_en": "six",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -503,6 +527,7 @@
    "alternatives": [
     "qi"
    ],
+   "gloss_en": "seven",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -523,6 +548,7 @@
    "alternatives": [
     "ba"
    ],
+   "gloss_en": "eight",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -543,6 +569,7 @@
    "alternatives": [
     "jiu"
    ],
+   "gloss_en": "nine",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -563,6 +590,7 @@
    "alternatives": [
     "shi"
    ],
+   "gloss_en": "ten",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -583,6 +611,7 @@
    "alternatives": [
     "mama"
    ],
+   "gloss_en": "mother",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -603,6 +632,7 @@
    "alternatives": [
     "baba"
    ],
+   "gloss_en": "father",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -625,6 +655,7 @@
     "gege"
    ],
    "grammar_notes": "младший брат — 弟弟 dìdi",
+   "gloss_en": "brother",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -647,6 +678,7 @@
     "jiejie"
    ],
    "grammar_notes": "младшая сестра — 妹妹 mèimei",
+   "gloss_en": "sister",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -667,6 +699,7 @@
    "alternatives": [
     "pengyou"
    ],
+   "gloss_en": "friend",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -687,6 +720,7 @@
    "alternatives": [
     "nanren"
    ],
+   "gloss_en": "man",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -707,6 +741,7 @@
    "alternatives": [
     "nuren"
    ],
+   "gloss_en": "woman",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -727,6 +762,7 @@
    "alternatives": [
     "haizi"
    ],
+   "gloss_en": "child",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -749,6 +785,7 @@
     "fangzi"
    ],
    "grammar_notes": "«дом, семья» — 家 jiā",
+   "gloss_en": "house",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -769,6 +806,7 @@
    "alternatives": [
     "men"
    ],
+   "gloss_en": "door",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -789,6 +827,7 @@
    "alternatives": [
     "zhuozi"
    ],
+   "gloss_en": "table",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -809,6 +848,7 @@
    "alternatives": [
     "chuang"
    ],
+   "gloss_en": "bed",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -829,6 +869,7 @@
    "alternatives": [
     "shu"
    ],
+   "gloss_en": "book",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -850,6 +891,7 @@
     "电话",
     "shouji"
    ],
+   "gloss_en": "phone",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -870,6 +912,7 @@
    "alternatives": [
     "chuanghu"
    ],
+   "gloss_en": "window",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -890,6 +933,7 @@
    "alternatives": [
     "shui"
    ],
+   "gloss_en": "water",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -910,6 +954,7 @@
    "alternatives": [
     "mianbao"
    ],
+   "gloss_en": "bread",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -930,6 +975,7 @@
    "alternatives": [
     "kafei"
    ],
+   "gloss_en": "coffee",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -950,6 +996,7 @@
    "alternatives": [
     "cha"
    ],
+   "gloss_en": "tea",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -970,6 +1017,7 @@
    "alternatives": [
     "niunai"
    ],
+   "gloss_en": "milk",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -990,6 +1038,7 @@
    "alternatives": [
     "pingguo"
    ],
+   "gloss_en": "apple",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1010,6 +1059,7 @@
    "alternatives": [
     "yu"
    ],
+   "gloss_en": "fish",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1031,6 +1081,7 @@
     "shi"
    ],
    "grammar_notes": "связка «являться»: 我是学生",
+   "gloss_en": "to be",
    "example_zh": "我是学生。（Wǒ shì xuésheng.）",
    "example_ru": "Я студент.",
    "level": "A1",
@@ -1053,6 +1104,7 @@
    "alternatives": [
     "you"
    ],
+   "gloss_en": "to have",
    "example_zh": "我有一只猫。（Wǒ yǒu yì zhī māo.）",
    "example_ru": "У меня есть кот.",
    "level": "A1",
@@ -1076,6 +1128,7 @@
     "要",
     "xiang"
    ],
+   "gloss_en": "to want",
    "example_zh": "我想喝水。（Wǒ xiǎng hē shuǐ.）",
    "example_ru": "Я хочу пить воду.",
    "level": "A1",
@@ -1098,6 +1151,7 @@
    "alternatives": [
     "qu"
    ],
+   "gloss_en": "to go",
    "example_zh": "我去学校。（Wǒ qù xuéxiào.）",
    "example_ru": "Я иду в школу.",
    "level": "A1",
@@ -1120,6 +1174,7 @@
    "alternatives": [
     "chi"
    ],
+   "gloss_en": "to eat",
    "example_zh": "我们吃面包。（Wǒmen chī miànbāo.）",
    "example_ru": "Мы едим хлеб.",
    "level": "A1",
@@ -1142,6 +1197,7 @@
    "alternatives": [
     "he"
    ],
+   "gloss_en": "to drink",
    "example_zh": "我喝茶。（Wǒ hē chá.）",
    "example_ru": "Я пью чай.",
    "level": "A1",
@@ -1164,6 +1220,7 @@
    "alternatives": [
     "shuo"
    ],
+   "gloss_en": "to speak",
    "example_zh": "他说得很慢。（Tā shuō de hěn màn.）",
    "example_ru": "Он говорит медленно.",
    "level": "A1",
@@ -1186,6 +1243,7 @@
    "alternatives": [
     "zhidao"
    ],
+   "gloss_en": "to know",
    "example_zh": "我不知道。（Wǒ bù zhīdào.）",
    "example_ru": "Я не знаю.",
    "level": "A1",
@@ -1208,6 +1266,7 @@
    "alternatives": [
     "da"
    ],
+   "gloss_en": "big",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1228,6 +1287,7 @@
    "alternatives": [
     "xiao"
    ],
+   "gloss_en": "small",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1248,6 +1308,7 @@
    "alternatives": [
     "hao"
    ],
+   "gloss_en": "good",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1268,6 +1329,7 @@
    "alternatives": [
     "huai"
    ],
+   "gloss_en": "bad",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1288,6 +1350,7 @@
    "alternatives": [
     "xin"
    ],
+   "gloss_en": "new",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1308,6 +1371,7 @@
    "alternatives": [
     "re"
    ],
+   "gloss_en": "hot",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1328,6 +1392,7 @@
    "alternatives": [
     "leng"
    ],
+   "gloss_en": "cold",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1348,6 +1413,7 @@
    "alternatives": [
     "piaoliang"
    ],
+   "gloss_en": "beautiful",
    "level": "A1",
    "tags": [
     "Простые описания"

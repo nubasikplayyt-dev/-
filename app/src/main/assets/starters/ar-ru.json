@@ -13,6 +13,7 @@
    "alternatives": [
     "marhaban"
    ],
+   "gloss_en": "hello",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -34,6 +35,7 @@
     "maa s-salama",
     "maas-salama"
    ],
+   "gloss_en": "goodbye",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -54,6 +56,7 @@
    "alternatives": [
     "naam"
    ],
+   "gloss_en": "yes",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -74,6 +77,7 @@
    "alternatives": [
     "la"
    ],
+   "gloss_en": "no",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -95,6 +99,7 @@
     "min fadlik",
     "minfadlik"
    ],
+   "gloss_en": "please",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -116,6 +121,7 @@
     "شكراً",
     "shukran"
    ],
+   "gloss_en": "thank you",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -138,6 +144,7 @@
     "asif"
    ],
    "grammar_notes": "говорит мужчина; женщина — آسفة āsifa",
+   "gloss_en": "sorry",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -159,6 +166,7 @@
     "sabah al-khayr",
     "sabahal-khayr"
    ],
+   "gloss_en": "good morning",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -179,6 +187,7 @@
    "alternatives": [
     "ana"
    ],
+   "gloss_en": "I",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -201,6 +210,7 @@
     "anta"
    ],
    "grammar_notes": "к мужчине; к женщине — أنتِ anti",
+   "gloss_en": "you",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -221,6 +231,7 @@
    "alternatives": [
     "huwa"
    ],
+   "gloss_en": "he",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -241,6 +252,7 @@
    "alternatives": [
     "hiya"
    ],
+   "gloss_en": "she",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -261,6 +273,7 @@
    "alternatives": [
     "nahnu"
    ],
+   "gloss_en": "we",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -281,6 +294,7 @@
    "alternatives": [
     "man"
    ],
+   "gloss_en": "who",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -302,6 +316,7 @@
     "ما",
     "madha"
    ],
+   "gloss_en": "what",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -322,6 +337,7 @@
    "alternatives": [
     "ayna"
    ],
+   "gloss_en": "where",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -342,6 +358,7 @@
    "alternatives": [
     "mata"
    ],
+   "gloss_en": "when",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -362,6 +379,7 @@
    "alternatives": [
     "kayfa"
    ],
+   "gloss_en": "how",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -382,6 +400,7 @@
    "alternatives": [
     "wahid"
    ],
+   "gloss_en": "one",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -402,6 +421,7 @@
    "alternatives": [
     "ithnan"
    ],
+   "gloss_en": "two",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -422,6 +442,7 @@
    "alternatives": [
     "thalatha"
    ],
+   "gloss_en": "three",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -442,6 +463,7 @@
    "alternatives": [
     "arbaa"
    ],
+   "gloss_en": "four",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -462,6 +484,7 @@
    "alternatives": [
     "khamsa"
    ],
+   "gloss_en": "five",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -482,6 +505,7 @@
    "alternatives": [
     "sitta"
    ],
+   "gloss_en": "six",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -502,6 +526,7 @@
    "alternatives": [
     "saba"
    ],
+   "gloss_en": "seven",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -522,6 +547,7 @@
    "alternatives": [
     "thamaniya"
    ],
+   "gloss_en": "eight",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -542,6 +568,7 @@
    "alternatives": [
     "tisa"
    ],
+   "gloss_en": "nine",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -562,6 +589,7 @@
    "alternatives": [
     "ashara"
    ],
+   "gloss_en": "ten",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -583,6 +611,7 @@
     "ماما",
     "umm"
    ],
+   "gloss_en": "mother",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -604,6 +633,7 @@
     "بابا",
     "ab"
    ],
+   "gloss_en": "father",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -624,6 +654,7 @@
    "alternatives": [
     "akh"
    ],
+   "gloss_en": "brother",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -644,6 +675,7 @@
    "alternatives": [
     "ukht"
    ],
+   "gloss_en": "sister",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -664,6 +696,7 @@
    "alternatives": [
     "sadiq"
    ],
+   "gloss_en": "friend",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -684,6 +717,7 @@
    "alternatives": [
     "rajul"
    ],
+   "gloss_en": "man",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -704,6 +738,7 @@
    "alternatives": [
     "imraa"
    ],
+   "gloss_en": "woman",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -724,6 +759,7 @@
    "alternatives": [
     "tifl"
    ],
+   "gloss_en": "child",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -745,6 +781,7 @@
     "منزل",
     "bayt"
    ],
+   "gloss_en": "house",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -765,6 +802,7 @@
    "alternatives": [
     "bab"
    ],
+   "gloss_en": "door",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -785,6 +823,7 @@
    "alternatives": [
     "tawila"
    ],
+   "gloss_en": "table",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -805,6 +844,7 @@
    "alternatives": [
     "sarir"
    ],
+   "gloss_en": "bed",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -825,6 +865,7 @@
    "alternatives": [
     "kitab"
    ],
+   "gloss_en": "book",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -846,6 +887,7 @@
     "جوال",
     "hatif"
    ],
+   "gloss_en": "phone",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -866,6 +908,7 @@
    "alternatives": [
     "nafidha"
    ],
+   "gloss_en": "window",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -886,6 +929,7 @@
    "alternatives": [
     "ma"
    ],
+   "gloss_en": "water",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -906,6 +950,7 @@
    "alternatives": [
     "khubz"
    ],
+   "gloss_en": "bread",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -926,6 +971,7 @@
    "alternatives": [
     "qahwa"
    ],
+   "gloss_en": "coffee",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -946,6 +992,7 @@
    "alternatives": [
     "shay"
    ],
+   "gloss_en": "tea",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -966,6 +1013,7 @@
    "alternatives": [
     "halib"
    ],
+   "gloss_en": "milk",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -986,6 +1034,7 @@
    "alternatives": [
     "tuffaha"
    ],
+   "gloss_en": "apple",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1006,6 +1055,7 @@
    "alternatives": [
     "samak"
    ],
+   "gloss_en": "fish",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1027,6 +1077,7 @@
     "kana"
    ],
    "grammar_notes": "«был»; в настоящем времени связка опускается: أنا طالب — я студент",
+   "gloss_en": "to be",
    "example_ar": "أنا طالب. (anā ṭālib)",
    "example_ru": "Я студент.",
    "level": "A1",
@@ -1050,6 +1101,7 @@
     "indi"
    ],
    "grammar_notes": "«у меня есть»; дословно «у меня»",
+   "gloss_en": "to have",
    "example_ar": "عندي قطة. (ʿindī qiṭṭa)",
    "example_ru": "У меня есть кошка.",
    "level": "A1",
@@ -1074,6 +1126,7 @@
     "arada"
    ],
    "grammar_notes": "«я хочу» — أريد urīdu",
+   "gloss_en": "to want",
    "example_ar": "أريد ماء. (urīdu māʾ)",
    "example_ru": "Я хочу воды.",
    "level": "A1",
@@ -1097,6 +1150,7 @@
     "أذهب",
     "dhahaba"
    ],
+   "gloss_en": "to go",
    "example_ar": "أذهب إلى البيت. (adhhabu ilā l-bayt)",
    "example_ru": "Я иду домой.",
    "level": "A1",
@@ -1120,6 +1174,7 @@
     "آكل",
     "akala"
    ],
+   "gloss_en": "to eat",
    "example_ar": "نأكل الخبز. (naʾkulu l-khubz)",
    "example_ru": "Мы едим хлеб.",
    "level": "A1",
@@ -1143,6 +1198,7 @@
     "أشرب",
     "shariba"
    ],
+   "gloss_en": "to drink",
    "example_ar": "أشرب الشاي. (ashrabu sh-shāy)",
    "example_ru": "Я пью чай.",
    "level": "A1",
@@ -1166,6 +1222,7 @@
     "أتكلم",
     "takallama"
    ],
+   "gloss_en": "to speak",
    "example_ar": "هو يتكلم ببطء. (huwa yatakallamu bi-buṭʾ)",
    "example_ru": "Он говорит медленно.",
    "level": "A1",
@@ -1189,6 +1246,7 @@
     "أعرف",
     "arafa"
    ],
+   "gloss_en": "to know",
    "example_ar": "لا أعرف. (lā aʿrif)",
    "example_ru": "Я не знаю.",
    "level": "A1",
@@ -1211,6 +1269,7 @@
    "alternatives": [
     "kabir"
    ],
+   "gloss_en": "big",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1231,6 +1290,7 @@
    "alternatives": [
     "saghir"
    ],
+   "gloss_en": "small",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1251,6 +1311,7 @@
    "alternatives": [
     "jayyid"
    ],
+   "gloss_en": "good",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1271,6 +1332,7 @@
    "alternatives": [
     "sayyi"
    ],
+   "gloss_en": "bad",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1291,6 +1353,7 @@
    "alternatives": [
     "jadid"
    ],
+   "gloss_en": "new",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1312,6 +1375,7 @@
     "ساخن",
     "harr"
    ],
+   "gloss_en": "hot",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1332,6 +1396,7 @@
    "alternatives": [
     "barid"
    ],
+   "gloss_en": "cold",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1352,6 +1417,7 @@
    "alternatives": [
     "jamil"
    ],
+   "gloss_en": "beautiful",
    "level": "A1",
    "tags": [
     "Простые описания"

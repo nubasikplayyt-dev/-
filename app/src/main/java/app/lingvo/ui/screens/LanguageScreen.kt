@@ -14,7 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
-import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Edit
@@ -118,13 +117,12 @@ fun LanguageScreen(container: AppContainer, nav: NavHostController, lang: String
                     }
                 }
             } else if (pending != null && !container.repository.hasStarter(spec) && o.total == 0) {
-                Text("Для этого языка стартового словаря пока нет. Добавьте слова вручную, списком или импортом.",
+                Text("Для этого языка стартового словаря пока нет. Добавьте слова вручную, импортом или списком в «Словаре».",
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             SoftCard(padding = 8.dp) {
                 Item(Icons.AutoMirrored.Filled.MenuBook, Palette.Ocean, "Мой словарь", "${o.total} карточек") { nav.navigate(Routes.dictionary(course.id)) }
                 Item(Icons.Filled.Add, Palette.Mint, "Добавить слово", "С переводом, примером и заметками") { nav.navigate(Routes.add(course.id)) }
-                Item(Icons.AutoMirrored.Filled.PlaylistAdd, Palette.Violet, "Добавить списком", "Много слов за раз") { nav.navigate(Routes.bulk(course.id)) }
                 Item(Icons.Filled.ImportExport, Palette.Sun, "Импорт и экспорт", spec.fileName) { nav.navigate(Routes.import(course.id)) }
             }
         }

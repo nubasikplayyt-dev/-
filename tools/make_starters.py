@@ -393,6 +393,9 @@ def build(code, info):
             e["alternatives"] = alts
         if note:
             e["grammar_notes"] = note
+        if code != "en":
+            # Английская подсказка для локальной нейросети, рисующей картинки к словам.
+            e["gloss_en"] = en.split(";")[0].replace("?", "").strip()
         if pos == "verb":
             k = verb_i - 1
             e[ex_key] = info["examples"][k]

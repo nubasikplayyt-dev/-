@@ -53,6 +53,7 @@ Android-приложение для ежедневного изучения **л
 - [Напоминания](docs/NOTIFICATIONS.md)
 - [Остров занятия (Dynamic Island-подобный интерфейс)](docs/DYNAMIC_ISLAND.md)
 - [Письменный режим и ручное подтверждение](docs/TYPING.md)
+- [Картинки к словам (локальная нейросеть)](docs/WORD_IMAGES.md)
 - [Правила для Claude (CLAUDE.md)](CLAUDE.md)
 
 ## Технологии

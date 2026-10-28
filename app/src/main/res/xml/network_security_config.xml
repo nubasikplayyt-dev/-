@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Обычный HTTP нужен только для сервера Stable Diffusion в домашней сети (картинки к словам):
+  такие серверы почти всегда работают по http://192.168.x.x:7860. Код приложения сам ограничивает адреса:
+  картинки — только локальная сеть (WordImagePrompt.isLocalAddress), импорт словарей — только https://.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

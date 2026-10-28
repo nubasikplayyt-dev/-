@@ -13,6 +13,7 @@
    "alternatives": [
     "hoi"
    ],
+   "gloss_en": "hello",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -33,6 +34,7 @@
    "alternatives": [
     "doei"
    ],
+   "gloss_en": "goodbye",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -50,6 +52,7 @@
    "russian": "да",
    "article": "",
    "part_of_speech": "phrase",
+   "gloss_en": "yes",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -67,6 +70,7 @@
    "russian": "нет",
    "article": "",
    "part_of_speech": "phrase",
+   "gloss_en": "no",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -87,6 +91,7 @@
    "alternatives": [
     "alsjeblieft"
    ],
+   "gloss_en": "please",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -108,6 +113,7 @@
     "dank u",
     "bedankt"
    ],
+   "gloss_en": "thank you",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -128,6 +134,7 @@
    "alternatives": [
     "pardon"
    ],
+   "gloss_en": "sorry",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -145,6 +152,7 @@
    "russian": "доброе утро",
    "article": "",
    "part_of_speech": "phrase",
+   "gloss_en": "good morning",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -162,6 +170,7 @@
    "russian": "я",
    "article": "",
    "part_of_speech": "pronoun",
+   "gloss_en": "I",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -182,6 +191,7 @@
    "alternatives": [
     "je"
    ],
+   "gloss_en": "you",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -199,6 +209,7 @@
    "russian": "он",
    "article": "",
    "part_of_speech": "pronoun",
+   "gloss_en": "he",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -219,6 +230,7 @@
    "alternatives": [
     "ze"
    ],
+   "gloss_en": "she",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -239,6 +251,7 @@
    "alternatives": [
     "we"
    ],
+   "gloss_en": "we",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -259,6 +272,7 @@
    "alternatives": [
     "wie"
    ],
+   "gloss_en": "who",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -279,6 +293,7 @@
    "alternatives": [
     "wat"
    ],
+   "gloss_en": "what",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -299,6 +314,7 @@
    "alternatives": [
     "waar"
    ],
+   "gloss_en": "where",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -319,6 +335,7 @@
    "alternatives": [
     "wanneer"
    ],
+   "gloss_en": "when",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -339,6 +356,7 @@
    "alternatives": [
     "hoe"
    ],
+   "gloss_en": "how",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -359,6 +377,7 @@
    "alternatives": [
     "een"
    ],
+   "gloss_en": "one",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -376,6 +395,7 @@
    "russian": "два",
    "article": "",
    "part_of_speech": "numeral",
+   "gloss_en": "two",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -393,6 +413,7 @@
    "russian": "три",
    "article": "",
    "part_of_speech": "numeral",
+   "gloss_en": "three",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -410,6 +431,7 @@
    "russian": "четыре",
    "article": "",
    "part_of_speech": "numeral",
+   "gloss_en": "four",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -427,6 +449,7 @@
    "russian": "пять",
    "article": "",
    "part_of_speech": "numeral",
+   "gloss_en": "five",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -444,6 +467,7 @@
    "russian": "шесть",
    "article": "",
    "part_of_speech": "numeral",
+   "gloss_en": "six",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -461,6 +485,7 @@
    "russian": "семь",
    "article": "",
    "part_of_speech": "numeral",
+   "gloss_en": "seven",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -478,6 +503,7 @@
    "russian": "восемь",
    "article": "",
    "part_of_speech": "numeral",
+   "gloss_en": "eight",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -495,6 +521,7 @@
    "russian": "девять",
    "article": "",
    "part_of_speech": "numeral",
+   "gloss_en": "nine",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -512,6 +539,7 @@
    "russian": "десять",
    "article": "",
    "part_of_speech": "numeral",
+   "gloss_en": "ten",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -532,6 +560,7 @@
    "alternatives": [
     "mama"
    ],
+   "gloss_en": "mother",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -552,6 +581,7 @@
    "alternatives": [
     "papa"
    ],
+   "gloss_en": "father",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -569,6 +599,7 @@
    "russian": "брат",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "brother",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -586,6 +617,7 @@
    "russian": "сестра",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "sister",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -606,6 +638,7 @@
    "alternatives": [
     "de vriendin"
    ],
+   "gloss_en": "friend",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -623,6 +656,7 @@
    "russian": "мужчина",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "man",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -640,6 +674,7 @@
    "russian": "женщина",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "woman",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -657,6 +692,7 @@
    "russian": "ребёнок",
    "article": "het",
    "part_of_speech": "noun",
+   "gloss_en": "child",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -674,6 +710,7 @@
    "russian": "дом",
    "article": "het",
    "part_of_speech": "noun",
+   "gloss_en": "house",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -691,6 +728,7 @@
    "russian": "дверь",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "door",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -708,6 +746,7 @@
    "russian": "стол",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "table",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -725,6 +764,7 @@
    "russian": "кровать",
    "article": "het",
    "part_of_speech": "noun",
+   "gloss_en": "bed",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -742,6 +782,7 @@
    "russian": "книга",
    "article": "het",
    "part_of_speech": "noun",
+   "gloss_en": "book",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -759,6 +800,7 @@
    "russian": "телефон",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "phone",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -776,6 +818,7 @@
    "russian": "окно",
    "article": "het",
    "part_of_speech": "noun",
+   "gloss_en": "window",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -793,6 +836,7 @@
    "russian": "вода",
    "article": "het",
    "part_of_speech": "noun",
+   "gloss_en": "water",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -810,6 +854,7 @@
    "russian": "хлеб",
    "article": "het",
    "part_of_speech": "noun",
+   "gloss_en": "bread",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -827,6 +872,7 @@
    "russian": "кофе",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "coffee",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -844,6 +890,7 @@
    "russian": "чай",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "tea",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -861,6 +908,7 @@
    "russian": "молоко",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "milk",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -878,6 +926,7 @@
    "russian": "яблоко",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "apple",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -895,6 +944,7 @@
    "russian": "рыба",
    "article": "de",
    "part_of_speech": "noun",
+   "gloss_en": "fish",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -913,6 +963,7 @@
    "article": "",
    "part_of_speech": "verb",
    "grammar_notes": "ik ben, jij bent, hij is",
+   "gloss_en": "to be",
    "example_nl": "Ik ben student.",
    "example_ru": "Я студент.",
    "level": "A1",
@@ -933,6 +984,7 @@
    "article": "",
    "part_of_speech": "verb",
    "grammar_notes": "ik heb, hij heeft",
+   "gloss_en": "to have",
    "example_nl": "Ik heb een kat.",
    "example_ru": "У меня есть кот.",
    "level": "A1",
@@ -953,6 +1005,7 @@
    "article": "",
    "part_of_speech": "verb",
    "grammar_notes": "ik wil",
+   "gloss_en": "to want",
    "example_nl": "Ik wil water.",
    "example_ru": "Я хочу воды.",
    "level": "A1",
@@ -973,6 +1026,7 @@
    "article": "",
    "part_of_speech": "verb",
    "grammar_notes": "ik ga",
+   "gloss_en": "to go",
    "example_nl": "Ik ga naar huis.",
    "example_ru": "Я иду домой.",
    "level": "A1",
@@ -992,6 +1046,7 @@
    "russian": "есть (кушать)",
    "article": "",
    "part_of_speech": "verb",
+   "gloss_en": "to eat",
    "example_nl": "Wij eten brood.",
    "example_ru": "Мы едим хлеб.",
    "level": "A1",
@@ -1011,6 +1066,7 @@
    "russian": "пить",
    "article": "",
    "part_of_speech": "verb",
+   "gloss_en": "to drink",
    "example_nl": "Ik drink thee.",
    "example_ru": "Я пью чай.",
    "level": "A1",
@@ -1033,6 +1089,7 @@
    "alternatives": [
     "praten"
    ],
+   "gloss_en": "to speak",
    "example_nl": "Hij spreekt langzaam.",
    "example_ru": "Он говорит медленно.",
    "level": "A1",
@@ -1053,6 +1110,7 @@
    "article": "",
    "part_of_speech": "verb",
    "grammar_notes": "ik weet",
+   "gloss_en": "to know",
    "example_nl": "Ik weet het niet.",
    "example_ru": "Я не знаю.",
    "level": "A1",
@@ -1072,6 +1130,7 @@
    "russian": "большой",
    "article": "",
    "part_of_speech": "adjective",
+   "gloss_en": "big",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1089,6 +1148,7 @@
    "russian": "маленький",
    "article": "",
    "part_of_speech": "adjective",
+   "gloss_en": "small",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1106,6 +1166,7 @@
    "russian": "хороший",
    "article": "",
    "part_of_speech": "adjective",
+   "gloss_en": "good",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1123,6 +1184,7 @@
    "russian": "плохой",
    "article": "",
    "part_of_speech": "adjective",
+   "gloss_en": "bad",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1140,6 +1202,7 @@
    "russian": "новый",
    "article": "",
    "part_of_speech": "adjective",
+   "gloss_en": "new",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1157,6 +1220,7 @@
    "russian": "горячий",
    "article": "",
    "part_of_speech": "adjective",
+   "gloss_en": "hot",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1174,6 +1238,7 @@
    "russian": "холодный",
    "article": "",
    "part_of_speech": "adjective",
+   "gloss_en": "cold",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1191,6 +1256,7 @@
    "russian": "красивый",
    "article": "",
    "part_of_speech": "adjective",
+   "gloss_en": "beautiful",
    "level": "A1",
    "tags": [
     "Простые описания"

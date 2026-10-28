@@ -14,6 +14,7 @@
     "안녕",
     "annyeonghaseyo"
    ],
+   "gloss_en": "hello",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -37,6 +38,7 @@
     "annyeonghigaseyo"
    ],
    "grammar_notes": "уходящему; остающемуся — 안녕히 계세요",
+   "gloss_en": "goodbye",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -58,6 +60,7 @@
     "예",
     "ne"
    ],
+   "gloss_en": "yes",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -78,6 +81,7 @@
    "alternatives": [
     "aniyo"
    ],
+   "gloss_en": "no",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -99,6 +103,7 @@
     "juseyo"
    ],
    "grammar_notes": "«дайте, пожалуйста» (после названия вещи)",
+   "gloss_en": "please",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -120,6 +125,7 @@
     "고마워요",
     "gamsahamnida"
    ],
+   "gloss_en": "thank you",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -141,6 +147,7 @@
     "미안해요",
     "joesonghamnida"
    ],
+   "gloss_en": "sorry",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -163,6 +170,7 @@
     "joeunachim"
    ],
    "grammar_notes": "дословно; чаще говорят 안녕하세요",
+   "gloss_en": "good morning",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -185,6 +193,7 @@
     "jeo"
    ],
    "grammar_notes": "вежливо; неформально — 나 na",
+   "gloss_en": "I",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -206,6 +215,7 @@
     "neo"
    ],
    "grammar_notes": "только с близкими",
+   "gloss_en": "you",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -226,6 +236,7 @@
    "alternatives": [
     "geu"
    ],
+   "gloss_en": "he",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -246,6 +257,7 @@
    "alternatives": [
     "geunyeo"
    ],
+   "gloss_en": "she",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -266,6 +278,7 @@
    "alternatives": [
     "uri"
    ],
+   "gloss_en": "we",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -286,6 +299,7 @@
    "alternatives": [
     "nugu"
    ],
+   "gloss_en": "who",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -307,6 +321,7 @@
     "무엇",
     "mwo"
    ],
+   "gloss_en": "what",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -327,6 +342,7 @@
    "alternatives": [
     "eodi"
    ],
+   "gloss_en": "where",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -347,6 +363,7 @@
    "alternatives": [
     "eonje"
    ],
+   "gloss_en": "when",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -367,6 +384,7 @@
    "alternatives": [
     "eotteoke"
    ],
+   "gloss_en": "how",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -389,6 +407,7 @@
     "il"
    ],
    "grammar_notes": "китайско-корейский счёт; собственный — 하나 hana",
+   "gloss_en": "one",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -410,6 +429,7 @@
     "둘",
     "i"
    ],
+   "gloss_en": "two",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -431,6 +451,7 @@
     "셋",
     "sam"
    ],
+   "gloss_en": "three",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -452,6 +473,7 @@
     "넷",
     "sa"
    ],
+   "gloss_en": "four",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -473,6 +495,7 @@
     "다섯",
     "o"
    ],
+   "gloss_en": "five",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -494,6 +517,7 @@
     "여섯",
     "yuk"
    ],
+   "gloss_en": "six",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -515,6 +539,7 @@
     "일곱",
     "chil"
    ],
+   "gloss_en": "seven",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -536,6 +561,7 @@
     "여덟",
     "pal"
    ],
+   "gloss_en": "eight",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -557,6 +583,7 @@
     "아홉",
     "gu"
    ],
+   "gloss_en": "nine",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -578,6 +605,7 @@
     "열",
     "sip"
    ],
+   "gloss_en": "ten",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -599,6 +627,7 @@
     "어머니",
     "eomma"
    ],
+   "gloss_en": "mother",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -620,6 +649,7 @@
     "아버지",
     "appa"
    ],
+   "gloss_en": "father",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -642,6 +672,7 @@
     "hyeong"
    ],
    "grammar_notes": "старший брат (говорит мужчина); у девушки — 오빠 oppa",
+   "gloss_en": "brother",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -664,6 +695,7 @@
     "eonni"
    ],
    "grammar_notes": "старшая сестра (говорит девушка); у парня — 누나 nuna",
+   "gloss_en": "sister",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -684,6 +716,7 @@
    "alternatives": [
     "chingu"
    ],
+   "gloss_en": "friend",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -704,6 +737,7 @@
    "alternatives": [
     "namja"
    ],
+   "gloss_en": "man",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -724,6 +758,7 @@
    "alternatives": [
     "yeoja"
    ],
+   "gloss_en": "woman",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -744,6 +779,7 @@
    "alternatives": [
     "ai"
    ],
+   "gloss_en": "child",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -764,6 +800,7 @@
    "alternatives": [
     "jip"
    ],
+   "gloss_en": "house",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -784,6 +821,7 @@
    "alternatives": [
     "mun"
    ],
+   "gloss_en": "door",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -805,6 +843,7 @@
     "테이블",
     "chaeksang"
    ],
+   "gloss_en": "table",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -825,6 +864,7 @@
    "alternatives": [
     "chimdae"
    ],
+   "gloss_en": "bed",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -845,6 +885,7 @@
    "alternatives": [
     "chaek"
    ],
+   "gloss_en": "book",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -866,6 +907,7 @@
     "전화",
     "haendeupon"
    ],
+   "gloss_en": "phone",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -886,6 +928,7 @@
    "alternatives": [
     "changmun"
    ],
+   "gloss_en": "window",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -906,6 +949,7 @@
    "alternatives": [
     "mul"
    ],
+   "gloss_en": "water",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -926,6 +970,7 @@
    "alternatives": [
     "ppang"
    ],
+   "gloss_en": "bread",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -946,6 +991,7 @@
    "alternatives": [
     "keopi"
    ],
+   "gloss_en": "coffee",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -966,6 +1012,7 @@
    "alternatives": [
     "cha"
    ],
+   "gloss_en": "tea",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -986,6 +1033,7 @@
    "alternatives": [
     "uyu"
    ],
+   "gloss_en": "milk",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1006,6 +1054,7 @@
    "alternatives": [
     "sagwa"
    ],
+   "gloss_en": "apple",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1028,6 +1077,7 @@
     "saengseon"
    ],
    "grammar_notes": "как еда; живая — 물고기",
+   "gloss_en": "fish",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1049,6 +1099,7 @@
     "ida"
    ],
    "grammar_notes": "связка: 학생이에요 — «(я) студент»",
+   "gloss_en": "to be",
    "example_ko": "저는 학생이에요. (Jeoneun haksaeng-ieyo.)",
    "example_ru": "Я студент.",
    "level": "A1",
@@ -1072,6 +1123,7 @@
     "있어요",
     "itda"
    ],
+   "gloss_en": "to have",
    "example_ko": "고양이가 있어요. (Goyang-iga isseoyo.)",
    "example_ru": "У меня есть кот.",
    "level": "A1",
@@ -1096,6 +1148,7 @@
     "wonhada"
    ],
    "grammar_notes": "«хочу сделать» — -고 싶어요",
+   "gloss_en": "to want",
    "example_ko": "물 마시고 싶어요. (Mul masigo sipeoyo.)",
    "example_ru": "Я хочу пить воду.",
    "level": "A1",
@@ -1119,6 +1172,7 @@
     "가요",
     "gada"
    ],
+   "gloss_en": "to go",
    "example_ko": "학교에 가요. (Hakgyoe gayo.)",
    "example_ru": "Я иду в школу.",
    "level": "A1",
@@ -1142,6 +1196,7 @@
     "먹어요",
     "meokda"
    ],
+   "gloss_en": "to eat",
    "example_ko": "빵을 먹어요. (Ppang-eul meogeoyo.)",
    "example_ru": "Я ем хлеб.",
    "level": "A1",
@@ -1165,6 +1220,7 @@
     "마셔요",
     "masida"
    ],
+   "gloss_en": "to drink",
    "example_ko": "차를 마셔요. (Chareul masyeoyo.)",
    "example_ru": "Я пью чай.",
    "level": "A1",
@@ -1188,6 +1244,7 @@
     "말해요",
     "malhada"
    ],
+   "gloss_en": "to speak",
    "example_ko": "그는 천천히 말해요. (Geuneun cheoncheonhi malhaeyo.)",
    "example_ru": "Он говорит медленно.",
    "level": "A1",
@@ -1211,6 +1268,7 @@
     "알아요",
     "alda"
    ],
+   "gloss_en": "to know",
    "example_ko": "몰라요. (Mollayo.)",
    "example_ru": "Я не знаю.",
    "level": "A1",
@@ -1233,6 +1291,7 @@
    "alternatives": [
     "keuda"
    ],
+   "gloss_en": "big",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1253,6 +1312,7 @@
    "alternatives": [
     "jakda"
    ],
+   "gloss_en": "small",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1273,6 +1333,7 @@
    "alternatives": [
     "jota"
    ],
+   "gloss_en": "good",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1293,6 +1354,7 @@
    "alternatives": [
     "nappeuda"
    ],
+   "gloss_en": "bad",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1314,6 +1376,7 @@
     "새",
     "saeropda"
    ],
+   "gloss_en": "new",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1334,6 +1397,7 @@
    "alternatives": [
     "tteugeopda"
    ],
+   "gloss_en": "hot",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1356,6 +1420,7 @@
     "chagapda"
    ],
    "grammar_notes": "о погоде — 춥다",
+   "gloss_en": "cold",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1377,6 +1442,7 @@
     "아름답다",
     "yeppeuda"
    ],
+   "gloss_en": "beautiful",
    "level": "A1",
    "tags": [
     "Простые описания"

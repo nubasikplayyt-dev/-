@@ -60,6 +60,10 @@ data class AppSettings(
     val sessionNotification: Boolean = true,
     /** Кнопки «Помню»/«Не помню» прямо в острове-уведомлении и капсуле. */
     val islandAnswers: Boolean = true,
+    /** Рисовать картинки к новым словам локальной нейросетью (по умолчанию выключено). */
+    val imageGeneration: Boolean = false,
+    /** Адрес Stable Diffusion на компьютере в домашней сети (API Automatic1111/Forge/SD.Next). */
+    val imageServerUrl: String = "",
     val capsuleEnabled: Boolean = false,
     val capsuleContent: CapsuleContent = CapsuleContent.SESSION,
     val animations: Boolean = true,
@@ -88,6 +92,8 @@ class SettingsStore(private val context: Context) {
         const val MODE = "review_mode_"
         fun mode(code: String) = stringPreferencesKey(MODE + code)
         val islandAnswers = booleanPreferencesKey("island_answers")
+        val imageGeneration = booleanPreferencesKey("image_generation")
+        val imageServerUrl = stringPreferencesKey("image_server_url")
         fun newPerDay(code: String) = intPreferencesKey(NEW_PER_DAY + code)
         fun direction(code: String) = stringPreferencesKey(DIRECTION + code)
         fun remind(code: String) = booleanPreferencesKey(REMIND + code)
@@ -156,6 +162,8 @@ class SettingsStore(private val context: Context) {
             hideOnLockScreen = p[K.hideLock] ?: true,
             sessionNotification = p[K.sessionNotification] ?: true,
             islandAnswers = p[K.islandAnswers] ?: true,
+            imageGeneration = p[K.imageGeneration] ?: false,
+            imageServerUrl = p[K.imageServerUrl] ?: "",
             capsuleEnabled = p[K.capsule] ?: false,
             capsuleContent = p[K.capsuleContent]?.let { runCatching { CapsuleContent.valueOf(it) }.getOrNull() } ?: CapsuleContent.SESSION,
             animations = p[K.animations] ?: true,
@@ -205,6 +213,8 @@ class SettingsStore(private val context: Context) {
         p[K.hideLock] = s.hideOnLockScreen
         p[K.sessionNotification] = s.sessionNotification
         p[K.islandAnswers] = s.islandAnswers
+        p[K.imageGeneration] = s.imageGeneration
+        p[K.imageServerUrl] = s.imageServerUrl
         p[K.capsule] = s.capsuleEnabled
         p[K.capsuleContent] = s.capsuleContent.name
         p[K.animations] = s.animations

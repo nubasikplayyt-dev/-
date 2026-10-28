@@ -31,6 +31,17 @@ class AppContainer(app: Application) {
     val repository = LingvoRepository(app, database, settings)
     val island = IslandController(app, repository, scope)
     val speaker = Speaker(app) { scope.launch { settings.incrementListens() } }
+    val wordImages = app.lingvo.images.WordImages(app)
+
+    init {
+        // Новые слова пользователя — в очередь на картинку (если генерация включена в настройках).
+        repository.onWordsAdded = { added, spec ->
+            scope.launch {
+                val st = settings.current()
+                added.forEach { runCatching { wordImages.request(it, spec, st) } }
+            }
+        }
+    }
 
     /** Общее состояние для всех экранов (считается один раз, пока на него кто-то подписан). */
     val appState: SharedFlow<AppState> = appStateFlow(this).shareIn(scope, SharingStarted.WhileSubscribed(5_000), replay = 1)

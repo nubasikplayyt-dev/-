@@ -1,5 +1,8 @@
 package app.lingvo.ui.screens
 
+import androidx.compose.ui.Alignment
+import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -118,6 +121,7 @@ fun DictionaryScreen(container: AppContainer, nav: NavHostController, initialLan
     val context = androidx.compose.ui.platform.LocalContext.current
     val courses = app.lingvo.ui.rememberAppState(container).value?.courses.orEmpty()
 
+    var pickBulkLanguage by remember { mutableStateOf(false) }
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
@@ -142,10 +146,22 @@ fun DictionaryScreen(container: AppContainer, nav: NavHostController, initialLan
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                val l = filter.language
-                if (l != null) nav.navigate(Routes.add(l)) else pickLanguage = true
-            }) { Icon(Icons.Filled.Add, contentDescription = "Добавить слово") }
+            // Добавление слов: одно слово («+») или сразу много («Списком»).
+            Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                ExtendedFloatingActionButton(
+                    onClick = {
+                        val l = filter.language
+                        if (l != null) nav.navigate(Routes.bulk(l)) else pickBulkLanguage = true
+                    },
+                    icon = { Icon(Icons.AutoMirrored.Filled.PlaylistAdd, contentDescription = null) },
+                    text = { Text("Списком") },
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                )
+                FloatingActionButton(onClick = {
+                    val l = filter.language
+                    if (l != null) nav.navigate(Routes.add(l)) else pickLanguage = true
+                }) { Icon(Icons.Filled.Add, contentDescription = "Добавить слово") }
+            }
         },
     ) { padding ->
         val all = cardsState ?: run { Centered { CircularProgressIndicator() }; return@Scaffold }
@@ -202,7 +218,7 @@ fun DictionaryScreen(container: AppContainer, nav: NavHostController, initialLan
                     if (all.isEmpty()) "Добавьте слова вручную или импортируйте словарь из Claude." else "Измените запрос или фильтры.",
                 )
             } else {
-                LazyColumn(contentPadding = PaddingValues(bottom = 88.dp)) {
+                LazyColumn(contentPadding = PaddingValues(bottom = 160.dp)) {
                     items(list, key = { it.id }) { card ->
                         DictionaryRow(card, courses.firstOrNull { it.id == card.entry.language }?.flag.orEmpty()) { nav.navigate(Routes.entry(card.id)) }
                         HorizontalDivider()
@@ -212,6 +228,10 @@ fun DictionaryScreen(container: AppContainer, nav: NavHostController, initialLan
         }
     }
 
+    if (pickBulkLanguage) {
+        LanguagePickerDialog("Добавить списком", courses, onPick = { pickBulkLanguage = false; nav.navigate(Routes.bulk(it)) },
+            onDismiss = { pickBulkLanguage = false })
+    }
     if (pickLanguage) {
         LanguagePickerDialog("Добавить слово", courses, onPick = { pickLanguage = false; nav.navigate(Routes.add(it)) }, onDismiss = { pickLanguage = false })
     }

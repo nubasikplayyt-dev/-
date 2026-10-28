@@ -218,11 +218,18 @@ class LingvoRepository(
     suspend fun findDuplicates(language: String, term: String, article: String, excludeId: String? = null): List<VocabEntry> =
         entries.byKey(language, Normalizer.entryKey(term, article)).filter { it.id != excludeId }.map { it.toDomain() }
 
-    suspend fun addEntry(entry: VocabEntry) = db.withTransaction {
-        val t = now()
-        val clean = entry.copy(createdAt = t, updatedAt = t, partOfSpeech = PartsOfSpeech.canonical(entry.partOfSpeech))
-        entries.insert(listOf(VocabularyEntryEntity.from(clean, locallyEdited = true)))
-        reviews.insertIgnore(listOf(ReviewStateEntity.fresh(clean.id, clean.language)))
+    /** Вызывается после того, как пользователь добавил слова (вручную или списком), — например, чтобы нарисовать картинки. */
+    var onWordsAdded: ((List<VocabEntry>, LanguageSpec) -> Unit)? = null
+
+    suspend fun addEntry(entry: VocabEntry) {
+        val clean = db.withTransaction {
+            val t = now()
+            val clean = entry.copy(createdAt = t, updatedAt = t, partOfSpeech = PartsOfSpeech.canonical(entry.partOfSpeech))
+            entries.insert(listOf(VocabularyEntryEntity.from(clean, locallyEdited = true)))
+            reviews.insertIgnore(listOf(ReviewStateEntity.fresh(clean.id, clean.language)))
+            clean
+        }
+        spec(clean.language)?.let { sp -> runCatching { onWordsAdded?.invoke(listOf(clean), sp) } }
     }
 
     /** Изменение текста карточки не сбрасывает прогресс повторений. */
@@ -260,6 +267,7 @@ class LingvoRepository(
     suspend fun bulkAdd(spec: LanguageSpec, text: String, tags: List<String>): BulkResult {
         val parsed = BulkParser.parse(text)
         val dupes = ArrayList<String>()
+        val addedEntries = ArrayList<VocabEntry>()
         var added = 0
         db.withTransaction {
             val seen = HashSet<String>()
@@ -276,9 +284,11 @@ class LingvoRepository(
                 )
                 entries.insert(listOf(VocabularyEntryEntity.from(e, locallyEdited = true)))
                 reviews.insertIgnore(listOf(ReviewStateEntity.fresh(e.id, e.language)))
+                addedEntries += e
                 added++
             }
         }
+        if (addedEntries.isNotEmpty()) runCatching { onWordsAdded?.invoke(addedEntries, spec) }
         return BulkResult(added, dupes, parsed.errors)
     }
 

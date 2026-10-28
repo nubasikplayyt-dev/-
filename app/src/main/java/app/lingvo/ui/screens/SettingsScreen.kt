@@ -1,5 +1,6 @@
 package app.lingvo.ui.screens
 
+import androidx.compose.material3.OutlinedTextField
 import android.Manifest
 import android.content.Intent
 import android.net.Uri
@@ -195,6 +196,48 @@ fun SettingsLearningScreen(container: AppContainer, nav: NavHostController) {
                 }
             }
         }
+        WordImagesGroup(container, settings) { f -> update(f) }
+    }
+}
+
+/** Картинки к словам: локальная нейросеть (Stable Diffusion на компьютере в домашней сети). */
+@Composable
+private fun WordImagesGroup(container: AppContainer, settings: AppSettings, update: ((AppSettings) -> AppSettings) -> Unit) {
+    val scope = rememberCoroutineScope()
+    val toast = rememberToast()
+    var url by remember(settings.imageServerUrl) { mutableStateOf(settings.imageServerUrl) }
+    var status by remember { mutableStateOf<String?>(null) }
+    var cache by remember { mutableStateOf(container.wordImages.cacheSize()) }
+    val urlOk = url.isBlank() || app.lingvo.core.WordImagePrompt.isLocalAddress(url)
+    Group("Картинки к словам",
+        "Новые слова получают картинку от нейросети Stable Diffusion, запущенной на вашем компьютере в той же Wi‑Fi-сети " +
+            "(Automatic1111, Forge или SD.Next с флагами --api --listen). Слова отправляются только по адресу " +
+            "домашней сети, не в интернет. Рисование идёт в фоне; пока картинки нет, карточка показывается без неё.") {
+        SwitchRow("Рисовать картинки к новым словам", settings.imageGeneration) { v -> update { it.copy(imageGeneration = v) } }
+        OutlinedTextField(
+            url, { url = it }, Modifier.fillMaxWidth(), singleLine = true,
+            label = { Text("Адрес сервера") }, placeholder = { Text("http://192.168.1.20:7860") },
+            isError = !urlOk,
+            supportingText = { if (!urlOk) Text("Нужен адрес домашней сети: 192.168.x.x, 10.x.x.x, localhost или *.local") },
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(enabled = urlOk && url != settings.imageServerUrl, onClick = { update { it.copy(imageServerUrl = url.trim()) } }) {
+                Text("Сохранить")
+            }
+            OutlinedButton(enabled = urlOk && url.isNotBlank(), onClick = {
+                status = "Проверяю…"
+                scope.launch {
+                    status = runCatching { app.lingvo.images.LocalSdServerBackend(url).check() }
+                        .getOrElse { it.message }?.let { "Нет связи: $it" } ?: "Сервер отвечает ✓"
+                }
+            }) { Text("Проверить связь") }
+        }
+        status?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
+        Text("В кэше: ${cache.first} картинок, ${cache.second / 1024} КБ", style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (cache.first > 0) TextButton(onClick = {
+            toast("Удалено картинок: ${container.wordImages.clearCache()}"); cache = container.wordImages.cacheSize()
+        }) { Text("Очистить кэш картинок") }
     }
 }
 

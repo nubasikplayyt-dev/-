@@ -13,6 +13,7 @@
    "alternatives": [
     "konnichiwa"
    ],
+   "gloss_en": "hello",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -34,6 +35,7 @@
     "またね",
     "sayonara"
    ],
+   "gloss_en": "goodbye",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -54,6 +56,7 @@
    "alternatives": [
     "hai"
    ],
+   "gloss_en": "yes",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -74,6 +77,7 @@
    "alternatives": [
     "iie"
    ],
+   "gloss_en": "no",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -96,6 +100,7 @@
     "onegaishimasu"
    ],
    "grammar_notes": "просьба; «дайте, пожалуйста» — ください kudasai",
+   "gloss_en": "please",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -117,6 +122,7 @@
     "ありがとうございます",
     "arigato"
    ],
+   "gloss_en": "thank you",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -138,6 +144,7 @@
     "ごめんなさい",
     "sumimasen"
    ],
+   "gloss_en": "sorry",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -160,6 +167,7 @@
     "ohayo gozaimasu",
     "ohayogozaimasu"
    ],
+   "gloss_en": "good morning",
    "level": "A1",
    "tags": [
     "Приветствия и вежливость"
@@ -181,6 +189,7 @@
     "わたし",
     "watashi"
    ],
+   "gloss_en": "I",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -201,6 +210,7 @@
    "alternatives": [
     "anata"
    ],
+   "gloss_en": "you",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -222,6 +232,7 @@
     "かれ",
     "kare"
    ],
+   "gloss_en": "he",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -243,6 +254,7 @@
     "かのじょ",
     "kanojo"
    ],
+   "gloss_en": "she",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -264,6 +276,7 @@
     "わたしたち",
     "watashitachi"
    ],
+   "gloss_en": "we",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -285,6 +298,7 @@
     "だれ",
     "dare"
    ],
+   "gloss_en": "who",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -307,6 +321,7 @@
     "なん",
     "nani"
    ],
+   "gloss_en": "what",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -327,6 +342,7 @@
    "alternatives": [
     "doko"
    ],
+   "gloss_en": "where",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -347,6 +363,7 @@
    "alternatives": [
     "itsu"
    ],
+   "gloss_en": "when",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -368,6 +385,7 @@
     "どうやって",
     "do"
    ],
+   "gloss_en": "how",
    "level": "A1",
    "tags": [
     "Я, ты и вопросы"
@@ -389,6 +407,7 @@
     "いち",
     "ichi"
    ],
+   "gloss_en": "one",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -410,6 +429,7 @@
     "に",
     "ni"
    ],
+   "gloss_en": "two",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -431,6 +451,7 @@
     "さん",
     "san"
    ],
+   "gloss_en": "three",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -453,6 +474,7 @@
     "し",
     "yon"
    ],
+   "gloss_en": "four",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -474,6 +496,7 @@
     "ご",
     "go"
    ],
+   "gloss_en": "five",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -495,6 +518,7 @@
     "ろく",
     "roku"
    ],
+   "gloss_en": "six",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -517,6 +541,7 @@
     "しち",
     "nana"
    ],
+   "gloss_en": "seven",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -538,6 +563,7 @@
     "はち",
     "hachi"
    ],
+   "gloss_en": "eight",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -560,6 +586,7 @@
     "く",
     "kyu"
    ],
+   "gloss_en": "nine",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -581,6 +608,7 @@
     "じゅう",
     "ju"
    ],
+   "gloss_en": "ten",
    "level": "A1",
    "tags": [
     "Числа 1–10"
@@ -605,6 +633,7 @@
     "okasan"
    ],
    "grammar_notes": "о своей маме — 母 haha",
+   "gloss_en": "mother",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -629,6 +658,7 @@
     "otosan"
    ],
    "grammar_notes": "о своём папе — 父 chichi",
+   "gloss_en": "father",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -651,6 +681,7 @@
     "ani"
    ],
    "grammar_notes": "младший брат — 弟 otōto",
+   "gloss_en": "brother",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -673,6 +704,7 @@
     "ane"
    ],
    "grammar_notes": "младшая сестра — 妹 imōto",
+   "gloss_en": "sister",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -694,6 +726,7 @@
     "ともだち",
     "tomodachi"
    ],
+   "gloss_en": "friend",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -716,6 +749,7 @@
     "otoko no hito",
     "otokonohito"
    ],
+   "gloss_en": "man",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -738,6 +772,7 @@
     "onna no hito",
     "onnanohito"
    ],
+   "gloss_en": "woman",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -759,6 +794,7 @@
     "こども",
     "kodomo"
    ],
+   "gloss_en": "child",
    "level": "A1",
    "tags": [
     "Семья и люди"
@@ -781,6 +817,7 @@
     "うち",
     "ie"
    ],
+   "gloss_en": "house",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -801,6 +838,7 @@
    "alternatives": [
     "doa"
    ],
+   "gloss_en": "door",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -824,6 +862,7 @@
     "tsukue"
    ],
    "grammar_notes": "письменный стол; обеденный — テーブル",
+   "gloss_en": "table",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -844,6 +883,7 @@
    "alternatives": [
     "beddo"
    ],
+   "gloss_en": "bed",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -865,6 +905,7 @@
     "ほん",
     "hon"
    ],
+   "gloss_en": "book",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -887,6 +928,7 @@
     "スマホ",
     "denwa"
    ],
+   "gloss_en": "phone",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -908,6 +950,7 @@
     "まど",
     "mado"
    ],
+   "gloss_en": "window",
    "level": "A1",
    "tags": [
     "Дом и вещи"
@@ -929,6 +972,7 @@
     "みず",
     "mizu"
    ],
+   "gloss_en": "water",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -949,6 +993,7 @@
    "alternatives": [
     "pan"
    ],
+   "gloss_en": "bread",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -969,6 +1014,7 @@
    "alternatives": [
     "kohi"
    ],
+   "gloss_en": "coffee",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -990,6 +1036,7 @@
     "おちゃ",
     "ocha"
    ],
+   "gloss_en": "tea",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1012,6 +1059,7 @@
     "ミルク",
     "gyunyu"
    ],
+   "gloss_en": "milk",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1033,6 +1081,7 @@
     "リンゴ",
     "ringo"
    ],
+   "gloss_en": "apple",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1054,6 +1103,7 @@
     "さかな",
     "sakana"
    ],
+   "gloss_en": "fish",
    "level": "A1",
    "tags": [
     "Еда и напитки"
@@ -1075,6 +1125,7 @@
     "desu"
    ],
    "grammar_notes": "вежливая связка: 学生です — «(я) студент»",
+   "gloss_en": "to be",
    "example_ja": "私は学生です。（Watashi wa gakusei desu.）",
    "example_ru": "Я студент.",
    "level": "A1",
@@ -1099,6 +1150,7 @@
     "aru"
    ],
    "grammar_notes": "«есть, имеется» (о предметах; о живых — いる)",
+   "gloss_en": "to have",
    "example_ja": "時間があります。（Jikan ga arimasu.）",
    "example_ru": "У меня есть время.",
    "level": "A1",
@@ -1123,6 +1175,7 @@
     "hoshii"
    ],
    "grammar_notes": "«хочу (вещь)» — прилагательное; «хочу сделать» — 〜たい",
+   "gloss_en": "to want",
    "example_ja": "水が欲しいです。（Mizu ga hoshii desu.）",
    "example_ru": "Я хочу воды.",
    "level": "A1",
@@ -1147,6 +1200,7 @@
     "行きます",
     "iku"
    ],
+   "gloss_en": "to go",
    "example_ja": "学校に行きます。（Gakkō ni ikimasu.）",
    "example_ru": "Я иду в школу.",
    "level": "A1",
@@ -1171,6 +1225,7 @@
     "食べます",
     "taberu"
    ],
+   "gloss_en": "to eat",
    "example_ja": "パンを食べます。（Pan o tabemasu.）",
    "example_ru": "Я ем хлеб.",
    "level": "A1",
@@ -1195,6 +1250,7 @@
     "飲みます",
     "nomu"
    ],
+   "gloss_en": "to drink",
    "example_ja": "お茶を飲みます。（Ocha o nomimasu.）",
    "example_ru": "Я пью чай.",
    "level": "A1",
@@ -1219,6 +1275,7 @@
     "話します",
     "hanasu"
    ],
+   "gloss_en": "to speak",
    "example_ja": "彼はゆっくり話します。（Kare wa yukkuri hanashimasu.）",
    "example_ru": "Он говорит медленно.",
    "level": "A1",
@@ -1244,6 +1301,7 @@
     "shiru"
    ],
    "grammar_notes": "«знаю» — 知っています",
+   "gloss_en": "to know",
    "example_ja": "知りません。（Shirimasen.）",
    "example_ru": "Я не знаю.",
    "level": "A1",
@@ -1267,6 +1325,7 @@
     "おおきい",
     "okii"
    ],
+   "gloss_en": "big",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1288,6 +1347,7 @@
     "ちいさい",
     "chiisai"
    ],
+   "gloss_en": "small",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1310,6 +1370,7 @@
     "よい",
     "ii"
    ],
+   "gloss_en": "good",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1331,6 +1392,7 @@
     "わるい",
     "warui"
    ],
+   "gloss_en": "bad",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1352,6 +1414,7 @@
     "あたらしい",
     "atarashii"
    ],
+   "gloss_en": "new",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1373,6 +1436,7 @@
     "あつい",
     "atsui"
    ],
+   "gloss_en": "hot",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1396,6 +1460,7 @@
     "tsumetai"
    ],
    "grammar_notes": "о погоде — 寒い samui",
+   "gloss_en": "cold",
    "level": "A1",
    "tags": [
     "Простые описания"
@@ -1418,6 +1483,7 @@
     "美しい",
     "kirei"
    ],
+   "gloss_en": "beautiful",
    "level": "A1",
    "tags": [
     "Простые описания"
