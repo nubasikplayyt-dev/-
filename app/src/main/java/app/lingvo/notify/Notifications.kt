@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat
 import app.lingvo.MainActivity
 import app.lingvo.R
 import app.lingvo.core.LanguageSpec
-import app.lingvo.core.Languages
 import app.lingvo.core.SessionText
 import app.lingvo.data.AppSettings
 
@@ -26,8 +25,10 @@ object Notifications {
     const val CHANNEL_SESSION = "session"
 
     private const val ID_REMINDER_COMBINED = 1000
-    private fun reminderId(spec: LanguageSpec) = 1001 + Languages.all.indexOf(spec)
-    fun sessionId(spec: LanguageSpec) = 2001 + Languages.all.indexOf(spec)
+    /** Стабильные ID уведомлений по ID курса (курсов может быть сколько угодно). */
+    private fun reminderId(spec: LanguageSpec) = 10_000 + Math.floorMod(spec.code.hashCode(), 40_000)
+    fun sessionId(spec: LanguageSpec) = 50_000 + Math.floorMod(spec.code.hashCode(), 40_000)
+    private const val ACCENT = 0xFF5B3FD1.toInt()
 
     const val EXTRA_OPEN = "open"
 
@@ -76,16 +77,16 @@ object Notifications {
     // ---------- Напоминания ----------
 
     @SuppressLint("MissingPermission")
-    fun showReminders(context: Context, counts: List<Pair<LanguageSpec, Int>>, settings: AppSettings) {
+    fun showReminders(context: Context, counts: List<Pair<LanguageSpec, Int>>, settings: AppSettings, text: app.lingvo.core.ReminderTexts.Text? = null) {
         if (!canPost(context)) return
         val nm = NotificationManagerCompat.from(context)
-        val nonZero = counts.filter { it.second > 0 }
+        val nonZero = counts.filter { it.second > 0 }.ifEmpty { counts.take(1) }
         if (nonZero.isEmpty()) { cancelReminders(context); return }
         val visibility = if (settings.hideOnLockScreen) NotificationCompat.VISIBILITY_PRIVATE else NotificationCompat.VISIBILITY_PUBLIC
 
         fun build(group: List<Pair<LanguageSpec, Int>>, route: String, req: Int): Notification {
-            val title = SessionText.reminderTitle(group)
-            val body = SessionText.reminderBody(group)
+            val title = text?.title ?: SessionText.reminderTitle(group)
+            val body = text?.body ?: SessionText.reminderBody(group)
             val public = NotificationCompat.Builder(context, CHANNEL_REMINDERS)
                 .setSmallIcon(R.drawable.ic_stat_lingvo)
                 .setContentTitle("Время повторить слова")
@@ -96,6 +97,7 @@ object Notifications {
                 .setContentText(body)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(body))
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                .setColor(ACCENT)
                 .setAutoCancel(true)
                 .setVisibility(visibility)
                 .setPublicVersion(public)
@@ -106,8 +108,8 @@ object Notifications {
         }
 
         if (settings.combineReminders || nonZero.size == 1) {
-            val route = if (nonZero.size == 1) "review/${nonZero[0].first.code}" else "home"
-            Languages.all.forEach { nm.cancel(reminderId(it)) }
+            val route = if (nonZero.size == 1 && nonZero[0].second > 0) "review/${nonZero[0].first.code}" else "home"
+            counts.forEach { nm.cancel(reminderId(it.first)) }
             nm.notify(ID_REMINDER_COMBINED, build(nonZero, route, ID_REMINDER_COMBINED))
         } else {
             nm.cancel(ID_REMINDER_COMBINED)
@@ -115,10 +117,10 @@ object Notifications {
         }
     }
 
+    /** Убирает все напоминания (любых курсов). */
     fun cancelReminders(context: Context) {
-        val nm = NotificationManagerCompat.from(context)
-        nm.cancel(ID_REMINDER_COMBINED)
-        Languages.all.forEach { nm.cancel(reminderId(it)) }
+        val nm = context.getSystemService(NotificationManager::class.java)
+        nm.activeNotifications.filter { it.notification.channelId == CHANNEL_REMINDERS }.forEach { nm.cancel(it.id) }
     }
 
     // ---------- Компактное уведомление активной сессии ----------
@@ -131,17 +133,20 @@ object Notifications {
         /** Текущее слово (без перевода) — только если пользователь разрешил. */
         val currentWord: String?,
         val otherQueues: String?,
+        val streak: Int = 0,
+        val creatureName: String? = null,
     )
 
     @SuppressLint("MissingPermission")
     fun showSession(context: Context, info: SessionInfo, settings: AppSettings) {
         if (!canPost(context)) return
-        val title = SessionText.progress(info.spec, info.done, info.total)
+        val title = SessionText.progress(info.spec, info.done, info.total) + if (info.streak > 0) "  🔥${info.streak}" else ""
         val remaining = (info.total - info.done).coerceAtLeast(0)
         val text = buildString {
             append("Осталось $remaining ${SessionText.plural(remaining, "карточка", "карточки", "карточек")}")
             if (info.currentWord != null) append(" · ${info.currentWord}")
             if (info.otherQueues != null) append(" · ${info.otherQueues}")
+            if (info.creatureName != null) append(" · ${info.creatureName} болеет за вас")
         }
         val reqBase = sessionId(info.spec) * 10
         val content = openIntent(context, "review/${info.spec.code}", reqBase)
@@ -164,6 +169,7 @@ object Notifications {
                 .setOnlyAlertOnce(true)
                 .setSilent(true)
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                .setColor(ACCENT)
                 .setVisibility(if (settings.hideOnLockScreen) NotificationCompat.VISIBILITY_PRIVATE else NotificationCompat.VISIBILITY_PUBLIC)
                 .setPublicVersion(
                     NotificationCompat.Builder(context, CHANNEL_SESSION).setSmallIcon(R.drawable.ic_stat_lingvo)
@@ -205,6 +211,7 @@ object Notifications {
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setCategory(Notification.CATEGORY_PROGRESS)
+            .setColor(ACCENT)
             .setVisibility(if (settings.hideOnLockScreen) Notification.VISIBILITY_PRIVATE else Notification.VISIBILITY_PUBLIC)
             .setPublicVersion(publicVersion)
             .setContentIntent(content)

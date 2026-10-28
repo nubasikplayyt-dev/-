@@ -55,6 +55,13 @@ interface EntryDao {
     @Query("DELETE FROM vocabulary_entry WHERE id = :id")
     suspend fun delete(id: String)
 
+    @Query("DELETE FROM vocabulary_entry WHERE language = :language")
+    suspend fun deleteByLanguage(language: String)
+
+    @Transaction
+    @Query("SELECT * FROM vocabulary_entry")
+    suspend fun allWithState(): List<EntryWithState>
+
     @Query("DELETE FROM vocabulary_entry")
     suspend fun deleteAll()
 
@@ -170,6 +177,15 @@ interface SessionDao {
     @Query("SELECT * FROM learning_session WHERE done > 0 ORDER BY started_at DESC LIMIT :limit")
     fun observeRecent(limit: Int): Flow<List<LearningSessionEntity>>
 
+    @Query("SELECT * FROM learning_session")
+    suspend fun all(): List<LearningSessionEntity>
+
+    @Query("SELECT * FROM learning_session")
+    fun observeAll(): Flow<List<LearningSessionEntity>>
+
+    @Query("DELETE FROM learning_session WHERE language = :language")
+    suspend fun deleteByLanguage(language: String)
+
     @Insert
     suspend fun insert(session: LearningSessionEntity): Long
 
@@ -187,4 +203,76 @@ interface ImportHistoryDao {
 
     @Query("SELECT * FROM import_history ORDER BY imported_at DESC LIMIT 20")
     fun observeRecent(): Flow<List<VocabularyImportHistoryEntity>>
+}
+
+@Dao
+interface CourseDao {
+    @Query("SELECT * FROM course ORDER BY sort_order, created_at, id")
+    fun observeAll(): Flow<List<CourseEntity>>
+
+    @Query("SELECT * FROM course ORDER BY sort_order, created_at, id")
+    suspend fun all(): List<CourseEntity>
+
+    @Query("SELECT * FROM course WHERE id = :id")
+    suspend fun get(id: String): CourseEntity?
+
+    @Upsert
+    suspend fun upsert(course: CourseEntity)
+
+    @Upsert
+    suspend fun upsertAll(courses: List<CourseEntity>)
+
+    @Query("DELETE FROM course WHERE id = :id")
+    suspend fun delete(id: String)
+
+    @Query("DELETE FROM course")
+    suspend fun deleteAll()
+}
+
+@Dao
+interface UnlockDao {
+    @Query("SELECT * FROM unlock ORDER BY unlocked_at, kind, item_id")
+    fun observeAll(): Flow<List<UnlockEntity>>
+
+    @Query("SELECT * FROM unlock")
+    suspend fun all(): List<UnlockEntity>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertIgnore(items: List<UnlockEntity>)
+
+    @Upsert
+    suspend fun upsertAll(items: List<UnlockEntity>)
+
+    @Query("UPDATE unlock SET level = :level, seen = 0 WHERE kind = 'CREATURE' AND item_id = :id")
+    suspend fun setCreatureLevel(id: String, level: Int)
+
+    @Query("UPDATE unlock SET seen = 1 WHERE kind = :kind AND item_id = :id")
+    suspend fun markSeen(kind: String, id: String)
+
+    @Query("UPDATE unlock SET seen = 1")
+    suspend fun markAllSeen()
+
+    @Query("DELETE FROM unlock")
+    suspend fun deleteAll()
+}
+
+@Dao
+interface DailyDao {
+    @Query("SELECT * FROM daily_progress ORDER BY epoch_day")
+    fun observeAll(): Flow<List<DailyProgressEntity>>
+
+    @Query("SELECT * FROM daily_progress ORDER BY epoch_day")
+    suspend fun all(): List<DailyProgressEntity>
+
+    @Query("SELECT * FROM daily_progress WHERE epoch_day = :day")
+    suspend fun get(day: Long): DailyProgressEntity?
+
+    @Upsert
+    suspend fun upsert(day: DailyProgressEntity)
+
+    @Upsert
+    suspend fun upsertAll(days: List<DailyProgressEntity>)
+
+    @Query("DELETE FROM daily_progress")
+    suspend fun deleteAll()
 }

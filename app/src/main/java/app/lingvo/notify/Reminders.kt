@@ -12,7 +12,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import app.lingvo.LingvoApp
-import app.lingvo.core.Languages
+import app.lingvo.core.ReminderTexts
 import app.lingvo.core.ReminderPlanner
 import app.lingvo.data.AppSettings
 import kotlinx.coroutines.CoroutineScope
@@ -98,9 +98,10 @@ class ReminderWorker(context: Context, params: WorkerParameters) : CoroutineWork
         val repo = app.container.repository
         return try {
             val settings = repo.settings.current()
-            val counts = Languages.all
-                .filter { settings.lang(it.code).remindersEnabled }
-                .map { it to repo.dueCount(it.code) }
+            val courses = repo.courses().map { it.spec }.filter { settings.lang(it.code).remindersEnabled }
+            val counts = courses.map { it to repo.dueCount(it.code) }
+            val newAvailable = courses.sumOf { repo.newCardsForToday(it).second.coerceAtMost(repo.counts(it.code).newCount) }
+            val streak = repo.streak()
             val now = ZonedDateTime.now()
             val snoozed = inputData.getBoolean(KEY_SNOOZED, false)
             val config = if (snoozed) settings.reminder.copy(days = java.time.DayOfWeek.entries.toSet()) else settings.reminder
@@ -108,10 +109,20 @@ class ReminderWorker(context: Context, params: WorkerParameters) : CoroutineWork
                 config, now, counts.sumOf { it.second },
                 lastActivity = if (snoozed) null else repo.lastActivity(),
                 notificationsAllowed = Notifications.canPost(applicationContext),
+                goalCompleted = streak.todayCompleted,
+                newAvailable = newAvailable,
             )
             Log.i("ReminderWorker", "Решение: ${decision.reason}")
-            if (decision.notify) Notifications.showReminders(applicationContext, counts, settings)
-            else if (counts.sumOf { it.second } == 0) Notifications.cancelReminders(applicationContext)
+            if (decision.notify) {
+                val creature = app.lingvo.core.Creatures.byId(settings.favoriteCreature)?.name
+                val text = ReminderTexts.pick(
+                    ReminderTexts.Context(counts, streak.current, streak.atRisk, streak.todayAnswers, streak.todayGoal, creature),
+                    now.toLocalDate().toEpochDay(),
+                )
+                Notifications.showReminders(applicationContext, counts, settings, text)
+            } else if (streak.todayCompleted || counts.sumOf { it.second } == 0) {
+                Notifications.cancelReminders(applicationContext)
+            }
             Result.success()
         } catch (e: Exception) {
             Log.e("ReminderWorker", "Ошибка проверки напоминания", e)
@@ -138,7 +149,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
                     }
                     ACTION_SNOOZE_SESSION -> {
                         // Сессия сохраняется; уведомление скрывается и вернётся напоминанием через 30 минут.
-                        val lang = intent.getStringExtra(EXTRA_LANGUAGE)?.let { Languages.byCode(it) }
+                        val lang = intent.getStringExtra(EXTRA_LANGUAGE)?.let { app.container.repository.spec(it) }
                         lang?.let { app.container.island.snooze(it) }
                         ReminderScheduler.snooze(context, 30)
                     }

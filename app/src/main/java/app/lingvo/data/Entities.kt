@@ -157,3 +157,52 @@ data class EntryWithState(
     @androidx.room.Relation(parentColumn = "id", entityColumn = "entry_id")
     val state: ReviewStateEntity?,
 )
+
+/** Языковой курс. `id` совпадает со значением `language` у карточек (для старых данных — "es"/"de"). */
+@Entity(tableName = "course")
+data class CourseEntity(
+    @PrimaryKey val id: String,
+    @ColumnInfo(name = "language_code") val languageCode: String,
+    val name: String,
+    val flag: String,
+    @ColumnInfo(name = "translation_code") val translationCode: String,
+    @ColumnInfo(name = "translation_name") val translationName: String,
+    @ColumnInfo(name = "created_at") val createdAt: Long,
+    @ColumnInfo(name = "sort_order") val sortOrder: Int,
+) {
+    fun toDomain() = app.lingvo.core.Course(id, languageCode, name, flag, translationCode, translationName, createdAt, sortOrder)
+
+    companion object {
+        fun from(c: app.lingvo.core.Course) = CourseEntity(
+            c.id, c.languageCode, c.name, c.flag, c.translationCode, c.translationName, c.createdAt, c.sortOrder,
+        )
+    }
+}
+
+/** Открытое: достижение, область карты, существо или иконка. Не удаляется при обновлениях. */
+@Entity(tableName = "unlock", primaryKeys = ["kind", "item_id"])
+data class UnlockEntity(
+    val kind: String,
+    @ColumnInfo(name = "item_id") val itemId: String,
+    @ColumnInfo(name = "unlocked_at") val unlockedAt: Long,
+    /** Уровень существа (для остальных — 1). */
+    val level: Int,
+    /** Пользователь уже видел анимацию получения. */
+    val seen: Boolean,
+)
+
+/** Прогресс календарного дня для серий. `epoch_day` — локальная дата в момент ответа. */
+@Entity(tableName = "daily_progress")
+data class DailyProgressEntity(
+    @PrimaryKey @ColumnInfo(name = "epoch_day") val epochDay: Long,
+    val answers: Int,
+    val remembered: Int,
+    val goal: Int,
+    @ColumnInfo(name = "completed_at") val completedAt: Long?,
+) {
+    fun toDomain() = app.lingvo.core.DayRecord(epochDay, answers, remembered, goal, completedAt)
+
+    companion object {
+        fun from(d: app.lingvo.core.DayRecord) = DailyProgressEntity(d.epochDay, d.answers, d.remembered, d.goal, d.completedAt)
+    }
+}

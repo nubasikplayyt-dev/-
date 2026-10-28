@@ -6,7 +6,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import app.lingvo.core.LanguageSpec
-import app.lingvo.core.Languages
+import app.lingvo.core.Creatures
 import app.lingvo.core.SessionProgress
 import app.lingvo.core.SessionText
 import app.lingvo.data.AppSettings
@@ -76,11 +76,14 @@ class IslandController(
         val stillSnoozed = s.snoozed.filter { (lang, done) -> active[lang]?.done == done }
         if (stillSnoozed != s.snoozed) snoozed.value = stillSnoozed
 
+        val specs = repo.courses().map { it.spec }
         val otherQueues = if (s.settings.capsuleContent == CapsuleContent.BOTH_QUEUES) {
-            SessionText.dueSummary(Languages.all.map { it to repo.dueCount(it.code) }).ifEmpty { null }
+            SessionText.dueSummary(specs.map { it to repo.dueCount(it.code) }).ifEmpty { null }
         } else null
+        val streak = runCatching { repo.streak().current }.getOrDefault(0)
+        val creature = Creatures.byId(s.settings.favoriteCreature)
 
-        for (spec in Languages.all) {
+        for (spec in specs) {
             val session = active[spec.code]
             val show = session != null && s.settings.sessionNotification && spec.code !in stillSnoozed &&
                 Notifications.channelEnabled(context, Notifications.CHANNEL_SESSION)
@@ -90,7 +93,7 @@ class IslandController(
                 } else null
                 Notifications.showSession(
                     context,
-                    Notifications.SessionInfo(spec, session.id, session.done, session.total, word, otherQueues),
+                    Notifications.SessionInfo(spec, session.id, session.done, session.total, word, otherQueues, streak, creature?.name),
                     s.settings,
                 )
                 shownLanguages += spec.code
@@ -102,9 +105,10 @@ class IslandController(
 
         val current = s.sessions.firstOrNull { it.done < it.total }
         val capsuleVisible = current != null && s.settings.capsuleEnabled && !s.foreground && canDrawOverlays(context)
+        val currentSpec = current?.let { c -> specs.firstOrNull { it.code == c.language } }
         withContext(Dispatchers.Main) {
-            if (capsuleVisible && current != null) {
-                val spec = Languages.require(current.language)
+            if (capsuleVisible && current != null && currentSpec != null) {
+                val spec = currentSpec
                 val label = when (s.settings.capsuleContent) {
                     CapsuleContent.SESSION -> "${spec.flag} ${current.done}/${current.total}"
                     CapsuleContent.BOTH_QUEUES -> otherQueues ?: "${spec.flag} ${current.done}/${current.total}"
@@ -116,6 +120,9 @@ class IslandController(
                         label = label,
                         progress = if (current.total == 0) 0f else current.done.toFloat() / current.total,
                         animate = s.settings.animations,
+                        streak = streak,
+                        colorA = (creature?.colorA ?: 0xFF5B3FD1).toInt(),
+                        colorB = (creature?.colorB ?: 0xFF2F6BFF).toInt(),
                     )
                 )
             } else {

@@ -52,7 +52,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import app.lingvo.AppContainer
 import app.lingvo.core.CEFR_LEVELS
-import app.lingvo.core.Languages
 import app.lingvo.core.LearningStatus
 import app.lingvo.core.Normalizer
 import app.lingvo.core.PartsOfSpeech
@@ -117,6 +116,7 @@ fun DictionaryScreen(container: AppContainer, nav: NavHostController, initialLan
     var query by rememberSaveable { mutableStateOf("") }
     var pickLanguage by remember { mutableStateOf(false) }
     val context = androidx.compose.ui.platform.LocalContext.current
+    val courses = app.lingvo.ui.rememberAppState(container).value?.courses.orEmpty()
 
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -129,7 +129,7 @@ fun DictionaryScreen(container: AppContainer, nav: NavHostController, initialLan
                         val shown = filter.copy(query = query).apply(all, System.currentTimeMillis())
                         if (shown.isEmpty()) return@IconButton
                         // Тот же список, что на экране, — по языкам, читаемым текстом.
-                        val text = Languages.all.mapNotNull { spec ->
+                        val text = courses.map { it.spec }.mapNotNull { spec ->
                             val part = shown.filter { it.entry.language == spec.code }.map { it.entry }
                             if (part.isEmpty()) null else TextExport.plain(spec, part)
                         }.joinToString("\n")
@@ -156,14 +156,10 @@ fun DictionaryScreen(container: AppContainer, nav: NavHostController, initialLan
 
         Column(Modifier.fillMaxSize().padding(padding)) {
             Column(Modifier.padding(horizontal = 16.dp)) {
-                val options = listOf<String?>(null) + Languages.all.map { it.code }
-                SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-                    options.forEachIndexed { i, code ->
-                        SegmentedButton(
-                            selected = filter.language == code,
-                            onClick = { filter = filter.copy(language = code, tag = null) },
-                            shape = SegmentedButtonDefaults.itemShape(i, options.size),
-                        ) { Text(code?.let { c -> Languages.require(c).let { "${it.flag} ${it.nameRu}" } } ?: "Все") }
+                Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilterChip(filter.language == null, { filter = filter.copy(language = null, tag = null) }, { Text("Все курсы") })
+                    courses.forEach { c ->
+                        FilterChip(filter.language == c.id, { filter = filter.copy(language = c.id, tag = null) }, { Text("${c.flag} ${c.name}") })
                     }
                 }
                 OutlinedTextField(
@@ -208,7 +204,7 @@ fun DictionaryScreen(container: AppContainer, nav: NavHostController, initialLan
             } else {
                 LazyColumn(contentPadding = PaddingValues(bottom = 88.dp)) {
                     items(list, key = { it.id }) { card ->
-                        DictionaryRow(card) { nav.navigate(Routes.entry(card.id)) }
+                        DictionaryRow(card, courses.firstOrNull { it.id == card.entry.language }?.flag.orEmpty()) { nav.navigate(Routes.entry(card.id)) }
                         HorizontalDivider()
                     }
                 }
@@ -217,17 +213,16 @@ fun DictionaryScreen(container: AppContainer, nav: NavHostController, initialLan
     }
 
     if (pickLanguage) {
-        LanguagePickerDialog("Добавить слово", onPick = { pickLanguage = false; nav.navigate(Routes.add(it)) }, onDismiss = { pickLanguage = false })
+        LanguagePickerDialog("Добавить слово", courses, onPick = { pickLanguage = false; nav.navigate(Routes.add(it)) }, onDismiss = { pickLanguage = false })
     }
 }
 
 @Composable
-private fun DictionaryRow(card: Card, onClick: () -> Unit) {
-    val spec = Languages.byCode(card.entry.language)
+private fun DictionaryRow(card: Card, flag: String, onClick: () -> Unit) {
     val now = System.currentTimeMillis()
     ListItem(
         modifier = Modifier.clickable(onClick = onClick).padding(horizontal = 4.dp),
-        headlineContent = { Text("${spec?.flag.orEmpty()} ${card.entry.displayTerm}", maxLines = 2, overflow = TextOverflow.Ellipsis) },
+        headlineContent = { Text("$flag ${card.entry.displayTerm}", maxLines = 2, overflow = TextOverflow.Ellipsis) },
         supportingContent = { Text(card.entry.translation, maxLines = 2, overflow = TextOverflow.Ellipsis) },
         trailingContent = {
             Column(horizontalAlignment = androidx.compose.ui.Alignment.End) {

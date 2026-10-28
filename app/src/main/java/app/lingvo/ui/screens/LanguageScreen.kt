@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -15,90 +15,110 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.School
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import app.lingvo.AppContainer
-import app.lingvo.core.Languages
 import app.lingvo.ui.Routes
 import app.lingvo.ui.components.BackTopBar
 import app.lingvo.ui.components.BarChart
+import app.lingvo.ui.components.BigActionButton
 import app.lingvo.ui.components.Centered
-import app.lingvo.ui.components.LabeledValue
-import app.lingvo.ui.rememberOverviews
-import app.lingvo.ui.theme.LangColors
+import app.lingvo.ui.components.MenuRow
+import app.lingvo.ui.components.SoftCard
+import app.lingvo.ui.components.StatTile
+import app.lingvo.ui.rememberAppState
+import app.lingvo.ui.rememberToast
+import app.lingvo.ui.theme.LocalGradients
+import app.lingvo.ui.theme.Palette
+import kotlinx.coroutines.launch
 
+/** Раздел курса: показатели и все действия с ним. */
 @Composable
 fun LanguageScreen(container: AppContainer, nav: NavHostController, lang: String) {
-    val spec = Languages.byCode(lang) ?: Languages.SPANISH
-    val overviews by rememberOverviews(container)
-    Scaffold(topBar = { BackTopBar("${spec.flag} ${spec.nameRu}", onBack = { nav.popBackStack() }) }) { padding ->
-        val o = overviews?.firstOrNull { it.spec.code == spec.code } ?: run { Centered { CircularProgressIndicator() }; return@Scaffold }
+    val state by rememberAppState(container)
+    val scope = rememberCoroutineScope()
+    val toast = rememberToast()
+    var busy by remember { mutableStateOf(false) }
+    val s = state ?: run { Centered { CircularProgressIndicator() }; return }
+    val course = s.courses.firstOrNull { it.id == lang } ?: run { Centered { Text("Курс не найден") }; return }
+    val spec = course.spec
+    val o = s.overview(course.id) ?: return
+    val g = LocalGradients.current
+    Scaffold(topBar = {
+        BackTopBar("${course.flag} ${course.name}", onBack = { nav.popBackStack() }) {
+            IconButton(onClick = { nav.navigate(Routes.courseEdit(course.id)) }) { Icon(Icons.Filled.Edit, "Настройки курса") }
+        }
+    }) { padding ->
         Column(
             Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Card(Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        LabeledValue("в словаре", "${o.total}")
-                        LabeledValue("к повторению", "${o.due}")
-                        LabeledValue("новых", "${o.newAvailable}")
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                StatTile("${o.total}", "в словаре", Palette.Ocean, Modifier.weight(1f))
+                StatTile("${o.due}", "к повторению", Palette.Coral, Modifier.weight(1f))
+                StatTile("${o.learned}", "выучено", Palette.Mint, Modifier.weight(1f))
+            }
+            SoftCard {
+                Text("Неделя", style = MaterialTheme.typography.labelLarge)
+                Spacer(Modifier.height(6.dp))
+                BarChart(o.week, Palette.course(course.id))
+            }
+            BigActionButton(
+                if (o.due > 0) "Начать повторение" else "Сейчас нечего повторять", g.sunrise,
+                subtitle = if (o.due > 0) "${o.due} карточек ждут" else null, icon = Icons.Filled.PlayArrow, enabled = o.due > 0,
+            ) { nav.navigate(Routes.review(course.id)) }
+            BigActionButton(
+                "Учить новые слова", g.violet,
+                subtitle = when {
+                    o.newLeftToday > 0 -> "${o.newLeftToday} из ${o.newLimit} на сегодня"
+                    o.newAvailable == 0 -> "Новых слов нет — добавьте или импортируйте"
+                    else -> "Норма на сегодня выполнена"
+                },
+                icon = Icons.Filled.School, enabled = o.newLeftToday > 0,
+            ) { nav.navigate(Routes.learn(course.id)) }
+            if (o.total < 30 && container.repository.hasStarter(spec)) {
+                BigActionButton("Добавить стартовый набор", g.mint, subtitle = "30 полезных слов с примерами", icon = Icons.Filled.AutoAwesome, enabled = !busy) {
+                    busy = true
+                    scope.launch {
+                        runCatching { container.repository.importStarter(spec) }
+                            .onSuccess { toast("Добавлено: ${it.newEntries.size}") }
+                            .onFailure { toast("Не удалось: ${it.message}") }
+                        busy = false
                     }
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        LabeledValue("выучено", "${o.learned}")
-                        LabeledValue("сегодня", "${o.reviewsToday}")
-                        LabeledValue("серия, дней", "${o.streak}")
-                    }
-                    Text("Неделя", style = MaterialTheme.typography.labelLarge)
-                    BarChart(o.week, LangColors.of(spec.code))
                 }
             }
-            Button(onClick = { nav.navigate(Routes.review(spec.code)) }, enabled = o.due > 0, modifier = Modifier.fillMaxWidth()) {
-                ButtonContent(Icons.Filled.PlayArrow, if (o.due > 0) "Начать повторение (${o.due})" else "Сейчас нечего повторять")
-            }
-            FilledTonalButton(onClick = { nav.navigate(Routes.learn(spec.code)) }, enabled = o.newLeftToday > 0, modifier = Modifier.fillMaxWidth()) {
-                ButtonContent(
-                    Icons.Filled.School,
-                    when {
-                        o.newLeftToday > 0 -> "Учить новые слова (${o.newLeftToday} из ${o.newLimit} на сегодня)"
-                        o.newAvailable == 0 -> "Новых слов нет — добавьте или импортируйте"
-                        else -> "Норма новых слов на сегодня выполнена"
-                    },
-                )
-            }
-            OutlinedButton(onClick = { nav.navigate(Routes.dictionary(spec.code)) }, modifier = Modifier.fillMaxWidth()) {
-                ButtonContent(Icons.AutoMirrored.Filled.MenuBook, "Мой словарь")
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = { nav.navigate(Routes.add(spec.code)) }, modifier = Modifier.weight(1f)) {
-                    ButtonContent(Icons.Filled.Add, "Слово")
-                }
-                OutlinedButton(onClick = { nav.navigate(Routes.bulk(spec.code)) }, modifier = Modifier.weight(1f)) {
-                    ButtonContent(Icons.AutoMirrored.Filled.PlaylistAdd, "Списком")
-                }
-            }
-            OutlinedButton(onClick = { nav.navigate(Routes.import(spec.code)) }, modifier = Modifier.fillMaxWidth()) {
-                ButtonContent(Icons.Filled.ImportExport, "Импорт и экспорт")
+            SoftCard(padding = 8.dp) {
+                Item(Icons.AutoMirrored.Filled.MenuBook, Palette.Ocean, "Мой словарь", "${o.total} карточек") { nav.navigate(Routes.dictionary(course.id)) }
+                Item(Icons.Filled.Add, Palette.Mint, "Добавить слово", "С переводом, примером и заметками") { nav.navigate(Routes.add(course.id)) }
+                Item(Icons.AutoMirrored.Filled.PlaylistAdd, Palette.Violet, "Добавить списком", "Много слов за раз") { nav.navigate(Routes.bulk(course.id)) }
+                Item(Icons.Filled.ImportExport, Palette.Sun, "Импорт и экспорт", spec.fileName) { nav.navigate(Routes.import(course.id)) }
             }
         }
     }
 }
+
+@Composable
+private fun Item(icon: ImageVector, color: androidx.compose.ui.graphics.Color, title: String, subtitle: String, onClick: () -> Unit) =
+    MenuRow(icon, color, title, subtitle, onClick)
 
 @Composable
 fun ButtonContent(icon: ImageVector, text: String) {

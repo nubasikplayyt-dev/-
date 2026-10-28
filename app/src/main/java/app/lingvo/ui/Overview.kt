@@ -93,27 +93,6 @@ object OverviewCalculator {
     fun needsAttention(list: List<LanguageOverview>): LanguageOverview? =
         list.filter { it.due > 0 }.maxWithOrNull(compareBy<LanguageOverview> { it.due }.thenBy { it.overdueMs })
 
-    data class Achievement(val title: String, val description: String, val unlocked: Boolean)
-
-    fun achievements(all: List<LanguageOverview>, logs: List<ReviewLogEntity>, zone: ZoneId, today: LocalDate): List<Achievement> {
-        val streak = Streaks.current(Streaks.days(logs.map { it.reviewedAt }, zone), today)
-        val longest = Streaks.longest(Streaks.days(logs.map { it.reviewedAt }, zone))
-        val reviews = logs.size
-        val mastered = all.sumOf { it.mastered }
-        val learned = all.sumOf { it.learned }
-        return listOf(
-            Achievement("Первый шаг", "Первое повторение", reviews >= 1),
-            Achievement("Три дня подряд", "Серия из 3 дней", maxOf(streak, longest) >= 3),
-            Achievement("Неделя", "Серия из 7 дней", maxOf(streak, longest) >= 7),
-            Achievement("Месяц", "Серия из 30 дней", maxOf(streak, longest) >= 30),
-            Achievement("Сотня", "100 повторений", reviews >= 100),
-            Achievement("Тысяча", "1000 повторений", reviews >= 1000),
-            Achievement("Крепкая память", "50 слов хорошо запоминаются", learned >= 50),
-            Achievement("Полиглот", "По 20 устойчиво усвоенных слов в двух языках", all.count { it.mastered >= 20 } >= 2),
-            Achievement("Мастер", "100 устойчиво усвоенных слов", mastered >= 100),
-        )
-    }
-
     /** Карта активности: количество повторений по дням за последние [days] дней. */
     fun activity(logs: List<ReviewLogEntity>, zone: ZoneId, today: LocalDate, days: Int): List<DayCount> {
         val byDay = logs.groupBy { Instant.ofEpochMilli(it.reviewedAt).atZone(zone).toLocalDate() }

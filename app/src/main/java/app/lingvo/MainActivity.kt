@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import app.lingvo.notify.Notifications
 import app.lingvo.ui.LingvoNavHost
 import app.lingvo.ui.theme.LingvoTheme
@@ -28,7 +30,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         handleIntent(intent)
         setContent {
-            LingvoTheme {
+            val settings by container.settings.flow.collectAsState(initial = null)
+            LingvoTheme(settings?.theme ?: app.lingvo.data.ThemeMode.LIGHT) {
                 LingvoNavHost(
                     container = container,
                     pendingRoute = pendingRoute,

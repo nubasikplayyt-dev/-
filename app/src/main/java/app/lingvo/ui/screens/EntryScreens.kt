@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import app.lingvo.AppContainer
-import app.lingvo.core.Languages
 import app.lingvo.core.Rating
 import app.lingvo.core.StatusClassifier
 import app.lingvo.core.VocabEntry
@@ -77,7 +76,7 @@ fun EntryScreen(container: AppContainer, nav: NavHostController, id: String) {
         }
         return
     }
-    val spec = Languages.byCode(c.entry.language) ?: Languages.SPANISH
+    val spec = app.lingvo.ui.rememberCourseSpec(container, c.entry.language) ?: app.lingvo.core.LanguageSpec.forLanguage(c.entry.language)
 
     if (editing) {
         EditEntry(container, c.entry, onDone = { editing = false })
@@ -126,10 +125,18 @@ fun EntryScreen(container: AppContainer, nav: NavHostController, id: String) {
                 Text("История ответов", style = MaterialTheme.typography.titleMedium)
                 val dtf = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
                 logs.takeLast(15).reversed().forEach {
-                    Text("${dtf.format(Date(it.reviewedAt))} — ${Rating.of(it.rating).labelRu}", style = MaterialTheme.typography.bodySmall)
+                    Text("${dtf.format(Date(it.reviewedAt))} — ${app.lingvo.core.Answer.of(Rating.of(it.rating)).labelRu}", style = MaterialTheme.typography.bodySmall)
                 }
             }
             HorizontalDivider()
+            if (!c.state.suspended) {
+                app.lingvo.ui.components.BigActionButton(
+                    "Повторить это слово", app.lingvo.ui.theme.LocalGradients.current.sunrise,
+                    subtitle = "Оно станет первым в занятии курса", icon = androidx.compose.material.icons.Icons.Filled.PlayArrow,
+                ) {
+                    scope.launch { repo.queueWord(c.id)?.let { course -> nav.navigate(app.lingvo.ui.Routes.review(course)) } }
+                }
+            }
             OutlinedButton(onClick = {
                 scope.launch { repo.setSuspended(c.id, !c.state.suspended) }
             }, modifier = Modifier.fillMaxWidth()) { Text(if (c.state.suspended) "Вернуть в повторения" else "Приостановить карточку") }
@@ -170,7 +177,7 @@ fun ConfirmDialog(title: String, text: String, confirmText: String, onConfirm: (
 
 @Composable
 private fun EditEntry(container: AppContainer, entry: VocabEntry, onDone: () -> Unit) {
-    val spec = Languages.byCode(entry.language) ?: Languages.SPANISH
+    val spec = app.lingvo.ui.rememberCourseSpec(container, entry.language) ?: app.lingvo.core.LanguageSpec.forLanguage(entry.language)
     var draft by remember(entry.id) { mutableStateOf(EntryDraft.from(entry)) }
     var dupes by remember { mutableStateOf<List<VocabEntry>>(emptyList()) }
     val scope = rememberCoroutineScope()
@@ -218,7 +225,7 @@ fun DuplicateDialog(dupes: List<VocabEntry>, onKeep: () -> Unit, onCancel: () ->
 
 @Composable
 fun AddEntryScreen(container: AppContainer, nav: NavHostController, lang: String) {
-    val spec = Languages.byCode(lang) ?: Languages.SPANISH
+    val spec = app.lingvo.ui.rememberCourseSpec(container, lang) ?: run { Centered { CircularProgressIndicator() }; return }
     var draft by remember { mutableStateOf(EntryDraft()) }
     var dupes by remember { mutableStateOf<List<VocabEntry>>(emptyList()) }
     var added by remember { mutableStateOf(0) }
@@ -255,15 +262,16 @@ fun AddEntryScreen(container: AppContainer, nav: NavHostController, lang: String
 
 @Composable
 fun BulkAddScreen(container: AppContainer, nav: NavHostController, lang: String) {
-    val spec = Languages.byCode(lang) ?: Languages.SPANISH
+    val spec = app.lingvo.ui.rememberCourseSpec(container, lang) ?: run { Centered { CircularProgressIndicator() }; return }
     var text by rememberSaveable { mutableStateOf("") }
     var tags by rememberSaveable { mutableStateOf("") }
     var result by remember { mutableStateOf<String?>(null) }
     var busy by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val example = if (spec.code == "de")
+    val example = if (spec.languageCode == "de")
         "die Voraussetzung — предпосылка | Das ist eine Voraussetzung. | Это условие.\neine Entscheidung treffen — принимать решение"
-    else "la cita — встреча | Tengo una cita a las tres. | У меня встреча в три.\ndarse cuenta de — осознавать"
+    else if (spec.languageCode == "es") "la cita — встреча | Tengo una cita a las tres. | У меня встреча в три.\ndarse cuenta de — осознавать"
+    else "слово — перевод | пример | перевод примера\nустойчивое выражение — перевод"
 
     Scaffold(topBar = { BackTopBar("Список слов · ${spec.flag}", onBack = { nav.popBackStack() }) }) { padding ->
         Column(

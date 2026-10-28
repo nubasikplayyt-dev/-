@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import app.lingvo.core.CEFR_LEVELS
 import app.lingvo.core.Categories
 import app.lingvo.core.LanguageSpec
-import app.lingvo.core.Languages
 import app.lingvo.core.Normalizer
 import app.lingvo.core.PartsOfSpeech
 import app.lingvo.core.VocabEntry
@@ -83,12 +82,12 @@ data class EntryDraft(
 
 @Composable
 fun EntryForm(spec: LanguageSpec, draft: EntryDraft, onChange: (EntryDraft) -> Unit, modifier: Modifier = Modifier) {
-    val isGerman = spec.code == Languages.GERMAN.code
+    val hasArticles = spec.articles.isNotEmpty()
     Column(modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Field("${spec.flag} Слово или выражение *", draft.term, { onChange(draft.copy(term = it)) }, capitalize = false)
-        Field("Перевод на русский *", draft.translation, { onChange(draft.copy(translation = it)) })
+        Field("Перевод *", draft.translation, { onChange(draft.copy(translation = it)) })
         if (spec.articles.isNotEmpty()) {
-            Text(if (isGerman) "Артикль (для существительных)" else "Артикль", style = MaterialTheme.typography.labelLarge)
+            Text("Артикль (для существительных)", style = MaterialTheme.typography.labelLarge)
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState())) {
                 (listOf("") + spec.articles.toList()).forEach { a ->
                     androidx.compose.material3.FilterChip(
@@ -99,7 +98,7 @@ fun EntryForm(spec: LanguageSpec, draft: EntryDraft, onChange: (EntryDraft) -> U
                 }
             }
         }
-        if (isGerman || draft.plural.isNotEmpty()) {
+        if (hasArticles || draft.plural.isNotEmpty()) {
             Field("Множественное число", draft.plural, { onChange(draft.copy(plural = it)) })
         }
         FilterDropdown(
@@ -122,8 +121,8 @@ fun EntryForm(spec: LanguageSpec, draft: EntryDraft, onChange: (EntryDraft) -> U
             }
         }
         Field("Устойчивые сочетания (по одному в строке)", draft.collocations, { onChange(draft.copy(collocations = it)) }, singleLine = false)
-        Field(if (isGerman) "Грамматика (управление, падеж, предлоги)" else "Грамматика", draft.grammarNotes, { onChange(draft.copy(grammarNotes = it)) }, singleLine = false)
-        if (!isGerman) Field("Где употребляется (регион)", draft.regionalUsage, { onChange(draft.copy(regionalUsage = it)) })
+        Field("Грамматика (управление, падеж, формы)", draft.grammarNotes, { onChange(draft.copy(grammarNotes = it)) }, singleLine = false)
+        Field("Где употребляется (регион, стиль)", draft.regionalUsage, { onChange(draft.copy(regionalUsage = it)) })
         Field("Личные заметки", draft.notes, { onChange(draft.copy(notes = it)) }, singleLine = false)
     }
 }

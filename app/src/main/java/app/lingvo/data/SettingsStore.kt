@@ -1,6 +1,7 @@
 package app.lingvo.data
 
 import android.content.Context
+import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
@@ -8,7 +9,8 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import app.lingvo.core.Languages
+import app.lingvo.core.AppIcons
+import app.lingvo.core.DailyStreak
 import app.lingvo.core.ReminderConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -19,16 +21,23 @@ import java.time.DayOfWeek
 import java.time.LocalTime
 
 enum class Direction(val labelRu: String) {
-    TARGET_TO_RU("Изучаемый → русский"),
-    RU_TO_TARGET("Русский → изучаемый"),
-    MIXED("Смешанно"),
+    TARGET_TO_RU("Слово → перевод"),
+    RU_TO_TARGET("Перевод → слово"),
+    MIXED("Вперемешку"),
 }
 
 enum class CapsuleContent(val labelRu: String) {
-    SESSION("Текущая сессия"),
-    BOTH_QUEUES("Очереди обоих языков"),
+    SESSION("Текущее занятие"),
+    BOTH_QUEUES("Очереди всех курсов"),
 }
 
+enum class ThemeMode(val labelRu: String) {
+    LIGHT("Светлая"),
+    DARK("Тёмная"),
+    SYSTEM("Как в системе"),
+}
+
+/** Настройки одного курса. */
 data class LanguageSettings(
     val newPerDay: Int = 10,
     val direction: Direction = Direction.MIXED,
@@ -36,7 +45,10 @@ data class LanguageSettings(
 )
 
 data class AppSettings(
-    val languages: Map<String, LanguageSettings> = Languages.all.associate { it.code to LanguageSettings() },
+    /** Курс → настройки. Отсутствующий курс получает значения по умолчанию. */
+    val languages: Map<String, LanguageSettings> = emptyMap(),
+    val dailyGoal: Int = DailyStreak.DEFAULT_GOAL,
+    val activeCourseId: String = "",
     val autoSpeak: Boolean = false,
     val reminder: ReminderConfig = ReminderConfig(),
     val combineReminders: Boolean = true,
@@ -47,20 +59,32 @@ data class AppSettings(
     val capsuleContent: CapsuleContent = CapsuleContent.SESSION,
     val animations: Boolean = true,
     val motivation: Boolean = true,
+    val theme: ThemeMode = ThemeMode.LIGHT,
+    val favoriteCreature: String = "",
+    val appIcon: String = AppIcons.DEFAULT,
+    /** Сколько раз пользователь слушал произношение (для достижения «Чуткое ухо»). */
+    val listens: Int = 0,
     val onboardingDone: Boolean = false,
     /** Последняя HTTPS-ссылка на словарь (например, raw-файл в GitHub). */
     val importUrl: String = "",
 ) {
     fun lang(code: String): LanguageSettings = languages[code] ?: LanguageSettings()
+
+    fun withLang(code: String, f: (LanguageSettings) -> LanguageSettings) = copy(languages = languages + (code to f(lang(code))))
 }
 
 private val Context.dataStore by preferencesDataStore(name = "settings")
 
 class SettingsStore(private val context: Context) {
     private object K {
-        fun newPerDay(code: String) = intPreferencesKey("new_per_day_$code")
-        fun direction(code: String) = stringPreferencesKey("direction_$code")
-        fun remind(code: String) = booleanPreferencesKey("remind_$code")
+        const val NEW_PER_DAY = "new_per_day_"
+        const val DIRECTION = "direction_"
+        const val REMIND = "remind_"
+        fun newPerDay(code: String) = intPreferencesKey(NEW_PER_DAY + code)
+        fun direction(code: String) = stringPreferencesKey(DIRECTION + code)
+        fun remind(code: String) = booleanPreferencesKey(REMIND + code)
+        val dailyGoal = intPreferencesKey("daily_goal")
+        val activeCourse = stringPreferencesKey("active_course")
         val autoSpeak = booleanPreferencesKey("auto_speak")
         val remindersEnabled = booleanPreferencesKey("reminders_enabled")
         val reminderTimes = stringPreferencesKey("reminder_times")
@@ -76,8 +100,15 @@ class SettingsStore(private val context: Context) {
         val capsuleContent = stringPreferencesKey("capsule_content")
         val animations = booleanPreferencesKey("animations")
         val motivation = booleanPreferencesKey("motivation")
+        val theme = stringPreferencesKey("theme")
+        val favoriteCreature = stringPreferencesKey("favorite_creature")
+        val appIcon = stringPreferencesKey("app_icon")
+        val listens = intPreferencesKey("listens")
         val onboarding = booleanPreferencesKey("onboarding_done")
         val importUrl = stringPreferencesKey("import_url")
+
+        /** Числовые ключи — для восстановления из резервной копии. */
+        fun isInt(name: String) = name.startsWith(NEW_PER_DAY) || name == "daily_goal" || name == "listens"
     }
 
     val flow: Flow<AppSettings> = context.dataStore.data
@@ -87,23 +118,29 @@ class SettingsStore(private val context: Context) {
     suspend fun current(): AppSettings = flow.first()
 
     private fun read(p: Preferences): AppSettings {
-        val defaults = AppSettings()
+        val d = AppSettings()
+        val names = p.asMap().keys.map { it.name }
+        val courseIds = names.mapNotNull { n ->
+            listOf(K.NEW_PER_DAY, K.DIRECTION, K.REMIND).firstOrNull { n.startsWith(it) }?.let { n.removePrefix(it) }
+        }.toSet()
         return AppSettings(
-            languages = Languages.all.associate { spec ->
-                spec.code to LanguageSettings(
-                    newPerDay = p[K.newPerDay(spec.code)] ?: 10,
-                    direction = p[K.direction(spec.code)]?.let { runCatching { Direction.valueOf(it) }.getOrNull() } ?: Direction.MIXED,
-                    remindersEnabled = p[K.remind(spec.code)] ?: true,
+            languages = courseIds.associateWith { id ->
+                LanguageSettings(
+                    newPerDay = p[K.newPerDay(id)] ?: 10,
+                    direction = p[K.direction(id)]?.let { runCatching { Direction.valueOf(it) }.getOrNull() } ?: Direction.MIXED,
+                    remindersEnabled = p[K.remind(id)] ?: true,
                 )
             },
+            dailyGoal = p[K.dailyGoal] ?: d.dailyGoal,
+            activeCourseId = p[K.activeCourse] ?: "",
             autoSpeak = p[K.autoSpeak] ?: false,
             reminder = ReminderConfig(
                 enabled = p[K.remindersEnabled] ?: true,
-                times = p[K.reminderTimes]?.let(::parseTimes)?.takeIf { it.isNotEmpty() } ?: defaults.reminder.times,
-                days = p[K.reminderDays]?.let(::parseDays) ?: defaults.reminder.days,
+                times = p[K.reminderTimes]?.let(::parseTimes)?.takeIf { it.isNotEmpty() } ?: d.reminder.times,
+                days = p[K.reminderDays]?.let(::parseDays) ?: d.reminder.days,
                 quietHoursEnabled = p[K.quietEnabled] ?: false,
-                quietStart = p[K.quietStart]?.let(::parseTime) ?: defaults.reminder.quietStart,
-                quietEnd = p[K.quietEnd]?.let(::parseTime) ?: defaults.reminder.quietEnd,
+                quietStart = p[K.quietStart]?.let(::parseTime) ?: d.reminder.quietStart,
+                quietEnd = p[K.quietEnd]?.let(::parseTime) ?: d.reminder.quietEnd,
             ),
             combineReminders = p[K.combine] ?: true,
             showWordInNotification = p[K.showWord] ?: false,
@@ -113,24 +150,38 @@ class SettingsStore(private val context: Context) {
             capsuleContent = p[K.capsuleContent]?.let { runCatching { CapsuleContent.valueOf(it) }.getOrNull() } ?: CapsuleContent.SESSION,
             animations = p[K.animations] ?: true,
             motivation = p[K.motivation] ?: true,
+            theme = p[K.theme]?.let { runCatching { ThemeMode.valueOf(it) }.getOrNull() } ?: ThemeMode.LIGHT,
+            favoriteCreature = p[K.favoriteCreature] ?: "",
+            appIcon = p[K.appIcon] ?: AppIcons.DEFAULT,
+            listens = p[K.listens] ?: 0,
             onboardingDone = p[K.onboarding] ?: false,
             importUrl = p[K.importUrl] ?: "",
         )
     }
 
     suspend fun update(transform: (AppSettings) -> AppSettings) {
-        context.dataStore.edit { prefs ->
-            val next = transform(read(prefs))
-            write(prefs, next)
+        context.dataStore.edit { prefs -> write(prefs, transform(read(prefs))) }
+    }
+
+    suspend fun incrementListens() {
+        context.dataStore.edit { it[K.listens] = (it[K.listens] ?: 0) + 1 }
+    }
+
+    /** Удаляет настройки курса (при удалении курса). */
+    suspend fun removeCourse(id: String) {
+        context.dataStore.edit {
+            it.remove(K.newPerDay(id)); it.remove(K.direction(id)); it.remove(K.remind(id))
         }
     }
 
-    private fun write(p: androidx.datastore.preferences.core.MutablePreferences, s: AppSettings) {
+    private fun write(p: MutablePreferences, s: AppSettings) {
         s.languages.forEach { (code, l) ->
             p[K.newPerDay(code)] = l.newPerDay
             p[K.direction(code)] = l.direction.name
             p[K.remind(code)] = l.remindersEnabled
         }
+        p[K.dailyGoal] = s.dailyGoal
+        p[K.activeCourse] = s.activeCourseId
         p[K.autoSpeak] = s.autoSpeak
         p[K.remindersEnabled] = s.reminder.enabled
         p[K.reminderTimes] = s.reminder.times.joinToString(",") { formatTime(it) }
@@ -146,6 +197,10 @@ class SettingsStore(private val context: Context) {
         p[K.capsuleContent] = s.capsuleContent.name
         p[K.animations] = s.animations
         p[K.motivation] = s.motivation
+        p[K.theme] = s.theme.name
+        p[K.favoriteCreature] = s.favoriteCreature
+        p[K.appIcon] = s.appIcon
+        p[K.listens] = s.listens
         p[K.onboarding] = s.onboardingDone
         p[K.importUrl] = s.importUrl
     }
@@ -155,11 +210,10 @@ class SettingsStore(private val context: Context) {
         context.dataStore.data.first().asMap().mapKeys { it.key.name }.mapValues { it.value.toString() }
 
     suspend fun importMap(values: Map<String, String>) {
-        // Типы ключей однозначны: new_per_day_* — числа, true/false — флаги, остальное — строки.
         context.dataStore.edit { p ->
             values.forEach { (name, raw) ->
                 when {
-                    name.startsWith("new_per_day_") -> raw.toIntOrNull()?.let { p[intPreferencesKey(name)] = it }
+                    K.isInt(name) -> raw.toIntOrNull()?.let { p[intPreferencesKey(name)] = it }
                     raw == "true" || raw == "false" -> p[booleanPreferencesKey(name)] = raw.toBoolean()
                     else -> p[stringPreferencesKey(name)] = raw
                 }

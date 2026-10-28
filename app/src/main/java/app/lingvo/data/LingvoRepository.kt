@@ -2,7 +2,21 @@ package app.lingvo.data
 
 import android.content.Context
 import androidx.room.withTransaction
+import app.lingvo.core.Answer
 import app.lingvo.core.BackupCodec
+import app.lingvo.core.BackupCourse
+import app.lingvo.core.BackupDay
+import app.lingvo.core.BackupUnlock
+import app.lingvo.core.Course
+import app.lingvo.core.DailyStreak
+import app.lingvo.core.DayRecord
+import app.lingvo.core.Evaluation
+import app.lingvo.core.GameEngine
+import app.lingvo.core.LanguageCatalog
+import app.lingvo.core.ProgressSnapshot
+import app.lingvo.core.StreakState
+import app.lingvo.core.UnlockKey
+import app.lingvo.core.UnlockKind
 import app.lingvo.core.BackupEntry
 import app.lingvo.core.BackupFile
 import app.lingvo.core.BackupHistory
@@ -15,7 +29,6 @@ import app.lingvo.core.ImportPlan
 import app.lingvo.core.ImportPlanner
 import app.lingvo.core.IsoTime
 import app.lingvo.core.LanguageSpec
-import app.lingvo.core.Languages
 import app.lingvo.core.LearningStatus
 import app.lingvo.core.LocalEntry
 import app.lingvo.core.Normalizer
@@ -46,7 +59,7 @@ data class Card(
     val id: String get() = entry.id
 }
 
-data class AnswerResult(val session: LearningSessionEntity, val nextDue: Long)
+data class AnswerResult(val session: LearningSessionEntity, val nextDue: Long, val day: DayRecord)
 
 class LingvoRepository(
     private val context: Context,
@@ -61,8 +74,12 @@ class LingvoRepository(
     private val logs = db.logs()
     private val sessions = db.sessions()
     private val imports = db.imports()
+    private val courses = db.courses()
+    private val unlocks = db.unlocks()
+    private val daily = db.daily()
 
     fun now(): Long = clock()
+    fun today(): Long = LocalDate.now(zone()).toEpochDay()
     fun startOfToday(): Long = LocalDate.now(zone()).atStartOfDay(zone()).toInstant().toEpochMilli()
 
     // ---------- Наблюдение ----------
@@ -82,6 +99,7 @@ class LingvoRepository(
     fun observeActiveSessions(): Flow<List<LearningSessionEntity>> = sessions.observeActive()
     fun observeSession(id: Long): Flow<LearningSessionEntity?> = sessions.observe(id)
     fun observeRecentSessions(): Flow<List<LearningSessionEntity>> = sessions.observeRecent(30)
+    fun observeAllSessions(): Flow<List<LearningSessionEntity>> = sessions.observeAll()
     fun observeImportHistory() = imports.observeRecent()
     fun observeTotalEntries(): Flow<Int> = entries.observeTotal()
 
@@ -106,6 +124,52 @@ class LingvoRepository(
     suspend fun lastActivity(): Long? = logs.lastActivity()
     suspend fun nextDue(language: String): Long? = reviews.nextDue(language, now())
     fun retrievability(state: ReviewStateEntity): Double = fsrs.retrievability(state.toSrs(), now())
+
+    // ---------- Курсы ----------
+
+    fun observeCourses(): Flow<List<Course>> = courses.observeAll().map { l -> l.map { it.toDomain() } }
+    suspend fun courses(): List<Course> = courses.all().map { it.toDomain() }
+    suspend fun course(id: String): Course? = courses.get(id)?.toDomain()
+    suspend fun spec(id: String): LanguageSpec? = course(id)?.spec
+
+    /**
+     * Создаёт курс. ID — код языка, если такой курс ещё не создан (совместимость со словарями
+     * spanish/german_vocabulary.json), иначе код с суффиксом.
+     */
+    suspend fun createCourse(
+        languageCode: String, name: String, flag: String, translationCode: String = "ru", translationName: String = "Русский",
+    ): Course = db.withTransaction {
+        val code = languageCode.trim().lowercase().ifEmpty { "xx" }.replace(Regex("[^a-z0-9-]"), "")
+        val existing = courses.all().map { it.id }.toSet()
+        val base = if (translationCode == "ru") code else "$code-$translationCode"
+        var id = base
+        var n = 2
+        while (id in existing) id = "$base-${n++}"
+        val course = Course(
+            id = id, languageCode = code, name = name.trim().ifEmpty { LanguageCatalog.infoOrCustom(code).nameRu },
+            flag = flag.ifBlank { LanguageCatalog.infoOrCustom(code).flag }, translationCode = translationCode,
+            translationName = translationName, createdAt = now(), sortOrder = existing.size,
+        )
+        courses.upsert(CourseEntity.from(course))
+        course
+    }
+
+    suspend fun updateCourse(course: Course) = courses.upsert(CourseEntity.from(course))
+
+    /** Удаляет курс вместе с его карточками и прогрессом. История ответов остаётся для общей статистики и серий. */
+    suspend fun deleteCourse(id: String) {
+        autoBackup("before-delete-course")
+        db.withTransaction {
+            entries.deleteByLanguage(id)
+            sessions.deleteByLanguage(id)
+            courses.delete(id)
+        }
+        settings.removeCourse(id)
+    }
+
+    /** Есть ли встроенный стартовый набор для курса (сейчас — испанский и немецкий с переводом на русский). */
+    fun hasStarter(spec: LanguageSpec): Boolean =
+        spec.translationCode == "ru" && runCatching { context.assets.open(spec.fileName).close() }.isSuccess
 
     // ---------- Редактирование словаря ----------
 
@@ -152,7 +216,7 @@ class LingvoRepository(
         db.withTransaction {
             val seen = HashSet<String>()
             for (line in parsed.lines) {
-                val article = if (spec.code == Languages.GERMAN.code) Normalizer.detectArticle(line.term, spec) else ""
+                val article = if (spec.articles.isNotEmpty()) Normalizer.detectArticle(line.term, spec) else ""
                 val key = Normalizer.entryKey(line.term, article)
                 if (!seen.add(key) || entries.byKey(spec.code, key).isNotEmpty()) { dupes += line.term; continue }
                 val t = now()
@@ -253,6 +317,11 @@ class LingvoRepository(
                     },
                     reviewHistory = logs.all().map { BackupHistory(it.entryId, it.language, it.rating, it.reviewedAt, it.stateBefore, it.elapsedMs) },
                     settings = settings.exportMap(),
+                    courses = courses.all().map {
+                        BackupCourse(it.id, it.languageCode, it.name, it.flag, it.translationCode, it.translationName, it.createdAt, it.sortOrder)
+                    },
+                    unlocks = unlocks.all().map { BackupUnlock(it.kind, it.itemId, it.unlockedAt, it.level) },
+                    dailyProgress = daily.all().map { BackupDay(it.epochDay, it.answers, it.remembered, it.goal, it.completedAt) },
                 )
             )
         }
@@ -267,6 +336,15 @@ class LingvoRepository(
             logs.deleteAll()
             reviews.deleteAll()
             entries.deleteAll()
+            courses.deleteAll()
+            unlocks.deleteAll()
+            daily.deleteAll()
+            courses.upsertAll(BackupCodec.coursesOf(backup).map {
+                CourseEntity(it.id, it.languageCode, it.name, it.flag, it.translationCode, it.translationName, it.createdAt, it.sortOrder)
+            })
+            // Полученное ранее не отнимается: анимации уже были показаны.
+            unlocks.upsertAll(backup.unlocks.map { UnlockEntity(it.kind, it.itemId, it.unlockedAt, it.level, seen = true) })
+            daily.upsertAll(backup.dailyProgress.map { DailyProgressEntity(it.epochDay, it.answers, it.remembered, it.goal, it.completedAt) })
             entries.insert(backup.entries.map {
                 VocabularyEntryEntity(
                     id = it.id, language = it.language, term = it.term, termKey = Normalizer.entryKey(it.term, it.article),
@@ -291,6 +369,8 @@ class LingvoRepository(
             })
         }
         if (backup.settings.isNotEmpty()) settings.importMap(backup.settings)
+        if (backup.dailyProgress.isEmpty()) rebuildDailyFromLogs()
+        evaluateWorld()
         return backup.entries.size
     }
 
@@ -359,15 +439,23 @@ class LingvoRepository(
         return toCards(listOf(EntryWithState(e, st)), recentRatingsByEntry(entryId)).first()
     }
 
-    /** Предпросмотр следующего интервала для каждой оценки (подписи на кнопках). */
-    suspend fun previewIntervals(entryId: String): Map<Rating, Long> {
+    /** Предпросмотр следующего интервала для обеих кнопок. */
+    suspend fun previewIntervals(entryId: String): Map<Answer, Long> {
         val st = reviews.get(entryId) ?: return emptyMap()
         val t = now()
-        return Rating.entries.associateWith { fsrs.review(st.toSrs(), it, t).due - t }
+        return Answer.entries.associateWith { fsrs.review(st.toSrs(), it, t).due - t }
     }
 
-    /** Ответ сохраняется сразу: состояние, история и позиция сессии — в одной транзакции. */
-    suspend fun answer(sessionId: Long, entryId: String, rating: Rating): AnswerResult = db.withTransaction {
+    /**
+     * Ответ «Помню»/«Не помню» сохраняется сразу: состояние FSRS, история, позиция сессии и прогресс
+     * дня — в одной транзакции.
+     */
+    suspend fun answer(sessionId: Long, entryId: String, answer: Answer): AnswerResult {
+        val goal = settings.current().dailyGoal
+        return db.withTransaction { answerInTransaction(sessionId, entryId, answer.rating, goal) }
+    }
+
+    private suspend fun answerInTransaction(sessionId: Long, entryId: String, rating: Rating, goal: Int): AnswerResult {
         val t = now()
         val session = sessions.get(sessionId) ?: error("Сессия не найдена")
         val st = reviews.get(entryId) ?: error("Карточка не найдена")
@@ -392,7 +480,34 @@ class LingvoRepository(
             finishedAt = if (progress.isFinished) t else null,
         )
         sessions.update(updated)
-        AnswerResult(updated, after.due)
+        val todayDay = today()
+        val day = DailyStreak.record(daily.get(todayDay)?.toDomain(), todayDay, goal, rating != Rating.AGAIN, t)
+        daily.upsert(DailyProgressEntity.from(day))
+        return AnswerResult(updated, after.due, day)
+    }
+
+    /**
+     * Повторить конкретное слово: оно ставится первым в очередь занятия курса
+     * (текущее занятие продолжается, ничего не теряется).
+     */
+    suspend fun queueWord(entryId: String): String? = db.withTransaction {
+        val st = reviews.get(entryId) ?: return@withTransaction null
+        val t = now()
+        if (st.introducedAt == null) reviews.upsert(st.copy(introducedAt = t, due = t))
+        val active = sessions.active(st.language)
+        if (active != null) {
+            val ids = SessionProgress.decodeQueue(active.queue).filter { it != entryId }
+            sessions.update(active.copy(queue = SessionProgress.encodeQueue(listOf(entryId) + ids),
+                total = active.done + ids.size + 1, updatedAt = t))
+        } else {
+            sessions.insert(
+                LearningSessionEntity(
+                    language = st.language, queue = entryId, done = 0, total = 1, correct = 0,
+                    startedAt = t, updatedAt = t, finishedAt = null, status = SessionStatus.ACTIVE,
+                )
+            )
+        }
+        st.language
     }
 
     /** Завершение сессии не отменяет уже сохранённые ответы — оставшиеся карточки просто ждут следующего раза. */
@@ -402,6 +517,63 @@ class LingvoRepository(
     }
 
     suspend fun activeSessions() = sessions.allActive()
+
+    // ---------- Серии, достижения, карта, существа ----------
+
+    fun observeDays(): Flow<List<DayRecord>> = daily.observeAll().map { l -> l.map { it.toDomain() } }
+    fun observeUnlocks(): Flow<List<UnlockEntity>> = unlocks.observeAll()
+
+    suspend fun streak(): StreakState = DailyStreak.state(daily.all().map { it.toDomain() }, today(), settings.current().dailyGoal)
+
+    /** Изменение цели: если сегодня уже ответов достаточно — день засчитывается сразу. */
+    suspend fun setDailyGoal(goal: Int) {
+        settings.update { it.copy(dailyGoal = goal) }
+        db.withTransaction {
+            DailyStreak.applyGoal(daily.get(today())?.toDomain(), goal, now())?.let { daily.upsert(DailyProgressEntity.from(it)) }
+        }
+        evaluateWorld()
+    }
+
+    /** Восстанавливает дневной прогресс по истории ответов (копии старой версии без серий). */
+    suspend fun rebuildDailyFromLogs() = db.withTransaction {
+        val goal = DailyStreak.DEFAULT_GOAL
+        logs.all().groupBy { java.time.Instant.ofEpochMilli(it.reviewedAt).atZone(zone()).toLocalDate().toEpochDay() }
+            .forEach { (day, l) ->
+                var rec: DayRecord? = null
+                l.sortedBy { it.reviewedAt }.forEach { rec = DailyStreak.record(rec, day, goal, it.rating > 1, it.reviewedAt) }
+                rec?.let { daily.upsert(DailyProgressEntity.from(it)) }
+            }
+    }
+
+    /** Реальные показатели пользователя для достижений, карты и существ. */
+    suspend fun snapshot(): ProgressSnapshot = withContext(Dispatchers.Default) {
+        ProgressCalculator.snapshot(
+            cards = toCards(entries.allWithState(), recentRatingsByEntry()),
+            logs = logs.all(),
+            sessions = sessions.all(),
+            courseIds = courses.all().map { it.id }.toSet(),
+            streak = streak(),
+            listens = settings.current().listens,
+        )
+    }
+
+    /**
+     * Проверяет, что открыто, и сохраняет новое. Полученное никогда не отнимается.
+     * Вызывается после ответов, завершения занятия, импорта, добавления слов и при запуске.
+     */
+    suspend fun evaluateWorld(): Evaluation {
+        val owned = unlocks.all().associate { UnlockKey(UnlockKind.valueOf(it.kind), it.itemId) to it.level }
+        val result = GameEngine.evaluate(snapshot(), owned)
+        val t = now()
+        db.withTransaction {
+            unlocks.insertIgnore(result.unlocked.map { UnlockEntity(it.key.kind.name, it.key.id, t, it.level, seen = false) })
+            result.levelUps.forEach { (id, level) -> unlocks.setCreatureLevel(id, level) }
+        }
+        return result
+    }
+
+    suspend fun markSeen(kind: UnlockKind, id: String) = unlocks.markSeen(kind.name, id)
+    suspend fun markAllSeen() = unlocks.markAllSeen()
 
     companion object {
         fun isNewState(state: ReviewStateEntity) = state.introducedAt == null && state.state == CardState.NEW.name

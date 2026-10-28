@@ -27,7 +27,17 @@ import kotlin.math.abs
  * Нажатие — открыть тренировку, перетаскивание — переместить, долгое нажатие — скрыть.
  */
 class CapsuleOverlay(private val context: Context) {
-    data class Model(val sessionId: Long, val language: String, val label: String, val progress: Float, val animate: Boolean)
+    data class Model(
+        val sessionId: Long,
+        val language: String,
+        val label: String,
+        val progress: Float,
+        val animate: Boolean,
+        val streak: Int = 0,
+        /** Цвета выбранного существа — капсула окрашивается в них. */
+        val colorA: Int = 0xFF5B3FD1.toInt(),
+        val colorB: Int = 0xFF2F6BFF.toInt(),
+    )
 
     private val wm = context.getSystemService(WindowManager::class.java)
     private var view: CapsuleView? = null
@@ -132,12 +142,25 @@ class CapsuleOverlay(private val context: Context) {
         }
         private val rect = RectF()
 
+        private val dot = Paint(Paint.ANTI_ALIAS_FLAG)
+
         private fun applyTheme() {
-            val night = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-            bg.color = if (night) 0xF0202124.toInt() else 0xF0111111.toInt()
+            val m = model
+            // Яркий градиент в цветах существа-спутника; текст белый в любой теме.
+            bg.shader = android.graphics.LinearGradient(
+                0f, 0f, width.coerceAtLeast(1).toFloat(), 0f,
+                intArrayOf(0xFF2B2F6B.toInt(), m?.colorA ?: 0xFF5B3FD1.toInt(), m?.colorB ?: 0xFF2F6BFF.toInt()),
+                null, android.graphics.Shader.TileMode.CLAMP,
+            )
             text.color = 0xFFFFFFFF.toInt()
-            track.color = 0x33FFFFFF
-            bar.color = if (night) 0xFF8AB4F8.toInt() else 0xFF7CC4FF.toInt()
+            track.color = 0x44FFFFFF
+            bar.color = 0xFFFFD166.toInt()
+            dot.color = 0xFFFFD166.toInt()
+        }
+
+        override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+            super.onSizeChanged(w, h, oldw, oldh)
+            applyTheme()
         }
 
         fun update(m: Model) {
@@ -165,7 +188,7 @@ class CapsuleOverlay(private val context: Context) {
         }
 
         override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-            val label = model?.label.orEmpty()
+            val label = model?.let { it.label + if (it.streak > 0) "  🔥${it.streak}" else "" }.orEmpty()
             val w = (text.measureText(label) + 36 * density).toInt().coerceAtLeast((120 * density).toInt())
             val h = (text.textSize + 26 * density).toInt()
             setMeasuredDimension(w, h)
@@ -177,7 +200,7 @@ class CapsuleOverlay(private val context: Context) {
             val r = height / 2f
             canvas.drawRoundRect(rect, r, r, bg)
             val baseline = height / 2f - (text.descent() + text.ascent()) / 2f - 2 * density
-            canvas.drawText(m.label, 18 * density, baseline, text)
+            canvas.drawText(m.label + if (m.streak > 0) "  🔥${m.streak}" else "", 18 * density, baseline, text)
             val barTop = height - 7 * density
             val left = 18 * density
             val right = width - 18 * density

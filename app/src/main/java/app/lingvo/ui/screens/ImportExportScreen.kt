@@ -67,7 +67,7 @@ import app.lingvo.IncomingImport
 import app.lingvo.core.BackupCodec
 import app.lingvo.core.ConflictPolicy
 import app.lingvo.core.ImportPlan
-import app.lingvo.core.Languages
+import app.lingvo.core.VocabularyJson
 import app.lingvo.core.ParsedVocabulary
 import app.lingvo.core.VocabularyFormatException
 import app.lingvo.data.UrlFetcher
@@ -108,6 +108,11 @@ fun ImportExportScreen(
     var pendingRestore by remember { mutableStateOf<Pair<String, String>?>(null) }
     var exportLang by remember { mutableStateOf<String?>(null) }
     var url by remember { mutableStateOf("") }
+    val courses = app.lingvo.ui.rememberAppState(container).value?.courses.orEmpty()
+    val specs = courses.map { it.spec }
+    fun specOf(id: String) = specs.firstOrNull { it.code == id }
+    /** Язык файла, для которого ещё нет курса, — предлагаем создать курс. */
+    var missingLanguage by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(Unit) { url = container.settings.current().importUrl }
     val history by remember(repo) { repo.observeImportHistory() }.collectAsStateWithLifecycle(initialValue = emptyList())
 
@@ -116,9 +121,22 @@ fun ImportExportScreen(
         scope.launch {
             busy = true
             try {
-                val p = withContext(Dispatchers.Default) { repo.parseVocabulary(text, lang?.let { Languages.require(it) }) }
+                missingLanguage = null
+                var target = lang?.let { specOf(it) }
+                if (target == null) {
+                    // «Авто»: курс по языку файла.
+                    val fileLang = VocabularyJson.peekLanguage(text)
+                        ?: throw VocabularyFormatException("Не удалось определить язык файла. Выберите курс вручную.")
+                    val matches = specs.filter { it.languageCode == fileLang }
+                    when {
+                        matches.size == 1 -> target = matches.first()
+                        matches.size > 1 -> throw VocabularyFormatException("Для этого языка несколько курсов — выберите нужный выше.")
+                        else -> { missingLanguage = fileLang; return@launch }
+                    }
+                }
+                val p = withContext(Dispatchers.Default) { repo.parseVocabulary(text, target) }
                 parsed = p
-                if (lang == null) lang = p.language.code
+                lang = p.language.code
                 plan = repo.planImport(p, policy)
             } catch (e: VocabularyFormatException) {
                 error = e.message
@@ -149,7 +167,7 @@ fun ImportExportScreen(
         val code = exportLang
         if (uri != null && code != null) scope.launch {
             try {
-                val json = repo.exportVocabulary(Languages.require(code))
+                val json = repo.exportVocabulary(specOf(code) ?: return@launch)
                 withContext(Dispatchers.IO) { context.contentResolver.openOutputStream(uri, "wt")!!.use { it.write(json.toByteArray(Charsets.UTF_8)) } }
                 toast("Словарь сохранён")
             } catch (e: Exception) { toast("Не удалось сохранить: ${e.message}") }
@@ -163,7 +181,7 @@ fun ImportExportScreen(
         val code = textExportLang
         if (uri != null && code != null) scope.launch {
             try {
-                val spec = Languages.require(code)
+                val spec = specOf(code) ?: return@launch
                 val bytes = withContext(Dispatchers.Default) {
                     TextExport.bytes(textFormat, spec, repo.entriesOf(spec), TextExportOptions(includeExamples, includeGrammar))
                 }
@@ -198,18 +216,29 @@ fun ImportExportScreen(
         ) {
             SectionTitle("Импорт словаря")
             Text(
-                "Файл spanish_vocabulary.json или german_vocabulary.json из Claude. Существующие карточки и прогресс сохраняются, " +
+                "JSON-словарь из Claude (например, spanish_vocabulary.json). Существующие карточки и прогресс сохраняются, " +
                     "повторный импорт не создаёт дубликатов, ничего не удаляется.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            val options = listOf<String?>(null) + Languages.all.map { it.code }
-            SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-                options.forEachIndexed { i, code ->
-                    SegmentedButton(
-                        selected = lang == code,
-                        onClick = { lang = code; rawText?.let { analyze(it, sourceName) } },
-                        shape = SegmentedButtonDefaults.itemShape(i, options.size),
-                    ) { Text(code?.let { Languages.require(it).let { s -> "${s.flag} ${s.nameRu}" } } ?: "Авто") }
+            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilterChip(lang == null, { lang = null; rawText?.let { analyze(it, sourceName) } }, { Text("Авто") })
+                courses.forEach { c ->
+                    FilterChip(lang == c.id, { lang = c.id; rawText?.let { analyze(it, sourceName) } }, { Text("${c.flag} ${c.name}") })
+                }
+            }
+            missingLanguage?.let { code ->
+                val info = app.lingvo.core.LanguageCatalog.infoOrCustom(code)
+                Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)) {
+                    Column(Modifier.padding(16.dp)) {
+                        Text("В файле словарь языка «${info.nameRu}», а такого курса ещё нет.")
+                        Button(onClick = {
+                            scope.launch {
+                                val c = repo.createCourse(info.code, info.nameRu, info.flag)
+                                lang = c.id; missingLanguage = null
+                                rawText?.let { analyze(it, sourceName) }
+                            }
+                        }) { Text("Создать курс ${info.flag} ${info.nameRu} и продолжить") }
+                    }
                 }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -284,7 +313,7 @@ fun ImportExportScreen(
                 "Экспорт содержит только слова (без истории повторений) — его можно отправить Claude для пополнения.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            Languages.all.forEach { spec ->
+            specs.forEach { spec ->
                 Text("${spec.flag} ${spec.nameRu}", style = MaterialTheme.typography.titleSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     OutlinedButton(onClick = { exportLang = spec.code; saveVocab.launch(spec.fileName) }, modifier = Modifier.weight(1f)) {
@@ -327,7 +356,7 @@ fun ImportExportScreen(
                 }
             }
             val exportOptions = TextExportOptions(includeExamples, includeGrammar)
-            Languages.all.forEach { spec ->
+            specs.forEach { spec ->
                 Text("${spec.flag} ${spec.nameRu}", style = MaterialTheme.typography.titleSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     OutlinedButton(onClick = {
@@ -388,7 +417,7 @@ fun ImportExportScreen(
                 SectionTitle("История импорта")
                 val df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
                 history.forEach { h ->
-                    val spec = Languages.byCode(h.language)
+                    val spec = specOf(h.language)
                     Text(
                         "${df.format(Date(h.importedAt))} ${spec?.flag.orEmpty()} ${h.sourceName}: +${h.added}, изменено ${h.updated}, " +
                             "без изменений ${h.unchanged}" + (if (h.skipped + h.errors > 0) ", пропущено ${h.skipped + h.errors}" else ""),

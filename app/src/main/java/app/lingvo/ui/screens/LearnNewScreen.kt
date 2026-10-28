@@ -36,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import app.lingvo.AppContainer
-import app.lingvo.core.Languages
 import app.lingvo.data.Card
 import app.lingvo.ui.Routes
 import app.lingvo.ui.components.BackTopBar
@@ -50,7 +49,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LearnNewScreen(container: AppContainer, nav: NavHostController, lang: String) {
-    val spec = Languages.byCode(lang) ?: Languages.SPANISH
+    val spec = app.lingvo.ui.rememberCourseSpec(container, lang) ?: run { Centered { CircularProgressIndicator() }; return }
     val repo = container.repository
     val scope = rememberCoroutineScope()
     val toast = rememberToast()

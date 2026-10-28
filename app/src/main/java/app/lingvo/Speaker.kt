@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import java.util.Locale
 
 /** Произношение через системный TextToSpeech. Если голоса нет — сообщает об этом, а не падает. */
-class Speaker(private val context: Context) {
+class Speaker(private val context: Context, private val onSpoken: () -> Unit = {}) {
     enum class Status { NOT_STARTED, READY, UNAVAILABLE }
 
     private var tts: TextToSpeech? = null
@@ -32,9 +32,10 @@ class Speaker(private val context: Context) {
         if (_status.value == Status.NOT_STARTED) return "Синтез речи ещё запускается, попробуйте через секунду."
         val result = engine.setLanguage(Locale.forLanguageTag(spec.ttsTag))
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-            return "Нет голоса для языка «${spec.nameRu}». Установите его в настройках «Синтез речи» Android."
+            return "Нет голоса для курса «${spec.nameRu}». Установите его в настройках «Синтез речи» Android."
         }
         engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, "lingvo-${text.hashCode()}")
+        onSpoken()
         return null
     }
 

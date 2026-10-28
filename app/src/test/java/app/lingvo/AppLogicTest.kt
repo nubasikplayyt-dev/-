@@ -111,6 +111,5 @@ class AppLogicTest {
         assertEquals(1, es.newAvailable)
         assertEquals(1, es.newLeftToday)
         assertEquals("de", OverviewCalculator.needsAttention(listOf(de, es))?.spec?.code)
-        assertTrue(OverviewCalculator.achievements(listOf(de, es), logs, zone, java.time.LocalDate.of(2027, 1, 15)).first().unlocked)
     }
 }
