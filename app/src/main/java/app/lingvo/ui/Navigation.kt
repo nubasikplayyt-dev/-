@@ -4,7 +4,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -146,15 +147,12 @@ fun LingvoNavHost(
     val destination = backStack?.destination
     val currentTab = Tab.entries.firstOrNull { tab -> destination?.hierarchy?.any { it.route == tab.route } == true }
 
+    Box(Modifier.fillMaxSize()) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
           Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            // Остров занятия — над вкладками на любом экране, кроме самого занятия и знакомства со словами.
-            if (destination?.route !in setOf(Routes.REVIEW, Routes.LEARN, Routes.ONBOARDING, null)) {
-                InAppIsland(container, nav, if (currentTab == null) Modifier.navigationBarsPadding() else Modifier)
-            }
             if (currentTab != null) NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
                 Tab.entries.forEach { tab ->
                     NavigationBarItem(
@@ -205,6 +203,10 @@ fun LingvoNavHost(
             composable(Routes.SETTINGS_APPEARANCE) { SettingsAppearanceScreen(container, nav) }
             composable(Routes.SETTINGS_DATA) { SettingsDataScreen(container, nav) }
         }
+    }
+    // Остров занятия — сверху по центру на любом экране, кроме самого занятия и знакомства со словами;
+    // нижнее меню не перекрывает.
+    if (destination?.route !in setOf(Routes.REVIEW, Routes.LEARN, Routes.ONBOARDING, null)) InAppIsland(container, nav)
     }
     // Праздничные окна для новых достижений, областей, существ и иконок — поверх любого экрана.
     if (currentTab != null || destination?.route == Routes.REVIEW) CelebrationHost(container, nav)

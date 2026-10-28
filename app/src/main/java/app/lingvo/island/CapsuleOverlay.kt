@@ -10,26 +10,27 @@ import android.graphics.Paint
 import android.graphics.PixelFormat
 import android.graphics.RectF
 import android.graphics.Typeface
-import android.text.TextUtils
 import android.text.TextPaint
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.WindowManager
-import android.view.animation.DecelerateInterpolator
+import android.view.animation.PathInterpolator
 import app.lingvo.MainActivity
 import app.lingvo.notify.Notifications
 import kotlin.math.abs
 
 /**
- * Плавающая капсула поверх других приложений (TYPE_APPLICATION_OVERLAY) — интерактивный остров:
- *  - свёрнута: существо, текущее слово, прогресс;
- *  - нажатие — раскрывается: перевод и кнопки «Не помню» / «Помню» (ответ сохраняется сразу);
- *  - нажатие на заголовок раскрытой капсулы — открыть занятие в приложении;
- *  - перетаскивание — переместить, долгое нажатие — скрыть до следующего занятия.
- * Требует разрешения «Поверх других приложений», которое пользователь включает сам.
- * Показывается только пока идёт занятие и приложение свёрнуто; без фонового сервиса.
+ * Остров поверх других приложений (TYPE_APPLICATION_OVERLAY) в стиле системного музыкального плеера.
+ *
+ * - Компактно: пилюля сверху по центру, поверх строки состояния — существо, курс, счётчик и тонкая полоса прогресса.
+ * - Тап или свайп вниз по пилюле — плавно раскрывается в карточку на том же месте: вопрос и «Не помню» / «Помню».
+ * - Свайп вверх, тап вне карточки или ответ — плавно сворачивается обратно.
+ * - Перетаскивания нет: позиция окна фиксирована и никогда не меняется.
+ * - Когда карточек больше нет — элемент плавно исчезает.
+ * Требует разрешения «Поверх других приложений»; показывается, пока идёт занятие и приложение свёрнуто.
  */
 class CapsuleOverlay(
     private val context: Context,
@@ -41,91 +42,91 @@ class CapsuleOverlay(
         val language: String,
         val word: String,
         val translation: String,
-        val progressLabel: String,
-        val progress: Float,
+        val courseTitle: String,
+        val done: Int,
+        val total: Int,
         val animate: Boolean,
         val creature: Bitmap?,
         val answers: Boolean,
-        /** Цвет существа-спутника — им окрашены прогресс и акценты. */
+        /** Цвет существа-спутника — им окрашена полоса прогресса. */
         val colorA: Int,
-    )
+    ) {
+        val progress: Float get() = if (total == 0) 0f else done.toFloat() / total
+    }
 
     private val wm = context.getSystemService(WindowManager::class.java)
-    private var view: CapsuleView? = null
-    private var dismissedSessionId: Long? = null
+    private var view: IslandView? = null
 
+    /** Показывает или обновляет остров. Новый остров всегда появляется свёрнутым. */
     fun show(model: Model) {
-        if (dismissedSessionId == model.sessionId) return
         if (!IslandController.canDrawOverlays(context)) return
         val v = view ?: runCatching { createView() }.getOrNull()?.also { view = it } ?: return
         v.update(model)
     }
 
+    /** Плавно скрывает остров (занятие закончилось или приложение открыто). */
     fun hide() {
-        view?.let { runCatching { wm.removeView(it) } }
+        val v = view ?: return
         view = null
-    }
-
-    fun dismissUntilNextSession() {
-        dismissedSessionId = view?.model?.sessionId
-        hide()
+        v.fadeOut { runCatching { wm.removeView(v) } }
     }
 
     private fun dp(v: Float) = v * context.resources.displayMetrics.density
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun createView(): CapsuleView {
-        val v = CapsuleView(context)
+    private fun createView(): IslandView {
+        val v = IslandView(context)
         val lp = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                // Касания вне острова уходят приложению под ним, а мы получаем ACTION_OUTSIDE — чтобы свернуться.
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
             PixelFormat.TRANSLUCENT,
         ).apply {
             gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-            // Ниже строки состояния и выреза камеры — системные элементы не перекрываются.
-            y = statusBarHeight() + dp(8f).toInt()
+            // Фиксированная позиция: сверху по центру, поверх строки состояния (как «остров» у выреза камеры).
+            x = 0
+            y = dp(6f).toInt()
+            layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
-        val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
-        var downX = 0f; var downY = 0f; var startX = 0; var startY = 0; var moved = false; var longFired = false
-        val longPress = Runnable { if (!moved) { longFired = true; dismissUntilNextSession() } }
+        val slop = ViewConfiguration.get(context).scaledTouchSlop
+        val swipe = dp(24f)
+        var downX = 0f; var downY = 0f; var gesture = false
+        // Только тап и вертикальный свайп; движения пальца НЕ двигают окно.
         v.setOnTouchListener { _, e ->
             when (e.actionMasked) {
-                MotionEvent.ACTION_DOWN -> {
-                    downX = e.rawX; downY = e.rawY; startX = lp.x; startY = lp.y; moved = false; longFired = false
-                    v.postDelayed(longPress, ViewConfiguration.getLongPressTimeout().toLong())
-                }
+                MotionEvent.ACTION_OUTSIDE -> v.collapse()
+                MotionEvent.ACTION_DOWN -> { downX = e.rawX; downY = e.rawY; gesture = false }
                 MotionEvent.ACTION_MOVE -> {
-                    val dx = e.rawX - downX; val dy = e.rawY - downY
-                    if (abs(dx) > touchSlop || abs(dy) > touchSlop) moved = true
-                    if (moved) {
-                        v.removeCallbacks(longPress)
-                        lp.x = startX + dx.toInt()
-                        lp.y = (startY + dy.toInt()).coerceIn(statusBarHeight(), context.resources.displayMetrics.heightPixels - v.height - dp(64f).toInt())
-                        runCatching { wm.updateViewLayout(v, lp) }
-                    }
+                    val dy = e.rawY - downY
+                    if (!gesture && dy < -swipe) { gesture = true; v.collapse() }
+                    else if (!gesture && dy > swipe) { gesture = true; v.expand() }
                 }
                 MotionEvent.ACTION_UP -> {
-                    v.removeCallbacks(longPress)
-                    if (!moved && !longFired) handleTap(v, e.x, e.y)
+                    val moved = abs(e.rawX - downX) > slop || abs(e.rawY - downY) > slop
+                    if (!gesture && !moved) handleTap(v, e.x, e.y)
                 }
-                MotionEvent.ACTION_CANCEL -> v.removeCallbacks(longPress)
             }
             true
         }
         v.contentDescription = "Остров занятия. Нажмите, чтобы ответить"
         wm.addView(v, lp)
+        v.fadeIn()
         return v
     }
 
-    private fun handleTap(v: CapsuleView, x: Float, y: Float) {
+    private fun handleTap(v: IslandView, x: Float, y: Float) {
         val m = v.model ?: return
         when (v.hit(x, y)) {
-            CapsuleView.Hit.FORGOT -> { v.collapse(); onAnswer(m.sessionId, m.entryId, false) }
-            CapsuleView.Hit.REMEMBERED -> { v.collapse(); onAnswer(m.sessionId, m.entryId, true) }
-            CapsuleView.Hit.HEADER -> if (v.expanded || !m.answers) openSession(m) else v.expand()
-            CapsuleView.Hit.NONE -> v.collapse()
+            IslandView.Hit.FORGOT -> { v.collapse(); onAnswer(m.sessionId, m.entryId, false) }
+            IslandView.Hit.REMEMBERED -> { v.collapse(); onAnswer(m.sessionId, m.entryId, true) }
+            IslandView.Hit.OPEN -> openSession(m)
+            IslandView.Hit.PILL -> if (m.answers) v.expand() else openSession(m)
+            IslandView.Hit.NONE -> v.collapse()
         }
     }
 
@@ -137,111 +138,161 @@ class CapsuleOverlay(
         )
     }
 
-    private fun statusBarHeight(): Int {
-        val id = context.resources.getIdentifier("status_bar_height", "dimen", "android")
-        return if (id > 0) context.resources.getDimensionPixelSize(id) else dp(24f).toInt()
-    }
-
-    /** Капсула рисуется вручную: тёмный «остров», существо слева, слово, прогресс, кнопки ответа. */
-    class CapsuleView(context: Context) : View(context) {
-        enum class Hit { HEADER, FORGOT, REMEMBERED, NONE }
+    /**
+     * Остров рисуется вручную. Размер, скругление и содержимое зависят от одной доли раскрытия [t] (0..1),
+     * которую плавно ведёт аниматор, — поэтому раскрытие и сворачивание согласованы, как у плеера.
+     */
+    class IslandView(context: Context) : View(context) {
+        enum class Hit { PILL, OPEN, FORGOT, REMEMBERED, NONE }
 
         var model: Model? = null
             private set
-        var expanded = false
-            private set
+        private var target = 0f
+        private var t = 0f
         private var shownProgress = 0f
-        private var animator: ValueAnimator? = null
+        private var expandAnim: ValueAnimator? = null
+        private var progressAnim: ValueAnimator? = null
         private val d = resources.displayMetrics.density
-        private val scale = resources.configuration.fontScale.coerceIn(1f, 1.3f)
-        private val bg = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xF2141320.toInt() }
+        private val fs = resources.configuration.fontScale.coerceIn(1f, 1.3f)
+        private val ease = PathInterpolator(0.2f, 0f, 0f, 1f) // «emphasized» из Material 3
+        private val bg = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xFA121118.toInt() }
         private val track = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0x33FFFFFF }
         private val bar = Paint(Paint.ANTI_ALIAS_FLAG)
         private val btn = Paint(Paint.ANTI_ALIAS_FLAG)
         private val title = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            textSize = 16f * scale * d; color = 0xFFFFFFFF.toInt(); typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            textSize = 13.5f * fs * d; color = 0xFFFFFFFF.toInt(); typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
         }
-        private val small = TextPaint(Paint.ANTI_ALIAS_FLAG).apply { textSize = 12.5f * scale * d; color = 0xCCFFFFFF.toInt() }
+        private val counter = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
+            textSize = 12.5f * fs * d; color = 0xCCFFFFFF.toInt(); typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            textAlign = Paint.Align.RIGHT
+        }
+        private val question = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
+            textSize = 24f * fs * d; color = 0xFFFFFFFF.toInt(); typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        }
+        private val hint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply { textSize = 13f * fs * d; color = 0x99FFFFFF.toInt() }
         private val btnText = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            textSize = 15f * scale * d; color = 0xFFFFFFFF.toInt(); typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            textSize = 15f * fs * d; color = 0xFFFFFFFF.toInt(); typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
             textAlign = Paint.Align.CENTER
         }
         private val rect = RectF()
         private val forgotRect = RectF()
         private val rememberedRect = RectF()
-        private val headerH get() = 56 * d * scale
-        private val bodyH get() = 104 * d * scale
+        private val openRect = RectF()
 
-        fun expand() { expanded = true; contentDescription = "Перевод: ${model?.translation}. Кнопки «Не помню» и «Помню»"; requestLayout(); invalidate() }
-        fun collapse() { if (expanded) { expanded = false; contentDescription = "Остров занятия. Нажмите, чтобы ответить"; requestLayout(); invalidate() } }
+        // Размеры пилюли и карточки.
+        private val pillW get() = 230 * d
+        private val pillH get() = 38 * d * fs
+        private val cardW get() = (360 * d).coerceAtMost(resources.displayMetrics.widthPixels - 16 * d)
+        private val cardH get() = 196 * d * fs
+
+        val expanded: Boolean get() = target == 1f
+
+        fun expand() = animateTo(1f)
+        fun collapse() = animateTo(0f)
+
+        private fun animateTo(value: Float) {
+            if (target == value) return
+            target = value
+            contentDescription = if (value == 1f) "Вопрос: ${model?.word}. Кнопки «Не помню» и «Помню». Свайп вверх — свернуть"
+            else "Остров занятия. Нажмите, чтобы ответить"
+            expandAnim?.cancel()
+            if (model?.animate == false) { t = value; requestLayout(); invalidate(); return }
+            expandAnim = ValueAnimator.ofFloat(t, value).apply {
+                duration = 380
+                interpolator = ease
+                addUpdateListener { t = it.animatedValue as Float; requestLayout(); invalidate() }
+                start()
+            }
+        }
+
+        fun fadeIn() {
+            alpha = 0f; scaleX = 0.85f; scaleY = 0.85f
+            animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(260).setInterpolator(ease).start()
+        }
+
+        fun fadeOut(end: () -> Unit) {
+            animate().alpha(0f).scaleX(0.85f).scaleY(0.85f).setDuration(260).setInterpolator(ease).withEndAction(end).start()
+        }
 
         fun hit(x: Float, y: Float): Hit = when {
-            expanded && forgotRect.contains(x, y) -> Hit.FORGOT
-            expanded && rememberedRect.contains(x, y) -> Hit.REMEMBERED
-            y <= headerH -> Hit.HEADER
+            t < 0.5f -> Hit.PILL
+            forgotRect.contains(x, y) -> Hit.FORGOT
+            rememberedRect.contains(x, y) -> Hit.REMEMBERED
+            openRect.contains(x, y) -> Hit.OPEN
             else -> Hit.NONE
         }
 
         fun update(m: Model) {
             val previous = model
             model = m
-            // Новая карточка — капсула снова свёрнута, перевод скрыт.
-            if (previous != null && previous.entryId != m.entryId) expanded = false
             bar.color = m.colorA
-            animator?.cancel()
-            if (m.animate && previous != null) {
-                animator = ValueAnimator.ofFloat(shownProgress, m.progress).apply {
-                    duration = 350
-                    interpolator = DecelerateInterpolator()
+            // После ответа — новая карточка: остров сворачивается, счётчик и полоса обновляются плавно.
+            if (previous != null && previous.entryId != m.entryId) collapse()
+            progressAnim?.cancel()
+            if (m.animate && previous != null && previous.progress != m.progress) {
+                progressAnim = ValueAnimator.ofFloat(shownProgress, m.progress).apply {
+                    duration = 420; interpolator = ease
                     addUpdateListener { shownProgress = it.animatedValue as Float; invalidate() }
                     start()
                 }
             } else shownProgress = m.progress
-            requestLayout()
-            invalidate()
+            requestLayout(); invalidate()
         }
 
+        private fun lerp(a: Float, b: Float) = a + (b - a) * t
+
         override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-            val w = (300 * d).toInt().coerceAtMost(resources.displayMetrics.widthPixels - (24 * d).toInt())
-            val h = (headerH + if (expanded) bodyH else 0f).toInt()
-            setMeasuredDimension(w, h)
+            setMeasuredDimension(lerp(pillW, cardW).toInt(), lerp(pillH, cardH).toInt())
         }
 
         override fun onDraw(canvas: Canvas) {
             val m = model ?: return
-            rect.set(0f, 0f, width.toFloat(), height.toFloat())
-            val r = if (expanded) 28 * d else height / 2f
+            val w = width.toFloat()
+            rect.set(0f, 0f, w, height.toFloat())
+            val r = lerp(pillH / 2, 30 * d)
             canvas.drawRoundRect(rect, r, r, bg)
-            // Существо слева.
-            val icon = 44 * d
-            val top = (headerH - icon) / 2
-            m.creature?.let { canvas.drawBitmap(it, null, RectF(8 * d, top, 8 * d + icon, top + icon), null) }
-            val textLeft = 8 * d + icon + 10 * d
-            val textRight = width - 16 * d
-            val word = TextUtils.ellipsize(m.word, title, textRight - textLeft, TextUtils.TruncateAt.END).toString()
-            canvas.drawText(word, textLeft, headerH / 2 - 2 * d, title)
-            val sub = if (expanded) m.progressLabel + " · нажмите сюда, чтобы открыть" else m.progressLabel + if (m.answers) " · нажмите, чтобы ответить" else ""
-            canvas.drawText(TextUtils.ellipsize(sub, small, textRight - textLeft, TextUtils.TruncateAt.END).toString(),
-                textLeft, headerH / 2 + small.textSize + 1 * d, small)
-            // Прогресс.
-            val barTop = headerH - 6 * d
-            rect.set(textLeft, barTop, textRight, barTop + 3 * d)
-            canvas.drawRoundRect(rect, 2 * d, 2 * d, track)
-            rect.set(textLeft, barTop, textLeft + (textRight - textLeft) * shownProgress.coerceIn(0f, 1f), barTop + 3 * d)
-            canvas.drawRoundRect(rect, 2 * d, 2 * d, bar)
-            if (!expanded) return
-            // Перевод и кнопки.
-            val tr = TextUtils.ellipsize(m.translation, title, width - 32 * d, TextUtils.TruncateAt.END).toString()
-            canvas.drawText(tr, 16 * d, headerH + 24 * d * scale, title)
-            val bTop = headerH + 40 * d * scale
-            val bBottom = height - 12 * d
-            val mid = width / 2f
-            forgotRect.set(12 * d, bTop, mid - 6 * d, bBottom)
-            rememberedRect.set(mid + 6 * d, bTop, width - 12 * d, bBottom)
+
+            // Шапка (общая для обоих состояний): чибик, курс, счётчик, тонкая полоса прогресса.
+            val pad = lerp(5 * d, 14 * d)
+            val icon = lerp(pillH - 10 * d, 40 * d)
+            val top = lerp(5 * d, 12 * d)
+            m.creature?.let { canvas.drawBitmap(it, null, RectF(pad, top, pad + icon, top + icon), null) }
+            val left = pad + icon + 8 * d
+            val right = w - lerp(12 * d, 16 * d)
+            val count = "${m.done}/${m.total}"
+            val baseline = top + icon / 2 - (title.descent() + title.ascent()) / 2 - 2 * d
+            canvas.drawText(count, right, baseline, counter)
+            val titleRight = right - counter.measureText(count) - 8 * d
+            canvas.drawText(TextUtils.ellipsize(m.courseTitle, title, titleRight - left, TextUtils.TruncateAt.END).toString(),
+                left, baseline, title)
+            val barY = top + icon / 2 + lerp(8 * d, 12 * d)
+            rect.set(left, barY, right, barY + 3 * d)
+            canvas.drawRoundRect(rect, 1.5f * d, 1.5f * d, track)
+            rect.set(left, barY, left + (right - left) * shownProgress.coerceIn(0f, 1f), barY + 3 * d)
+            canvas.drawRoundRect(rect, 1.5f * d, 1.5f * d, bar)
+            openRect.set(0f, 0f, w, top + icon + 4 * d)
+
+            // Содержимое карточки проявляется во второй половине раскрытия.
+            val a = ((t - 0.45f) / 0.55f).coerceIn(0f, 1f)
+            if (a <= 0f) { forgotRect.setEmpty(); rememberedRect.setEmpty(); return }
+            val alpha = (a * 255).toInt()
+            question.alpha = alpha; hint.alpha = (a * 153).toInt(); btnText.alpha = alpha
+            val qY = top + icon + 34 * d * fs
+            canvas.drawText(TextUtils.ellipsize(m.word, question, w - 32 * d, TextUtils.TruncateAt.END).toString(), 16 * d, qY, question)
+            canvas.drawText(TextUtils.ellipsize("Вспомните перевод · нажмите на шапку, чтобы открыть занятие", hint, w - 32 * d,
+                TextUtils.TruncateAt.END).toString(), 16 * d, qY + 20 * d * fs, hint)
+            val bTop = qY + 34 * d * fs
+            val bBottom = height - 14 * d
+            if (bBottom - bTop < 24 * d) { forgotRect.setEmpty(); rememberedRect.setEmpty(); return }
+            val mid = w / 2f
+            forgotRect.set(14 * d, bTop, mid - 6 * d, bBottom)
+            rememberedRect.set(mid + 6 * d, bTop, w - 14 * d, bBottom)
             val cy = (bTop + bBottom) / 2 - (btnText.descent() + btnText.ascent()) / 2
-            btn.color = 0xFFFF6B6B.toInt(); canvas.drawRoundRect(forgotRect, 18 * d, 18 * d, btn)
+            btn.color = 0xFFFF6B6B.toInt(); btn.alpha = alpha
+            canvas.drawRoundRect(forgotRect, 20 * d, 20 * d, btn)
             canvas.drawText("Не помню", forgotRect.centerX(), cy, btnText)
-            btn.color = 0xFF2FBF71.toInt(); canvas.drawRoundRect(rememberedRect, 18 * d, 18 * d, btn)
+            btn.color = 0xFF2FBF71.toInt(); btn.alpha = alpha
+            canvas.drawRoundRect(rememberedRect, 20 * d, 20 * d, btn)
             canvas.drawText("Помню", rememberedRect.centerX(), cy, btnText)
         }
     }

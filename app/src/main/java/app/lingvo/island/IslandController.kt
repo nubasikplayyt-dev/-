@@ -70,10 +70,6 @@ class IslandController(
 
     fun reveal(sessionId: Long, entryId: String) { revealed.value = sessionId to entryId }
 
-    fun hideCapsuleForNow() {
-        scope.launch(Dispatchers.Main) { overlay.dismissUntilNextSession() }
-    }
-
     private fun answerFromCapsule(sessionId: Long, entryId: String, remembered: Boolean) {
         scope.launch { repo.answer(sessionId, entryId, if (remembered) Answer.REMEMBERED else Answer.FORGOT) }
     }
@@ -148,8 +144,7 @@ class IslandController(
                     CapsuleOverlay.Model(
                         sessionId = ses.id, entryId = card.id, language = spec.code,
                         word = card.displayTerm, translation = card.translation,
-                        progressLabel = "${spec.flag} ${ses.done}/${ses.total}",
-                        progress = if (ses.total == 0) 0f else ses.done.toFloat() / ses.total,
+                        courseTitle = "${spec.flag} ${spec.nameRu}", done = ses.done, total = ses.total,
                         animate = s.settings.animations, creature = bmp, answers = s.settings.islandAnswers,
                         colorA = (def?.colorB ?: 0xFF7C72E0).toInt(),
                     )
