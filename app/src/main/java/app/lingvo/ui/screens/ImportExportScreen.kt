@@ -326,7 +326,7 @@ fun ImportExportScreen(
                     Text("С грамматическими пояснениями", Modifier.padding(start = 8.dp))
                 }
             }
-            val options = TextExportOptions(includeExamples, includeGrammar)
+            val exportOptions = TextExportOptions(includeExamples, includeGrammar)
             Languages.all.forEach { spec ->
                 Text("${spec.flag} ${spec.nameRu}", style = MaterialTheme.typography.titleSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -339,7 +339,7 @@ fun ImportExportScreen(
                             try {
                                 val list = repo.entriesOf(spec)
                                 if (list.isEmpty()) { toast("Словарь пуст"); return@launch }
-                                shareTextExport(context, spec, list, textFormat, options)
+                                shareTextExport(context, spec, list, textFormat, exportOptions)
                             } catch (e: Exception) { toast("Ошибка: ${e.message}") }
                         }
                     }, modifier = Modifier.weight(1f)) { ButtonContent(Icons.Filled.Share, "Отправить") }
@@ -347,7 +347,7 @@ fun ImportExportScreen(
                         scope.launch {
                             val list = repo.entriesOf(spec)
                             val fmt = if (textFormat == TextExportFormat.DOCX) TextExportFormat.PLAIN else textFormat
-                            val text = TextExport.text(fmt, spec, list, options)
+                            val text = TextExport.text(fmt, spec, list, exportOptions)
                             context.getSystemService(ClipboardManager::class.java)
                                 .setPrimaryClip(ClipData.newPlainText(spec.nameRu, text))
                             toast("Скопировано ${list.size} ${app.lingvo.core.SessionText.words(list.size)} текстом")
