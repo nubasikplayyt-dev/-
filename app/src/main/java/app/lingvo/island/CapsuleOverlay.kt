@@ -91,7 +91,9 @@ class CapsuleOverlay(
             // Фиксированная позиция: сверху по центру, поверх строки состояния (как «остров» у выреза камеры).
             x = 0
             y = dp(6f).toInt()
-            layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            if (android.os.Build.VERSION.SDK_INT >= 28) {
+                layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            }
         }
         val slop = ViewConfiguration.get(context).scaledTouchSlop
         val swipe = dp(24f)
