@@ -132,7 +132,8 @@ fun WorldScreen(container: AppContainer, nav: NavHostController) {
         ScreenHeader("Карта мира", "Открыто ${s.owned.count { it.kind == UnlockKind.REGION }} из ${WorldMap.regions.size} областей")
         WorldMapView(s, s.settings.animations) { selected = it }
 
-        if (next?.requirement != null) {
+        val nextReq = next?.requirement
+        if (next != null && nextReq != null) {
             SoftCard {
                 Text("Следующая цель", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -140,12 +141,12 @@ fun WorldScreen(container: AppContainer, nav: NavHostController) {
                     Spacer(Modifier.width(10.dp))
                     Column(Modifier.weight(1f)) {
                         Text(next.name, style = MaterialTheme.typography.titleMedium)
-                        Text("${next.requirement.value(s.snapshot).coerceAtMost(next.requirement.target)} из ${next.requirement.describe()}",
+                        Text("${nextReq.value(s.snapshot).coerceAtMost(nextReq.target)} из ${nextReq.describe()}",
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
                 Spacer(Modifier.height(10.dp))
-                GradientBar(next.requirement.progress(s.snapshot), brush = Brush.horizontalGradient(listOf(Color(next.colorA), Color(next.colorB))))
+                GradientBar(nextReq.progress(s.snapshot), brush = Brush.horizontalGradient(listOf(Color(next.colorA), Color(next.colorB))))
             }
         } else {
             GradientCard(LocalGradients.current.violet) {

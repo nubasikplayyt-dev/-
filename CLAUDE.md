@@ -1,18 +1,21 @@
-# CLAUDE.md — правила работы с проектом Lingvo Island
+# CLAUDE.md — правила работы с проектом Lingvo World
 
-Android-приложение для изучения испанского 🇪🇸 и немецкого 🇩🇪 с интервальным повторением (FSRS-5),
-двумя независимыми словарями, импортом JSON, напоминаниями и компактным «Dynamic Island»-подобным
-интерфейсом (Live Update-уведомление + необязательная плавающая капсула).
+Android-приложение Lingvo World для изучения любых языков: языковые курсы с произвольной парой
+«изучаемый → перевод», интервальное повторение FSRS-5 с кнопками «Помню»/«Не помню», ежедневные серии,
+достижения, карта языкового мира, существа-полиглоты, альтернативные иконки, импорт JSON, напоминания
+и компактный «Dynamic Island»-подобный интерфейс (Live Update-уведомление + необязательная капсула).
 
 ## Структура
 
 | Путь | Что это |
 |---|---|
-| `vocabulary/spanish_vocabulary.json` | **Канонический испанский словарь** (единый источник, встраивается в APK как стартовый набор) |
+| `vocabulary/spanish_vocabulary.json` | **Канонический испанский словарь** (встраивается в APK как стартовый набор) |
 | `vocabulary/german_vocabulary.json` | **Канонический немецкий словарь** |
+| `vocabulary/<код>_vocabulary.json` | Словари других языков (например, `it_vocabulary.json`); тоже становятся стартовыми наборами |
+| `design/icons/source/` | Исходные изображения иконок; `tools/make_icons.py` генерирует из них ресурсы |
 | `tools/vocab_tool.py` | Безопасное пополнение и проверка словарей (только stdlib Python) |
-| `core/` | Чистая Kotlin-логика без Android: FSRS, разбор/валидация JSON, слияние при импорте, расписание напоминаний, статусы, резервные копии. Тесты: `core/src/test` |
-| `app/` | Android-приложение: Room, DataStore, Compose UI, уведомления, WorkManager/AlarmManager, капсула |
+| `core/` | Чистая Kotlin-логика без Android: курсы и языки, FSRS, разбор/валидация JSON, слияние при импорте, серии, достижения/карта/существа/иконки (`Game.kt`), напоминания, резервные копии. Тесты: `core/src/test` |
+| `app/` | Android-приложение: Room (миграции!), DataStore, Compose UI, уведомления, WorkManager/AlarmManager, капсула, смена иконок |
 | `docs/` | Инструкции на русском |
 
 ## Команды
@@ -20,7 +23,9 @@ Android-приложение для изучения испанского 🇪�
 ```bash
 python3 tools/vocab_tool.py validate              # проверить оба словаря
 python3 tools/vocab_tool.py add de new.json       # добавить карточки (массив или {"entries": [...]})
+python3 tools/vocab_tool.py add it new.json       # любой язык: создаст vocabulary/it_vocabulary.json
 python3 tools/vocab_tool.py stats
+python3 tools/make_icons.py                       # перегенерировать иконки из design/icons/source
 ./gradlew :core:test -PcoreOnly=true              # тесты ядра (не нужен Android SDK)
 ./gradlew :core:test :app:testDebugUnitTest :app:lintDebug :app:assembleDebug   # полная сборка (нужен Android SDK)
 ```
@@ -30,8 +35,9 @@ CI (`.github/workflows/android.yml`) на каждый push проверяет �
 
 ## Как Claude пополняет словари
 
-Когда пользователь просит добавить испанское слово/выражение — работать **только** с
-`vocabulary/spanish_vocabulary.json`; немецкое — **только** с `vocabulary/german_vocabulary.json`.
+Каждый язык — свой файл: испанский — **только** `vocabulary/spanish_vocabulary.json`, немецкий — **только**
+`vocabulary/german_vocabulary.json`, любой другой — `vocabulary/<код ISO>_vocabulary.json` (поле выражения `term`).
+Файлы разных языков никогда не смешиваются.
 
 1. Подготовить новые карточки во временном JSON-файле (вне `vocabulary/`), например:
    ```json
@@ -53,7 +59,8 @@ CI (`.github/workflows/android.yml`) на каждый push проверяет �
 
 ### Что заполнять
 
-- Обязательно: выражение (`spanish`/`german`), `russian`.
+- Обязательно: выражение (`spanish`/`german`, для других языков `term`) и перевод (`russian`; если язык перевода
+  не русский — `translation`, а в шапке файла `"translation_language": "<код>"`).
 - По возможности: `part_of_speech` (`noun`, `verb`, `adjective`, `adverb`, `phrase`), пример и его перевод,
   `level` (A1–C2), `tags` (категории: «разговорная лексика», «академическая лексика», «деловая лексика»,
   «медицинская лексика», «политика и экономика», «устойчивые выражения» или свои).
@@ -112,6 +119,8 @@ CI (`.github/workflows/android.yml`) на каждый push проверяет �
 ```
 
 Испанский: те же поля, но `spanish` и `example_es`; `article` (`el`/`la`/`los`/`las`) — по желанию.
+Другие языки: `term` и `example_<код>` (например, `example_it`). Перевод не на русский: `translation`,
+`example_translation` и `"translation_language"` в шапке.
 Неизвестные поля сохраняются приложением при импорте и экспорте.
 
 ## Правила для изменений кода
@@ -120,5 +129,9 @@ CI (`.github/workflows/android.yml`) на каждый push проверяет �
 - Схема Room версионируется (`app/schemas/`); менять её только с миграцией, без destructive fallback —
   прогресс пользователя нельзя терять.
 - Импорт и восстановление — только в одной транзакции; перед ними — автоматическая резервная копия.
+- Бизнес-логика не знает конкретных языков: всё через `Course`/`LanguageSpec`.
+- Показатели для достижений, карты и существ считает только `ProgressCalculator` + `GameEngine`; полученное не отнимается.
+- Серии считаются по локальной дате в момент ответа (`daily_progress`), открытие приложения ничего не записывает.
+- Новые достижения/области/существа добавляются в `core/Game.kt` без изменения схемы БД.
 - Не добавлять постоянные фоновые сервисы, wake lock, polling, скрытые API.
 - Тексты интерфейса и ошибок — на русском.

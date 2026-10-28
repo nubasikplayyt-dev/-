@@ -83,4 +83,4 @@ fun prettyVerbForms(json: String): String = runCatching {
     }
 }.getOrDefault(json)
 
-fun languageOf(entry: VocabEntry) = Languages.byCode(entry.language) ?: Languages.SPANISH
+fun languageOf(entry: VocabEntry) = app.lingvo.core.LanguageSpec.forLanguage(entry.language)

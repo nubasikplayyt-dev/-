@@ -268,8 +268,9 @@ fun HomeScreen(container: AppContainer, nav: NavHostController) {
                     Column(Modifier.weight(1f)) {
                         Text("Вы здесь", color = Color.White.copy(alpha = 0.85f), style = MaterialTheme.typography.labelMedium)
                         Text(current.name, color = Color.White, style = MaterialTheme.typography.titleLarge)
-                        if (next?.requirement != null) {
-                            Text("Дальше: ${next.name} — ${next.requirement.value(s.snapshot).coerceAtMost(next.requirement.target)}/${next.requirement.target} ${next.requirement.metric.labelRu}",
+                        val req = next?.requirement
+                        if (next != null && req != null) {
+                            Text("Дальше: ${next.name} — ${req.value(s.snapshot).coerceAtMost(req.target)}/${req.target} ${req.metric.labelRu}",
                                 color = Color.White.copy(alpha = 0.9f), style = MaterialTheme.typography.bodySmall)
                         } else Text("Весь мир открыт! 🌌", color = Color.White, style = MaterialTheme.typography.bodySmall)
                     }

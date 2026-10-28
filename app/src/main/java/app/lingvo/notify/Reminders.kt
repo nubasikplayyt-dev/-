@@ -12,6 +12,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import app.lingvo.LingvoApp
+import app.lingvo.core.Creatures
 import app.lingvo.core.ReminderTexts
 import app.lingvo.core.ReminderPlanner
 import app.lingvo.data.AppSettings
@@ -114,7 +115,7 @@ class ReminderWorker(context: Context, params: WorkerParameters) : CoroutineWork
             )
             Log.i("ReminderWorker", "Решение: ${decision.reason}")
             if (decision.notify) {
-                val creature = app.lingvo.core.Creatures.byId(settings.favoriteCreature)?.name
+                val creature = Creatures.byId(settings.favoriteCreature)?.name
                 val text = ReminderTexts.pick(
                     ReminderTexts.Context(counts, streak.current, streak.atRisk, streak.todayAnswers, streak.todayGoal, creature),
                     now.toLocalDate().toEpochDay(),

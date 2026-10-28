@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """
-Безопасное пополнение словарей LingvoIsland (только стандартная библиотека Python).
+Безопасное пополнение словарей Lingvo World (только стандартная библиотека Python).
 
   python3 tools/vocab_tool.py validate
   python3 tools/vocab_tool.py add de new_words.json      # массив карточек или {"entries": [...]}
   python3 tools/vocab_tool.py add es - < new_words.json  # из stdin
+  python3 tools/vocab_tool.py add it new_words.json      # любой язык: vocabulary/it_vocabulary.json (создаётся при первом добавлении)
   python3 tools/vocab_tool.py stats
+
+Испанский и немецкий используют исторические ключи "spanish"/"german"; остальные языки — "term".
 
 Правила (см. CLAUDE.md): ID существующих карточек не меняются, записи не удаляются,
 дубликаты (без учёта регистра/пробелов/Unicode-формы, с артиклем) не добавляются,
@@ -24,10 +27,40 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VOCAB_DIR = os.path.join(ROOT, "vocabulary")
 BACKUP_DIR = os.path.join(VOCAB_DIR, ".backups")
 
-LANGS = {
+LEGACY = {
     "es": {"file": "spanish_vocabulary.json", "term": "spanish", "example": "example_es", "articles": {"el", "la", "los", "las"}},
     "de": {"file": "german_vocabulary.json", "term": "german", "example": "example_de", "articles": {"der", "die", "das"}},
 }
+ARTICLES = {"fr": {"le", "la", "les", "l'"}, "it": {"il", "lo", "la", "i", "gli", "le", "l'"}, "pt": {"o", "a", "os", "as"},
+            "nl": {"de", "het"}, "en": {"the"}, "el": {"ο", "η", "το", "οι", "τα"}}
+
+
+def spec_for(lang):
+    lang = lang.strip().lower()
+    if not re.fullmatch(r"[a-z0-9-]{2,24}", lang):
+        raise SystemExit(f"Некорректный код языка: {lang!r}")
+    return LEGACY.get(lang) or {"file": f"{lang}_vocabulary.json", "term": "term", "example": f"example_{lang}",
+                                "articles": ARTICLES.get(lang, set())}
+
+
+class _Langs(dict):
+    def __missing__(self, key):
+        return spec_for(key)
+
+    def __contains__(self, key):
+        return re.fullmatch(r"[a-z0-9-]{2,24}", str(key)) is not None
+
+
+LANGS = _Langs(LEGACY)
+
+
+def known_languages():
+    found = set(LEGACY)
+    for name in os.listdir(VOCAB_DIR):
+        m = re.fullmatch(r"([a-z0-9-]+)_vocabulary\.json", name)
+        if m and m.group(1) not in ("spanish", "german"):
+            found.add(m.group(1))
+    return sorted(found)
 REQUIRED_ORDER = ["id", "TERM", "russian", "article", "plural", "part_of_speech", "EXAMPLE", "example_ru",
                   "grammar_notes", "collocations", "verb_forms", "regional_usage", "level", "tags", "notes",
                   "source", "created_at", "updated_at"]
@@ -53,7 +86,9 @@ def path(lang):
     return os.path.join(VOCAB_DIR, LANGS[lang]["file"])
 
 
-def load(lang):
+def load(lang, create=False):
+    if create and not os.path.exists(path(lang)):
+        return {"schema_version": 1, "language": lang, "updated_at": now_iso(), "entries": []}
     with open(path(lang), encoding="utf-8") as f:
         doc = json.load(f)
     if doc.get("language") != lang:
@@ -91,7 +126,7 @@ def validate_doc(lang, doc):
         art = clean(e.get("article")).lower()
         if art and art not in spec["articles"]:
             errors.append(f"{label}: недопустимый артикль {art!r}")
-        if lang == "de" and e.get("part_of_speech") == "noun" and not art:
+        if lang == "de" and e.get("part_of_speech") == "noun" and not art:  # для немецкого артикль обязателен
             errors.append(f"{label}: у немецкого существительного нет артикля")
         k = key(e.get(spec["term"], ""), art)
         if k in keys:
@@ -102,6 +137,8 @@ def validate_doc(lang, doc):
 
 def backup(lang):
     os.makedirs(BACKUP_DIR, exist_ok=True)
+    if not os.path.exists(path(lang)):
+        return None
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     dst = os.path.join(BACKUP_DIR, f"{lang}-{stamp}.json")
     shutil.copy2(path(lang), dst)
@@ -127,7 +164,7 @@ def add(lang, source):
     incoming = raw.get("entries", []) if isinstance(raw, dict) else raw
     if not isinstance(incoming, list) or not incoming:
         raise SystemExit("Нет новых карточек — словарь не изменён.")
-    doc = load(lang)
+    doc = load(lang, create=True)
     entries = doc["entries"]
     by_id = {e["id"]: e for e in entries}
     by_key = {key(e[spec["term"]], e.get("article", "")): e for e in entries}
@@ -142,7 +179,7 @@ def add(lang, source):
         item.pop("term", None)
         item[spec["term"]] = term
         art = clean(item.get("article")).lower()
-        if lang == "de" and not art and item.get("part_of_speech") == "noun":
+        if spec["articles"] and not art and item.get("part_of_speech") == "noun":
             first = term.split(" ")[0].lower()
             if first in spec["articles"] and " " in term:
                 art = first
@@ -182,7 +219,7 @@ def add(lang, source):
         for extra in ("verb_forms", "regional_usage"):
             if item.get(extra):
                 entry[extra] = item[extra]
-        if lang == "es" and not entry["plural"]:
+        if lang != "de" and not entry["plural"]:
             entry.pop("plural")
         entry["created_at"] = ts
         entry["updated_at"] = ts
@@ -199,7 +236,10 @@ def add(lang, source):
     bk = backup(lang)
     doc["updated_at"] = ts
     save(lang, doc)
-    print(f"Резервная копия: {os.path.relpath(bk, ROOT)}")
+    if bk:
+        print(f"Резервная копия: {os.path.relpath(bk, ROOT)}")
+    else:
+        print(f"Создан новый словарь: vocabulary/{LANGS[lang]['file']}")
     print(f"Добавлено: {len(added)}")
     for a in added:
         print("  +", a)
@@ -216,7 +256,7 @@ def main():
     cmd = sys.argv[1]
     if cmd == "validate":
         bad = False
-        for lang in LANGS:
+        for lang in known_languages():
             errs = validate_doc(lang, load(lang))
             print(f"{LANGS[lang]['file']}: {'OK' if not errs else str(len(errs)) + ' ошибок'}")
             for e in errs:
@@ -226,7 +266,7 @@ def main():
     elif cmd == "add" and len(sys.argv) == 4 and sys.argv[2] in LANGS:
         add(sys.argv[2], sys.argv[3])
     elif cmd == "stats":
-        for lang in LANGS:
+        for lang in known_languages():
             doc = load(lang)
             print(f"{LANGS[lang]['file']}: {len(doc['entries'])} карточек, обновлён {doc.get('updated_at')}")
     else:
