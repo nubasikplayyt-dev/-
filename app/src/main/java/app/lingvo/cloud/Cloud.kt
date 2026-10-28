@@ -2,7 +2,6 @@ package app.lingvo.cloud
 
 import android.content.Context
 import android.util.Log
-import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
@@ -106,9 +105,6 @@ class Cloud(private val context: Context) {
 
     suspend fun signOut() {
         auth?.signOut()
-        runCatching {
-            CredentialManager.create(context).clearCredentialState(ClearCredentialStateRequest())
-        }
         refresh()
     }
 

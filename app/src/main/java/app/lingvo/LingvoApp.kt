@@ -5,6 +5,9 @@ import android.util.Log
 import app.lingvo.data.AppDatabase
 import app.lingvo.data.LingvoRepository
 import app.lingvo.data.SettingsStore
+import app.lingvo.cloud.Cloud
+import app.lingvo.cloud.FriendsRepository
+import app.lingvo.core.Competition
 import app.lingvo.images.WordImages
 import app.lingvo.island.IslandController
 import app.lingvo.notify.Notifications
@@ -34,8 +37,8 @@ class AppContainer(app: Application) {
     val island = IslandController(app, repository, scope)
     val speaker = Speaker(app) { scope.launch { settings.incrementListens() } }
     val wordImages = WordImages(app)
-    val cloud = app.lingvo.cloud.Cloud(app)
-    val friends = app.lingvo.cloud.FriendsRepository(cloud, database.friends(), settings, repository)
+    val cloud = Cloud(app)
+    val friends = FriendsRepository(cloud, database.friends(), settings, repository)
 
     init {
         // Новые слова пользователя — в очередь на картинку (если генерация включена в настройках).
@@ -93,11 +96,11 @@ class LingvoApp : Application() {
     private suspend fun notifyOvertaken() {
         val me = container.friends.mySummary()
         val friends = container.friends.observeFriends().first().associate { it.code to it.progress }
-        val ahead = app.lingvo.core.Competition.overtookMe(me.weekPoints, friends, notifiedThisWeek, me.weekKey)
+        val ahead = Competition.overtookMe(me.weekPoints, friends, notifiedThisWeek, me.weekKey)
         if (notifiedWeekKey != me.weekKey) { notifiedThisWeek.clear(); notifiedWeekKey = me.weekKey }
         val first = ahead.firstOrNull() ?: return
         notifiedThisWeek += first.nick
-        app.lingvo.notify.Notifications.showFriendAhead(this, first.nick, first.weekPoints, me.weekPoints)
+        Notifications.showFriendAhead(this, first.nick, first.weekPoints, me.weekPoints)
     }
 
     private val notifiedThisWeek = mutableSetOf<String>()

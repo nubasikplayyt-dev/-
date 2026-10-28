@@ -111,7 +111,7 @@ class FriendsRepository(
      * чтобы он мог добавить вас в ответ (подтверждение с его стороны).
      */
     suspend fun addFriend(raw: String): String? {
-        val code = ShareCodes.fromLink(raw) ?: return "Код не распознан. Он выглядит так: ${ShareCodes.pretty(ShareCodes.generate())}"
+        val code = ShareCodes.fromLink(raw) ?: return "Код не распознан. Он выглядит так: ABCD-EFGH"
         if (code == settings.current().shareCode) return "Это ваш собственный код"
         if (shares() == null) return Cloud.NOT_CONFIGURED
         cloud.signInAnonymously()?.let { if (cloud.account.value == null) return it }
