@@ -1,5 +1,7 @@
 package app.lingvo.ui.screens
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -96,6 +98,7 @@ fun EntryScreen(container: AppContainer, nav: NavHostController, id: String) {
         ) {
             TermHeader(c.entry) { container.speaker.speak(c.entry.displayTerm, spec)?.let(toast) }
             CardBody(c.entry)
+            WordPictureControls(container, c.entry, spec)
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Row { StatusBadge(c.status) }
@@ -312,5 +315,45 @@ fun BulkAddScreen(container: AppContainer, nav: NavHostController, lang: String)
             ) { Text("Добавить все") }
             result?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
         }
+    }
+}
+
+/**
+ * Картинка к слову вручную: выбрать свою из галереи, найти в интернете (Википедия / Openverse) или убрать.
+ * Картинка хранится в кэше по слову и показывается на карточке.
+ */
+@Composable
+private fun WordPictureControls(container: AppContainer, entry: VocabEntry, spec: app.lingvo.core.LanguageSpec) {
+    val images = container.wordImages
+    val scope = rememberCoroutineScope()
+    val toast = rememberToast()
+    val revision by images.revision.collectAsState()
+    val has = remember(revision, entry.id, entry.term) { images.fileFor(entry, spec).exists() }
+    var busy by remember { mutableStateOf(false) }
+    val pick = androidx.activity.compose.rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia(),
+    ) { uri ->
+        if (uri != null) scope.launch {
+            busy = true
+            runCatching { images.saveFromUri(entry, spec, uri) }
+                .onSuccess { toast("Картинка добавлена") }.onFailure { toast("Не удалось: ${it.message}") }
+            busy = false
+        }
+    }
+    Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        OutlinedButton(enabled = !busy, onClick = {
+            pick.launch(androidx.activity.result.PickVisualMediaRequest(
+                androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }) { Text(if (has) "Своя картинка" else "Добавить картинку") }
+        OutlinedButton(enabled = !busy, onClick = {
+            busy = true
+            scope.launch {
+                runCatching { images.searchNow(entry, spec) }
+                    .onSuccess { toast("Картинка найдена") }
+                    .onFailure { toast("Не нашлось картинки: ${it.message}") }
+                busy = false
+            }
+        }) { Text(if (busy) "Ищу…" else "Найти в интернете") }
+        if (has) TextButton(enabled = !busy, onClick = { images.remove(entry, spec) }) { Text("Убрать") }
     }
 }

@@ -33,4 +33,13 @@ class WordImagePromptTest {
         listOf("http://8.8.8.8:7860", "https://api.example.com", "ftp://192.168.1.2", "", "http://172.40.0.1")
             .forEach { assertFalse(WordImagePrompt.isLocalAddress(it), it) }
     }
+
+    @Test
+    fun `web query uses the word without article in its own wikipedia`() {
+        val q = WordImagePrompt.webQuery(e("die Mutter", "мама", "die"), Languages.GERMAN, "mother")
+        assertEquals("de", q.wikiLang)
+        assertEquals("Mutter", q.wikiQuery)
+        assertEquals("mother", q.englishQuery)
+        assertEquals(null, WordImagePrompt.webQuery(e("la mesa", "стол", "la"), Languages.SPANISH, null).englishQuery)
+    }
 }

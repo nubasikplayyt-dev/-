@@ -18,6 +18,7 @@ import app.lingvo.core.LanguageSpec
 import app.lingvo.core.VocabEntry
 import app.lingvo.core.WordImagePrompt
 import app.lingvo.data.AppSettings
+import app.lingvo.data.ImageSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,16 +48,40 @@ class WordImages(private val context: Context) {
 
     /** Ставит слово в очередь на рисование (если генерация включена и картинки ещё нет в кэше). */
     fun request(entry: VocabEntry, spec: LanguageSpec, settings: AppSettings) {
-        if (!settings.imageGeneration || settings.imageServerUrl.isBlank()) return
-        val req = WordImagePrompt.build(entry, spec, WordImagePrompt.glossEn(entry.extraJson))
+        if (!settings.imageGeneration) return
+        if (settings.imageSource == ImageSource.AI_SERVER && settings.imageServerUrl.isBlank()) return
+        val gloss = WordImagePrompt.glossEn(entry.extraJson)
+        val req = WordImagePrompt.build(entry, spec, gloss)
         if (fileFor(req.key).exists()) return
+        val web = WordImagePrompt.webQuery(entry, spec, gloss)
         val work = OneTimeWorkRequestBuilder<WordImageWorker>()
-            .setInputData(workDataOf(WordImageWorker.KEY to req.key, WordImageWorker.PROMPT to req.prompt))
+            .setInputData(workDataOf(
+                WordImageWorker.KEY to req.key, WordImageWorker.PROMPT to req.prompt,
+                WordImageWorker.WIKI_LANG to web.wikiLang, WordImageWorker.WIKI_QUERY to web.wikiQuery,
+                WordImageWorker.EN_QUERY to web.englishQuery,
+            ))
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
             .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
             .build()
         // Одна задача на слово: повторное добавление того же слова не запускает вторую генерацию.
         WorkManager.getInstance(context).enqueueUniqueWork("word-image-${req.key}", ExistingWorkPolicy.KEEP, work)
+    }
+
+    /** Найти картинку в интернете прямо сейчас (кнопка на странице слова); заменяет прежнюю. */
+    suspend fun searchNow(entry: VocabEntry, spec: LanguageSpec) {
+        val gloss = WordImagePrompt.glossEn(entry.extraJson)
+        val bytes = WebImageSearch.find(WordImagePrompt.webQuery(entry, spec, gloss))
+        withContext(Dispatchers.IO) { save(WordImagePrompt.cacheKey(spec.languageCode, entry), bytes) }
+    }
+
+    /** Своя картинка пользователя из галереи; заменяет прежнюю. */
+    suspend fun saveFromUri(entry: VocabEntry, spec: LanguageSpec, uri: android.net.Uri) = withContext(Dispatchers.IO) {
+        val bytes = context.contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: error("Не удалось открыть файл")
+        save(WordImagePrompt.cacheKey(spec.languageCode, entry), bytes)
+    }
+
+    fun remove(entry: VocabEntry, spec: LanguageSpec) {
+        fileFor(entry, spec).delete(); notifyChanged()
     }
 
     fun clearCache(): Int {
@@ -70,7 +95,13 @@ class WordImages(private val context: Context) {
 
     /** Сохраняет картинку уменьшенной (384 px, WebP) — экономит место. */
     fun save(key: String, bytes: ByteArray) {
-        val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: error("Не удалось прочитать картинку")
+        // Сначала только размеры, чтобы большая фотография из галереи не съела память.
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
+        var sample = 1
+        while (bounds.outWidth / (sample * 2) >= 384) sample *= 2
+        val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size, BitmapFactory.Options().apply { inSampleSize = sample })
+            ?: error("Не удалось прочитать картинку")
         val scaled = if (bmp.width > 384) Bitmap.createScaledBitmap(bmp, 384, 384 * bmp.height / bmp.width, true) else bmp
         val tmp = File(dir, "$key.tmp")
         tmp.outputStream().use { out ->
@@ -91,11 +122,16 @@ class WordImageWorker(context: Context, params: WorkerParameters) : CoroutineWor
         val prompt = inputData.getString(PROMPT) ?: return Result.failure()
         if (images.fileFor(key).exists()) return Result.success()
         val settings = app.container.settings.flow.first()
-        // Генерацию выключили, пока слово ждало в очереди, — ничего не делаем.
+        // Подбор выключили, пока слово ждало в очереди, — ничего не делаем.
         if (!settings.imageGeneration) return Result.success()
         return try {
-            val backend = LocalSdServerBackend(settings.imageServerUrl)
-            val bytes = withContext(Dispatchers.IO) { backend.generate(prompt, WordImagePrompt.NEGATIVE) }
+            val bytes = when (settings.imageSource) {
+                ImageSource.WEB -> WebImageSearch.find(WordImagePrompt.WebQuery(
+                    inputData.getString(WIKI_LANG) ?: "en", inputData.getString(WIKI_QUERY) ?: return Result.failure(),
+                    inputData.getString(EN_QUERY),
+                ))
+                ImageSource.AI_SERVER -> LocalSdServerBackend(settings.imageServerUrl).generate(prompt, WordImagePrompt.NEGATIVE)
+            }
             withContext(Dispatchers.IO) { images.save(key, bytes) }
             Result.success()
         } catch (e: IllegalArgumentException) {
@@ -109,5 +145,8 @@ class WordImageWorker(context: Context, params: WorkerParameters) : CoroutineWor
     companion object {
         const val KEY = "key"
         const val PROMPT = "prompt"
+        const val WIKI_LANG = "wiki_lang"
+        const val WIKI_QUERY = "wiki_query"
+        const val EN_QUERY = "en_query"
     }
 }

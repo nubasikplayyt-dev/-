@@ -210,29 +210,24 @@ private fun WordImagesGroup(container: AppContainer, settings: AppSettings, upda
     var cache by remember { mutableStateOf(container.wordImages.cacheSize()) }
     val urlOk = url.isBlank() || app.lingvo.core.WordImagePrompt.isLocalAddress(url)
     Group("Картинки к словам",
-        "Новые слова получают картинку от нейросети Stable Diffusion, запущенной на вашем компьютере в той же Wi‑Fi-сети " +
-            "(Automatic1111, Forge или SD.Next с флагами --api --listen). Слова отправляются только по адресу " +
-            "домашней сети, не в интернет. Рисование идёт в фоне; пока картинки нет, карточка показывается без неё.") {
-        SwitchRow("Рисовать картинки к новым словам", settings.imageGeneration) { v -> update { it.copy(imageGeneration = v) } }
-        OutlinedTextField(
-            url, { url = it }, Modifier.fillMaxWidth(), singleLine = true,
-            label = { Text("Адрес сервера") }, placeholder = { Text("http://192.168.1.20:7860") },
-            isError = !urlOk,
-            supportingText = { if (!urlOk) Text("Нужен адрес домашней сети: 192.168.x.x, 10.x.x.x, localhost или *.local") },
-        )
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(enabled = urlOk && url != settings.imageServerUrl, onClick = { update { it.copy(imageServerUrl = url.trim()) } }) {
-                Text("Сохранить")
+        "Картинку к слову можно выбрать самому на странице слова (из галереи или поиском в интернете). " +
+            "Здесь — автоматический подбор для новых слов: он идёт в фоне, карточка показывается сразу.") {
+        SwitchRow("Подбирать картинки к новым словам", settings.imageGeneration) { v -> update { it.copy(imageGeneration = v) } }
+        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            app.lingvo.data.ImageSource.entries.forEach { src ->
+                FilterChip(settings.imageSource == src, { update { it.copy(imageSource = src) } }, { Text(src.labelRu) })
             }
-            OutlinedButton(enabled = urlOk && url.isNotBlank(), onClick = {
-                status = "Проверяю…"
-                scope.launch {
-                    status = runCatching { app.lingvo.images.LocalSdServerBackend(url).check() }
-                        .getOrElse { it.message }?.let { "Нет связи: $it" } ?: "Сервер отвечает ✓"
-                }
-            }) { Text("Проверить связь") }
         }
+        if (settings.imageSource == app.lingvo.data.ImageSource.WEB) {
+            Text("Ищет готовую картинку: главное фото статьи Википедии на языке курса, иначе — свободные картинки " +
+                "Openverse. Для этого слово отправляется в Википедию/Openverse.", style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+        } else {
+        Text("Stable Diffusion на вашем компьютере в той же Wi‑Fi-сети (Automatic1111, Forge или SD.Next с флагами " +
+            "--api --listen). Слова уходят только на адрес домашней сети.", style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
         status?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
+        }
         Text("В кэше: ${cache.first} картинок, ${cache.second / 1024} КБ", style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (cache.first > 0) TextButton(onClick = {

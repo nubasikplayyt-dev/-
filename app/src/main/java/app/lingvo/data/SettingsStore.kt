@@ -32,6 +32,12 @@ enum class CapsuleContent(val labelRu: String) {
     BOTH_QUEUES("Очереди всех курсов"),
 }
 
+/** Откуда брать картинки к словам. */
+enum class ImageSource(val labelRu: String) {
+    WEB("Найти в интернете"),
+    AI_SERVER("Нарисовать нейросетью (свой сервер)"),
+}
+
 enum class ThemeMode(val labelRu: String) {
     LIGHT("Светлая"),
     DARK("Тёмная"),
@@ -60,8 +66,9 @@ data class AppSettings(
     val sessionNotification: Boolean = true,
     /** Кнопки «Помню»/«Не помню» прямо в острове-уведомлении и капсуле. */
     val islandAnswers: Boolean = true,
-    /** Рисовать картинки к новым словам локальной нейросетью (по умолчанию выключено). */
+    /** Подбирать картинки к новым словам автоматически (по умолчанию выключено). */
     val imageGeneration: Boolean = false,
+    val imageSource: ImageSource = ImageSource.WEB,
     /** Адрес Stable Diffusion на компьютере в домашней сети (API Automatic1111/Forge/SD.Next). */
     val imageServerUrl: String = "",
     val capsuleEnabled: Boolean = false,
@@ -94,6 +101,7 @@ class SettingsStore(private val context: Context) {
         val islandAnswers = booleanPreferencesKey("island_answers")
         val imageGeneration = booleanPreferencesKey("image_generation")
         val imageServerUrl = stringPreferencesKey("image_server_url")
+        val imageSource = stringPreferencesKey("image_source")
         fun newPerDay(code: String) = intPreferencesKey(NEW_PER_DAY + code)
         fun direction(code: String) = stringPreferencesKey(DIRECTION + code)
         fun remind(code: String) = booleanPreferencesKey(REMIND + code)
@@ -164,6 +172,7 @@ class SettingsStore(private val context: Context) {
             islandAnswers = p[K.islandAnswers] ?: true,
             imageGeneration = p[K.imageGeneration] ?: false,
             imageServerUrl = p[K.imageServerUrl] ?: "",
+            imageSource = p[K.imageSource]?.let { runCatching { ImageSource.valueOf(it) }.getOrNull() } ?: ImageSource.WEB,
             capsuleEnabled = p[K.capsule] ?: false,
             capsuleContent = p[K.capsuleContent]?.let { runCatching { CapsuleContent.valueOf(it) }.getOrNull() } ?: CapsuleContent.SESSION,
             animations = p[K.animations] ?: true,
@@ -215,6 +224,7 @@ class SettingsStore(private val context: Context) {
         p[K.islandAnswers] = s.islandAnswers
         p[K.imageGeneration] = s.imageGeneration
         p[K.imageServerUrl] = s.imageServerUrl
+        p[K.imageSource] = s.imageSource.name
         p[K.capsule] = s.capsuleEnabled
         p[K.capsuleContent] = s.capsuleContent.name
         p[K.animations] = s.animations

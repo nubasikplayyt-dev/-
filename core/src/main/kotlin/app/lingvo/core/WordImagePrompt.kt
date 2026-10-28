@@ -42,6 +42,23 @@ object WordImagePrompt {
         return Request(cacheKey(spec.languageCode, entry), s, prompt)
     }
 
+    /** Поиск картинки в интернете: язык Википедии, запрос в ней и английский запрос для Openverse. */
+    data class WebQuery(val wikiLang: String, val wikiQuery: String, val englishQuery: String?)
+
+    fun webQuery(entry: VocabEntry, spec: LanguageSpec, glossEn: String?): WebQuery {
+        val bare = entry.term.trim().let { t ->
+            if (entry.article.isNotEmpty()) t.removePrefix(entry.article).trimStart() else t
+        }.removePrefix("to ").trim().trim('¿', '?', '¡', '!')
+        val english = when {
+            spec.languageCode == "en" -> bare
+            !glossEn.isNullOrBlank() -> glossEn.trim()
+            spec.translationCode == "en" -> entry.translation.substringBefore(';').substringBefore(',').trim()
+            else -> null
+        }
+        val lang = spec.languageCode.lowercase().takeIf { it.matches(Regex("[a-z]{2,3}")) } ?: "en"
+        return WebQuery(lang, bare, english)
+    }
+
     /** Английская подсказка из неизвестных полей карточки (`gloss_en`), если она есть. */
     fun glossEn(extraJson: String): String? = runCatching {
         val obj = VocabularyJson.json.parseToJsonElement(extraJson) as? kotlinx.serialization.json.JsonObject
