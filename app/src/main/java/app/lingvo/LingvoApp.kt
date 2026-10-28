@@ -5,6 +5,7 @@ import android.util.Log
 import app.lingvo.data.AppDatabase
 import app.lingvo.data.LingvoRepository
 import app.lingvo.data.SettingsStore
+import app.lingvo.images.WordImages
 import app.lingvo.island.IslandController
 import app.lingvo.notify.Notifications
 import app.lingvo.notify.ReminderScheduler
@@ -31,7 +32,7 @@ class AppContainer(app: Application) {
     val repository = LingvoRepository(app, database, settings)
     val island = IslandController(app, repository, scope)
     val speaker = Speaker(app) { scope.launch { settings.incrementListens() } }
-    val wordImages = app.lingvo.images.WordImages(app)
+    val wordImages = WordImages(app)
 
     init {
         // Новые слова пользователя — в очередь на картинку (если генерация включена в настройках).
