@@ -218,6 +218,10 @@ class LingvoRepository(
         VocabularyJson.serialize(spec, entries.byLanguage(spec.code).map { it.toDomain() }, now())
     }
 
+    suspend fun entriesOf(spec: LanguageSpec): List<VocabEntry> = withContext(Dispatchers.IO) {
+        entries.byLanguage(spec.code).map { it.toDomain() }
+    }
+
     /** Стартовый набор из APK (те же канонические файлы, что лежат в репозитории). */
     suspend fun importStarter(spec: LanguageSpec): ImportPlan {
         val text = withContext(Dispatchers.IO) { context.assets.open(spec.fileName).bufferedReader().use { it.readText() } }

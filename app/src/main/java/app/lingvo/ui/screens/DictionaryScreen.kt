@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -55,6 +56,7 @@ import app.lingvo.core.Languages
 import app.lingvo.core.LearningStatus
 import app.lingvo.core.Normalizer
 import app.lingvo.core.PartsOfSpeech
+import app.lingvo.core.TextExport
 import app.lingvo.data.Card
 import app.lingvo.ui.Routes
 import app.lingvo.ui.components.Centered
@@ -114,10 +116,31 @@ fun DictionaryScreen(container: AppContainer, nav: NavHostController, initialLan
     var filter by remember { mutableStateOf(DictionaryFilter(language = initialLang)) }
     var query by rememberSaveable { mutableStateOf("") }
     var pickLanguage by remember { mutableStateOf(false) }
+    val context = androidx.compose.ui.platform.LocalContext.current
 
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        topBar = { TopAppBar(title = { Text("Мой словарь") }) },
+        topBar = {
+            TopAppBar(
+                title = { Text("Мой словарь") },
+                actions = {
+                    IconButton(onClick = {
+                        val all = cardsState.orEmpty()
+                        val shown = filter.copy(query = query).apply(all, System.currentTimeMillis())
+                        if (shown.isEmpty()) return@IconButton
+                        // Тот же список, что на экране, — по языкам, читаемым текстом.
+                        val text = Languages.all.mapNotNull { spec ->
+                            val part = shown.filter { it.entry.language == spec.code }.map { it.entry }
+                            if (part.isEmpty()) null else TextExport.plain(spec, part)
+                        }.joinToString("\n")
+                        val send = android.content.Intent(android.content.Intent.ACTION_SEND)
+                            .setType("text/plain")
+                            .putExtra(android.content.Intent.EXTRA_TEXT, text)
+                        context.startActivity(android.content.Intent.createChooser(send, "Отправить слова"))
+                    }) { Icon(Icons.Filled.Share, contentDescription = "Поделиться списком слов") }
+                },
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 val l = filter.language

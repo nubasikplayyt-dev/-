@@ -17,6 +17,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.FilterChip
+import app.lingvo.core.TextExport
+import app.lingvo.core.TextExportFormat
+import app.lingvo.core.TextExportOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.ContentCopy
@@ -145,6 +152,23 @@ fun ImportExportScreen(
                 val json = repo.exportVocabulary(Languages.require(code))
                 withContext(Dispatchers.IO) { context.contentResolver.openOutputStream(uri, "wt")!!.use { it.write(json.toByteArray(Charsets.UTF_8)) } }
                 toast("Словарь сохранён")
+            } catch (e: Exception) { toast("Не удалось сохранить: ${e.message}") }
+        }
+    }
+    var textFormat by remember { mutableStateOf(TextExportFormat.PLAIN) }
+    var includeExamples by remember { mutableStateOf(true) }
+    var includeGrammar by remember { mutableStateOf(false) }
+    var textExportLang by remember { mutableStateOf<String?>(null) }
+    val saveText = rememberLauncherForActivityResult(CreateTypedDocument()) { uri ->
+        val code = textExportLang
+        if (uri != null && code != null) scope.launch {
+            try {
+                val spec = Languages.require(code)
+                val bytes = withContext(Dispatchers.Default) {
+                    TextExport.bytes(textFormat, spec, repo.entriesOf(spec), TextExportOptions(includeExamples, includeGrammar))
+                }
+                withContext(Dispatchers.IO) { context.contentResolver.openOutputStream(uri, "wt")!!.use { it.write(bytes) } }
+                toast("Сохранено: ${textFormat.labelRu}")
             } catch (e: Exception) { toast("Не удалось сохранить: ${e.message}") }
         }
     }
@@ -278,6 +302,57 @@ fun ImportExportScreen(
                             toast("Скопировано: ${json.length} символов")
                         }
                     }, modifier = Modifier.weight(1f)) { ButtonContent(Icons.Filled.ContentCopy, "Копия") }
+                }
+            }
+
+            SectionTitle("Экспорт списком слов")
+            Text(
+                "Читаемый список: текст для чата или заметок, Markdown, таблица CSV (Excel, Google Таблицы) " +
+                    "или документ Word (.docx, открывается и в Google Документах). Обратно в приложение не импортируется — для этого JSON.",
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                TextExportFormat.entries.forEach { f ->
+                    FilterChip(selected = textFormat == f, onClick = { textFormat = f }, label = { Text(f.labelRu) })
+                }
+            }
+            if (textFormat != TextExportFormat.CSV) {
+                Row(Modifier.fillMaxWidth().toggleable(includeExamples, role = Role.Checkbox) { includeExamples = it }, verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(checked = includeExamples, onCheckedChange = null)
+                    Text("С примерами", Modifier.padding(start = 8.dp))
+                }
+                Row(Modifier.fillMaxWidth().toggleable(includeGrammar, role = Role.Checkbox) { includeGrammar = it }, verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(checked = includeGrammar, onCheckedChange = null)
+                    Text("С грамматическими пояснениями", Modifier.padding(start = 8.dp))
+                }
+            }
+            val options = TextExportOptions(includeExamples, includeGrammar)
+            Languages.all.forEach { spec ->
+                Text("${spec.flag} ${spec.nameRu}", style = MaterialTheme.typography.titleSmall)
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    OutlinedButton(onClick = {
+                        textExportLang = spec.code
+                        saveText.launch(textFileName(spec, textFormat) to textFormat.mimeType)
+                    }, modifier = Modifier.weight(1f)) { ButtonContent(Icons.Filled.Save, "Файл") }
+                    OutlinedButton(onClick = {
+                        scope.launch {
+                            try {
+                                val list = repo.entriesOf(spec)
+                                if (list.isEmpty()) { toast("Словарь пуст"); return@launch }
+                                shareTextExport(context, spec, list, textFormat, options)
+                            } catch (e: Exception) { toast("Ошибка: ${e.message}") }
+                        }
+                    }, modifier = Modifier.weight(1f)) { ButtonContent(Icons.Filled.Share, "Отправить") }
+                    OutlinedButton(onClick = {
+                        scope.launch {
+                            val list = repo.entriesOf(spec)
+                            val fmt = if (textFormat == TextExportFormat.DOCX) TextExportFormat.PLAIN else textFormat
+                            val text = TextExport.text(fmt, spec, list, options)
+                            context.getSystemService(ClipboardManager::class.java)
+                                .setPrimaryClip(ClipData.newPlainText(spec.nameRu, text))
+                            toast("Скопировано ${list.size} ${app.lingvo.core.SessionText.words(list.size)} текстом")
+                        }
+                    }, modifier = Modifier.weight(1f)) { ButtonContent(Icons.Filled.ContentCopy, "Текст") }
                 }
             }
 
@@ -424,6 +499,38 @@ private fun readText(context: Context, uri: Uri): Pair<String, String> {
     val text = resolver.openInputStream(uri)?.use { it.readBytes().toString(Charsets.UTF_8) }
         ?: throw IllegalStateException("Не удалось открыть файл.")
     return name to text
+}
+
+/** Создание документа с заданным MIME-типом: вход — (имя файла, тип). */
+private class CreateTypedDocument : androidx.activity.result.contract.ActivityResultContract<Pair<String, String>, Uri?>() {
+    override fun createIntent(context: Context, input: Pair<String, String>): Intent =
+        Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+            .setType(input.second).putExtra(Intent.EXTRA_TITLE, input.first)
+
+    override fun parseResult(resultCode: Int, intent: Intent?): Uri? =
+        if (resultCode == android.app.Activity.RESULT_OK) intent?.data else null
+}
+
+private fun textFileName(spec: app.lingvo.core.LanguageSpec, f: TextExportFormat) =
+    "${spec.fileName.substringBefore('_')}_words.${f.extension}"
+
+/** Отправка списка слов через Sharesheet: файл нужного формата + текст в EXTRA_TEXT для мессенджеров. */
+fun shareTextExport(context: Context, spec: app.lingvo.core.LanguageSpec, entries: List<app.lingvo.core.VocabEntry>, f: TextExportFormat, o: TextExportOptions) {
+    val plain = TextExport.text(if (f == TextExportFormat.DOCX || f == TextExportFormat.CSV) TextExportFormat.PLAIN else f, spec, entries, o)
+    val send = Intent(Intent.ACTION_SEND).apply {
+        putExtra(Intent.EXTRA_SUBJECT, TextExport.title(spec, entries.size))
+        if (f == TextExportFormat.PLAIN) {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, plain)
+        } else {
+            val dir = File(context.cacheDir, "exports").apply { mkdirs() }
+            val file = File(dir, textFileName(spec, f)).apply { writeBytes(TextExport.bytes(f, spec, entries, o)) }
+            type = f.mimeType
+            putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(context, "${context.packageName}.files", file))
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+    }
+    context.startActivity(Intent.createChooser(send, "Отправить слова").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
 }
 
 private fun shareJson(context: Context, fileName: String, json: String) {
