@@ -9,6 +9,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.drawable.Icon
 import android.os.Build
 import androidx.core.app.NotificationCompat
@@ -22,12 +23,15 @@ import app.lingvo.data.AppSettings
 
 object Notifications {
     const val CHANNEL_REMINDERS = "reminders"
-    const val CHANNEL_SESSION = "session"
+    /** Канал острова. Важность DEFAULT (без звука и вибрации) — иначе система прячет его в «Беззвучные». */
+    const val CHANNEL_SESSION = "session_live"
+    /** Старый канал с низкой важностью — удаляется при запуске. */
+    private const val LEGACY_CHANNEL_SESSION = "session"
+    private const val ISLAND_ID = 4242
 
     private const val ID_REMINDER_COMBINED = 1000
     /** Стабильные ID уведомлений по ID курса (курсов может быть сколько угодно). */
     private fun reminderId(spec: LanguageSpec) = 10_000 + Math.floorMod(spec.code.hashCode(), 40_000)
-    fun sessionId(spec: LanguageSpec) = 50_000 + Math.floorMod(spec.code.hashCode(), 40_000)
     private const val ACCENT = 0xFF5B3FD1.toInt()
 
     const val EXTRA_OPEN = "open"
@@ -39,9 +43,10 @@ object Notifications {
                 description = "Ежедневное напоминание, когда есть карточки к повторению"
             }
         )
+        nm.deleteNotificationChannel(LEGACY_CHANNEL_SESSION)
         nm.createNotificationChannel(
-            NotificationChannel(CHANNEL_SESSION, "Активная тренировка", NotificationManager.IMPORTANCE_LOW).apply {
-                description = "Компактный прогресс текущей сессии повторения"
+            NotificationChannel(CHANNEL_SESSION, "Остров занятия", NotificationManager.IMPORTANCE_DEFAULT).apply {
+                description = "Текущее слово и кнопки «Помню» / «Не помню» во время занятия. Без звука."
                 setShowBadge(false)
                 setSound(null, null)
                 enableVibration(false)
@@ -123,75 +128,125 @@ object Notifications {
         nm.activeNotifications.filter { it.notification.channelId == CHANNEL_REMINDERS }.forEach { nm.cancel(it.id) }
     }
 
-    // ---------- Компактное уведомление активной сессии ----------
+    // ---------- Остров: уведомление активного занятия ----------
 
-    data class SessionInfo(
+    /** Что показать в острове-уведомлении. */
+    data class IslandInfo(
         val spec: LanguageSpec,
         val sessionId: Long,
+        val entryId: String,
+        val word: String,
+        val translation: String,
+        val revealed: Boolean,
         val done: Int,
         val total: Int,
-        /** Текущее слово (без перевода) — только если пользователь разрешил. */
-        val currentWord: String?,
-        val otherQueues: String?,
-        val streak: Int = 0,
-        val creatureName: String? = null,
+        val streak: Int,
+        val creature: Bitmap?,
+        val creatureName: String?,
+        val answers: Boolean,
     )
 
-    @SuppressLint("MissingPermission")
-    fun showSession(context: Context, info: SessionInfo, settings: AppSettings) {
-        if (!canPost(context)) return
-        val title = SessionText.progress(info.spec, info.done, info.total) + if (info.streak > 0) "  🔥${info.streak}" else ""
-        val remaining = (info.total - info.done).coerceAtLeast(0)
-        val text = buildString {
-            append("Осталось $remaining ${SessionText.plural(remaining, "карточка", "карточки", "карточек")}")
-            if (info.currentWord != null) append(" · ${info.currentWord}")
-            if (info.otherQueues != null) append(" · ${info.otherQueues}")
-            if (info.creatureName != null) append(" · ${info.creatureName} болеет за вас")
-        }
-        val reqBase = sessionId(info.spec) * 10
-        val content = openIntent(context, "review/${info.spec.code}", reqBase)
-        val snooze = broadcast(context, NotificationActionReceiver.ACTION_SNOOZE_SESSION, reqBase + 1) {
+    private fun answerIntent(context: Context, info: IslandInfo, remembered: Boolean, req: Int) =
+        broadcast(context, NotificationActionReceiver.ACTION_ANSWER, req) {
+            putExtra(NotificationActionReceiver.EXTRA_SESSION_ID, info.sessionId)
+            putExtra(NotificationActionReceiver.EXTRA_ENTRY_ID, info.entryId)
+            putExtra(NotificationActionReceiver.EXTRA_REMEMBERED, remembered)
             putExtra(NotificationActionReceiver.EXTRA_LANGUAGE, info.spec.code)
+        }
+
+    /**
+     * Компактный остров: существо слева, текущее слово, прогресс и кнопки «Не помню» / «Помню».
+     * Перевод скрыт, пока пользователь не нажмёт «Перевод» (как «Показать ответ» в приложении).
+     * Ответы обрабатывает тот же код, что и в приложении: засчитывается только текущая карточка.
+     */
+    @SuppressLint("MissingPermission")
+    fun showIsland(context: Context, info: IslandInfo, settings: AppSettings) {
+        if (!canPost(context)) return
+        val title = "${info.spec.flag} ${info.word}"
+        val progress = "${info.done}/${info.total}" + if (info.streak > 0) " · серия ${info.streak}" else ""
+        val text = if (info.revealed) "${info.translation} · $progress" else "Вспомни перевод · $progress"
+        val reqBase = (Math.floorMod(info.sessionId, 100_000L).toInt()) * 10 + 1_000_000
+        val content = openIntent(context, "review/${info.spec.code}", reqBase)
+        val forgot = answerIntent(context, info, false, reqBase + 3)
+        val remembered = answerIntent(context, info, true, reqBase + 4)
+        val reveal = broadcast(context, NotificationActionReceiver.ACTION_REVEAL, reqBase + 5) {
+            putExtra(NotificationActionReceiver.EXTRA_SESSION_ID, info.sessionId)
+            putExtra(NotificationActionReceiver.EXTRA_ENTRY_ID, info.entryId)
         }
         val end = broadcast(context, NotificationActionReceiver.ACTION_END_SESSION, reqBase + 2) {
             putExtra(NotificationActionReceiver.EXTRA_SESSION_ID, info.sessionId)
             putExtra(NotificationActionReceiver.EXTRA_LANGUAGE, info.spec.code)
         }
+        val visibility = if (settings.hideOnLockScreen) NotificationCompat.VISIBILITY_PRIVATE else NotificationCompat.VISIBILITY_PUBLIC
+        val publicTitle = "${info.spec.flag} Занятие · ${info.done}/${info.total}"
+
         val notification = if (Build.VERSION.SDK_INT >= 36) {
-            buildLiveUpdate(context, info, title, text, content, snooze, end, settings)
+            buildLiveUpdate(context, info, title, text, publicTitle, content, forgot, remembered, reveal, end, settings)
         } else {
-            NotificationCompat.Builder(context, CHANNEL_SESSION)
+            val b = NotificationCompat.Builder(context, CHANNEL_SESSION)
                 .setSmallIcon(R.drawable.ic_stat_lingvo)
                 .setContentTitle(title)
                 .setContentText(text)
+                .setSubText(info.spec.nameRu)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(
+                    if (info.revealed) "${info.translation}\n$progress" else "Вспомни перевод и ответь.\n$progress"))
                 .setProgress(info.total.coerceAtLeast(1), info.done, false)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
                 .setSilent(true)
+                .setShowWhen(false)
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setColor(ACCENT)
-                .setVisibility(if (settings.hideOnLockScreen) NotificationCompat.VISIBILITY_PRIVATE else NotificationCompat.VISIBILITY_PUBLIC)
+                .setVisibility(visibility)
                 .setPublicVersion(
                     NotificationCompat.Builder(context, CHANNEL_SESSION).setSmallIcon(R.drawable.ic_stat_lingvo)
-                        .setContentTitle("${info.spec.flag} Повторение · ${info.done}/${info.total}").build()
+                        .setContentTitle(publicTitle).build()
                 )
                 .setContentIntent(content)
-                .addAction(0, "Открыть", content)
-                .addAction(0, "Отложить", snooze)
-                .addAction(0, "Завершить", end)
-                .build()
+            info.creature?.let { b.setLargeIcon(it) }
+            if (info.answers) {
+                b.addAction(0, "Не помню", forgot)
+                b.addAction(0, "Помню", remembered)
+                b.addAction(0, if (info.revealed) "Завершить" else "Перевод", if (info.revealed) end else reveal)
+            } else {
+                b.addAction(0, "Открыть", content)
+                b.addAction(0, "Завершить", end)
+            }
+            b.build()
         }
-        NotificationManagerCompat.from(context).notify(sessionId(info.spec), notification)
+        NotificationManagerCompat.from(context).notify(ISLAND_ID, notification)
+    }
+
+    /** Состояние завершения: короткое поздравление, само исчезает через 10 секунд. */
+    @SuppressLint("MissingPermission")
+    fun showIslandFinished(context: Context, spec: LanguageSpec, done: Int, correct: Int, creature: Bitmap?, creatureName: String?) {
+        if (!canPost(context)) return
+        val pct = if (done == 0) 0 else correct * 100 / done
+        val b = NotificationCompat.Builder(context, CHANNEL_SESSION)
+            .setSmallIcon(R.drawable.ic_stat_lingvo)
+            .setContentTitle("${spec.flag} Занятие завершено! 🎉")
+            .setContentText("$done ${SessionText.plural(done, "ответ", "ответа", "ответов")} · помню $pct%" +
+                (creatureName?.let { " · $it радуется" } ?: ""))
+            .setOnlyAlertOnce(true)
+            .setSilent(true)
+            .setAutoCancel(true)
+            .setTimeoutAfter(10_000)
+            .setColor(ACCENT)
+            .setContentIntent(openIntent(context, "home", 999_999))
+        creature?.let { b.setLargeIcon(it) }
+        NotificationManagerCompat.from(context).notify(ISLAND_ID, b.build())
     }
 
     /**
      * Android 16+: ProgressStyle + запрос «Live Update» (promoted ongoing). Система сама решает,
-     * показывать ли его как чип в строке состояния / на экране блокировки (аналог Dynamic Island).
+     * показывать ли его как чип в строке состояния и на экране блокировки.
      */
     @SuppressLint("NewApi")
     private fun buildLiveUpdate(
-        context: Context, info: SessionInfo, title: String, text: String,
-        content: PendingIntent, snooze: PendingIntent, end: PendingIntent, settings: AppSettings,
+        context: Context, info: IslandInfo, title: String, text: String, publicTitle: String,
+        content: PendingIntent, forgot: PendingIntent, remembered: PendingIntent, reveal: PendingIntent, end: PendingIntent,
+        settings: AppSettings,
     ): Notification {
         val total = info.total.coerceAtLeast(1)
         val style = Notification.ProgressStyle()
@@ -199,10 +254,7 @@ object Notifications {
             .setProgressSegments(listOf(Notification.ProgressStyle.Segment(total)))
             .setProgress(info.done.coerceIn(0, total))
         val icon = Icon.createWithResource(context, R.drawable.ic_stat_lingvo)
-        val publicVersion = Notification.Builder(context, CHANNEL_SESSION)
-            .setSmallIcon(icon)
-            .setContentTitle("${info.spec.flag} Повторение · ${info.done}/${info.total}")
-            .build()
+        val publicVersion = Notification.Builder(context, CHANNEL_SESSION).setSmallIcon(icon).setContentTitle(publicTitle).build()
         val builder = Notification.Builder(context, CHANNEL_SESSION)
             .setSmallIcon(icon)
             .setContentTitle(title)
@@ -210,14 +262,21 @@ object Notifications {
             .setStyle(style)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
+            .setShowWhen(false)
             .setCategory(Notification.CATEGORY_PROGRESS)
             .setColor(ACCENT)
             .setVisibility(if (settings.hideOnLockScreen) Notification.VISIBILITY_PRIVATE else Notification.VISIBILITY_PUBLIC)
             .setPublicVersion(publicVersion)
             .setContentIntent(content)
-            .addAction(Notification.Action.Builder(icon, "Открыть", content).build())
-            .addAction(Notification.Action.Builder(icon, "Отложить", snooze).build())
-            .addAction(Notification.Action.Builder(icon, "Завершить", end).build())
+        info.creature?.let { builder.setLargeIcon(Icon.createWithBitmap(it)) }
+        if (info.answers) {
+            builder.addAction(Notification.Action.Builder(icon, "Не помню", forgot).build())
+            builder.addAction(Notification.Action.Builder(icon, "Помню", remembered).build())
+            builder.addAction(Notification.Action.Builder(icon, if (info.revealed) "Завершить" else "Перевод", if (info.revealed) end else reveal).build())
+        } else {
+            builder.addAction(Notification.Action.Builder(icon, "Открыть", content).build())
+            builder.addAction(Notification.Action.Builder(icon, "Завершить", end).build())
+        }
         // Запрос продвижения в Live Update (EXTRA_REQUEST_PROMOTED_ONGOING).
         builder.extras.putBoolean("android.requestPromotedOngoing", true)
         // Короткий текст для чипа в строке состояния, если метод доступен в прошивке.
@@ -228,8 +287,8 @@ object Notifications {
         return builder.build()
     }
 
-    fun cancelSession(context: Context, spec: LanguageSpec) {
-        NotificationManagerCompat.from(context).cancel(sessionId(spec))
+    fun cancelIsland(context: Context) {
+        NotificationManagerCompat.from(context).cancel(ISLAND_ID)
     }
 
     /** Может ли система показать уведомление как Live Update (Android 16+). */

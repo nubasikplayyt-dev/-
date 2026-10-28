@@ -68,7 +68,6 @@ import app.lingvo.core.DailyStreak
 import app.lingvo.core.ReminderPlanner
 import app.lingvo.core.UnlockKind
 import app.lingvo.data.AppSettings
-import app.lingvo.data.CapsuleContent
 import app.lingvo.data.Direction
 import app.lingvo.data.SettingsStore
 import app.lingvo.data.ThemeMode
@@ -171,7 +170,16 @@ fun SettingsLearningScreen(container: AppContainer, nav: NavHostController) {
                         FilterChip(l.newPerDay == n, { update { it.withLang(c.id) { x -> x.copy(newPerDay = n) } } }, { Text("$n") })
                     }
                 }
-                Text("Направление проверки", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
+                Text("Как отвечать", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
+                Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    app.lingvo.core.ReviewMode.entries.forEach { m ->
+                        FilterChip(l.reviewMode == m, { update { it.withLang(c.id) { x -> x.copy(reviewMode = m) } } }, { Text(m.labelRu) })
+                    }
+                }
+                Text("«Написать слово»: виден перевод, вы пишете слово, приложение подсказывает расхождения, " +
+                    "а правильность подтверждаете вы сами.", style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Направление проверки (для кнопок)", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
                 Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Direction.entries.forEach { d ->
                         FilterChip(l.direction == d, { update { it.withLang(c.id) { x -> x.copy(direction = d) } } }, { Text(d.labelRu) })
@@ -275,10 +283,12 @@ fun SettingsRemindersScreen(container: AppContainer, nav: NavHostController) {
                 toast("Проверка запущена: уведомление появится, если цель дня ещё не выполнена")
             }) { Text("Проверить напоминание сейчас") }
         }
-        Group("Прогресс занятия (Dynamic Island)",
-            "В Android нет единого API «Dynamic Island». Используется обновляемое уведомление с прогрессом " +
-                "(на Android 16+ — Live Update с чипом в строке состояния) и, по желанию, плавающая капсула.") {
-            SwitchRow("Прогресс в уведомлении", settings.sessionNotification) { v -> update { it.copy(sessionNotification = v) } }
+        Group("Остров занятия",
+            "Dynamic Island есть только у iPhone. Здесь — своя рабочая версия: уведомление-остров с существом, " +
+                "текущим словом и кнопками «Не помню» / «Помню» (на Android 16+ — Live Update), такой же остров " +
+                "внизу экранов приложения и, по желанию, плавающая капсула. Ответ в любом из них сразу виден везде.") {
+            SwitchRow("Остров в уведомлении", settings.sessionNotification) { v -> update { it.copy(sessionNotification = v) } }
+            SwitchRow("Кнопки «Помню» / «Не помню» в уведомлении и капсуле", settings.islandAnswers) { v -> update { it.copy(islandAnswers = v) } }
             Text(when (canPromote) {
                 null -> "Live Updates доступны с Android 16. На вашей версии (${Build.VERSION.RELEASE}) — обычное уведомление с прогрессом."
                 true -> "Live Updates разрешены: прогресс может появляться чипом в строке состояния."
@@ -289,16 +299,13 @@ fun SettingsRemindersScreen(container: AppContainer, nav: NavHostController) {
                 if (v && !canOverlay) overlayExplain = true else update { it.copy(capsuleEnabled = v) }
             }
             if (settings.capsuleEnabled && canOverlay) {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    CapsuleContent.entries.forEach { c -> FilterChip(settings.capsuleContent == c, { update { it.copy(capsuleContent = c) } }, { Text(c.labelRu) }) }
-                }
-                Text("Капсула видна только во время незавершённого занятия, когда приложение свёрнуто. Нажатие — продолжить, " +
-                    "перетаскивание — переместить, долгое нажатие — скрыть.", style = MaterialTheme.typography.bodySmall,
+                Text("Капсула видна только во время незавершённого занятия, когда приложение свёрнуто. Нажатие — раскрыть " +
+                    "перевод и кнопки ответа, нажатие на заголовок — открыть занятие, перетаскивание — переместить, " +
+                    "долгое нажатие — скрыть.", style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
         Group("Приватность") {
-            SwitchRow("Показывать текущее слово в уведомлении (без перевода)", settings.showWordInNotification) { v -> update { it.copy(showWordInNotification = v) } }
             SwitchRow("Скрывать содержимое на экране блокировки", settings.hideOnLockScreen) { v -> update { it.copy(hideOnLockScreen = v) } }
         }
     }

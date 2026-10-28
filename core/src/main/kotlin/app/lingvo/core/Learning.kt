@@ -160,7 +160,7 @@ object ReminderTexts {
             if (ctx.atRisk) {
                 add(Text("Серия ${ctx.streak} ${SessionText.plural(ctx.streak, "день", "дня", "дней")} ждёт тебя 🔥",
                     "До цели дня — $left ${SessionText.plural(left, "ответ", "ответа", "ответов")}. Не дай огоньку погаснуть!"))
-                add(Text("Не потеряй серию 🔥 ${ctx.streak}", "Пара минут — и день засчитан. $what уже ждёт."))
+                add(Text("Серия ${ctx.streak} ждёт продолжения 🌍", "Пара минут — и день засчитан. $what уже ждёт."))
             }
             if (ctx.creatureName != null) {
                 add(Text("${ctx.creatureName} скучает 🐾", "Загляни на пару минут: $what. Цель дня — ${ctx.goal}."))

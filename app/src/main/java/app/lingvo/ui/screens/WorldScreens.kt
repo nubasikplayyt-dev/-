@@ -100,7 +100,7 @@ import app.lingvo.ui.components.PopIn
 import app.lingvo.ui.components.ProgressRing
 import app.lingvo.ui.components.ScreenHeader
 import app.lingvo.ui.components.SoftCard
-import app.lingvo.ui.components.StreakGlobe
+import app.lingvo.ui.components.StreakEarth
 import app.lingvo.ui.components.artRes
 import app.lingvo.ui.rememberAppState
 import app.lingvo.ui.rememberToast
@@ -368,16 +368,16 @@ fun StreakScreen(container: AppContainer, nav: NavHostController) {
         Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
             GradientCard(LocalGradients.current.hero) {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    StreakGlobe(st.current, st.todayCompleted, size = 180.dp, animate = s.settings.animations)
+                    StreakEarth(st.current, st.todayCompleted, size = 180.dp, animate = s.settings.animations)
                     Text("${st.current} ${SessionText.plural(st.current, "день", "дня", "дней")} подряд", color = Color.White,
                         style = MaterialTheme.typography.headlineMedium)
                     Text("Рекорд: ${st.best}", color = Color.White.copy(alpha = 0.9f), style = MaterialTheme.typography.titleMedium)
                     Spacer(Modifier.height(6.dp))
                     Text(
                         when {
-                            st.todayCompleted -> "Сегодня цель выполнена — глобус сияет ярче ✨"
-                            st.atRisk -> "Выполните цель дня, чтобы не потерять серию"
-                            else -> "Выполните цель дня, чтобы начать серию"
+                            st.todayCompleted -> "Сегодня цель выполнена — Земля сияет ✨"
+                            st.atRisk -> "Несколько слов сегодня — и серия продолжится 🌍"
+                            else -> "Несколько слов сегодня — и начнётся новая серия 🌍"
                         },
                         color = Color.White, textAlign = TextAlign.Center,
                     )
@@ -510,6 +510,8 @@ fun CreaturesScreen(container: AppContainer, nav: NavHostController) {
                                 Spacer(Modifier.height(4.dp))
                                 Text(if (owned) "${c.stageName(level)} · ур. $level" else c.aspect,
                                     style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                if (!owned && c.hint.isNotEmpty()) Text("💡 ${c.hint}", style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
                                 if (c.id == s.settings.favoriteCreature) Text("★ Спутник", style = MaterialTheme.typography.labelSmall, color = Palette.Violet)
                             }
                         }
@@ -539,8 +541,12 @@ fun CreatureScreen(container: AppContainer, nav: NavHostController, id: String) 
                 }
             }
             SoftCard {
-                Text(if (owned) c.description else "Это существо ещё не встретилось вам. Выполните условие, чтобы оно появилось.",
+                Text(if (owned) c.description else "Это существо ещё не встретилось вам. Подсказка: ${c.hint}",
                     style = MaterialTheme.typography.bodyLarge)
+                if (owned && c.personality.isNotEmpty()) {
+                    Spacer(Modifier.height(8.dp))
+                    Text("Характер: ${c.personality}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
                 Spacer(Modifier.height(8.dp))
                 Text("Живёт: ${WorldMap.byId(c.homeRegion)?.let { "${it.symbol} ${it.name}" }}", style = MaterialTheme.typography.bodySmall)
             }
@@ -559,7 +565,7 @@ fun CreatureScreen(container: AppContainer, nav: NavHostController, id: String) 
                     Row(Modifier.padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         (1..c.maxLevel).forEach { l ->
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                CreatureArt(c, l, size = 64.dp, locked = l > level, animate = false)
+                                CreatureArt(c, l, size = 64.dp, locked = l > level, mood = if (l == level) Mood.PROUD else Mood.CALM, animate = false)
                                 Text(c.stageName(l), style = MaterialTheme.typography.labelSmall)
                             }
                         }

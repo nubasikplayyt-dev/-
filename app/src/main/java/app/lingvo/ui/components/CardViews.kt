@@ -44,6 +44,9 @@ fun TermHeader(entry: VocabEntry, onSpeak: (() -> Unit)?) {
 @Composable
 fun CardBody(entry: VocabEntry, showTranslation: Boolean = true) {
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        if (entry.transcription.isNotEmpty()) {
+            Text("[${entry.transcription}]", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
         if (showTranslation) Text(entry.translation, style = MaterialTheme.typography.headlineSmall)
         if (entry.exampleTarget.isNotEmpty()) {
             HorizontalDivider()

@@ -60,6 +60,7 @@ import app.lingvo.core.LanguageCatalog
 import app.lingvo.core.LanguageInfo
 import app.lingvo.core.LanguageSpec
 import app.lingvo.core.SessionText
+import app.lingvo.core.Starter
 import app.lingvo.ui.Routes
 import app.lingvo.ui.components.BackTopBar
 import app.lingvo.ui.components.BigActionButton
@@ -94,7 +95,9 @@ fun OnboardingScreen(container: AppContainer, nav: NavHostController, firstRun: 
 
     val languages = LanguageCatalog.all.filter { it.code != translation.code } + selected.filter { LanguageCatalog.byCode(it.code) == null }
     val shown = languages.filter { query.isBlank() || it.nameRu.contains(query.trim(), ignoreCase = true) || it.code.equals(query.trim(), true) }
-    val starterAvailable = translation.code == "ru" && selected.any { it.legacyTermKey != null }
+    val withStarter = selected.filter { Starter.has(it.code, translation.code) }
+    val withoutStarter = selected.filter { !Starter.has(it.code, translation.code) }
+    val starterAvailable = withStarter.isNotEmpty()
 
     Column(
         Modifier.fillMaxSize().statusBarsPadding().imePadding().verticalScroll(rememberScrollState()).padding(18.dp),
@@ -153,10 +156,28 @@ fun OnboardingScreen(container: AppContainer, nav: NavHostController, firstRun: 
             Text("Столько ответов в день засчитывает день в серию. Изменить можно в настройках.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        if (starterAvailable) {
-            Row(Modifier.fillMaxWidth().clickable { starter = !starter }, verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(starter, onCheckedChange = { starter = it })
-                Text("Добавить стартовый набор слов (30 слов для испанского/немецкого)")
+        if (selected.isNotEmpty()) {
+            SoftCard {
+                Text("Начинаем с нуля", style = MaterialTheme.typography.titleMedium)
+                Text("Новый курс пустой — никаких чужих слов. Для новичков есть стартовый словарь: сначала " +
+                    "приветствия, «я/ты» и вопросы, числа (около 28 слов), а потом по 5–10 слов из следующих тем: " +
+                    "семья, дом, еда, главные глаголы, простые описания.",
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (starterAvailable) {
+                    Row(Modifier.fillMaxWidth().clickable { starter = !starter }, verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(starter, onCheckedChange = { starter = it })
+                        Text("Добавить стартовый словарь: " + withStarter.joinToString(", ") { "${it.flag} ${it.nameRu}" })
+                    }
+                }
+                if (withoutStarter.isNotEmpty()) {
+                    Text(
+                        "Для " + withoutStarter.joinToString(", ") { "«${it.nameRu}»" } +
+                            (if (translation.code != "ru") " с переводом на «${translation.nameRu}»" else "") +
+                            " стартового словаря пока нет — курс начнётся пустым. Слова можно добавить вручную, списком или импортом JSON.",
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 6.dp),
+                    )
+                }
             }
         }
 
@@ -173,8 +194,11 @@ fun OnboardingScreen(container: AppContainer, nav: NavHostController, firstRun: 
                     val created = selected.map { lang ->
                         repo.createCourse(lang.code, lang.nameRu, lang.flag, translation.code, translation.nameRu)
                     }
+                    var startWith: String? = null
                     if (starter && starterAvailable) {
-                        created.filter { repo.hasStarter(it.spec) }.forEach { repo.importStarter(it.spec) }
+                        created.filter { repo.hasStarter(it.spec) }.forEach {
+                            if (repo.importStarter(it.spec) != null && startWith == null) startWith = it.id
+                        }
                     }
                     container.settings.update { s ->
                         s.copy(
@@ -185,6 +209,8 @@ fun OnboardingScreen(container: AppContainer, nav: NavHostController, firstRun: 
                     if (firstRun) {
                         nav.navigate(Routes.HOME) { popUpTo(Routes.ONBOARDING) { inclusive = true } }
                     } else nav.goHome()
+                    // Стартовый словарь добавлен — сразу к знакомству с первыми словами.
+                    startWith?.let { nav.navigate(Routes.learn(it)) }
                 } catch (e: Exception) {
                     toast("Не удалось создать курс: ${e.message}")
                 } finally { busy = false }

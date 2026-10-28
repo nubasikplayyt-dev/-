@@ -68,6 +68,29 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import app.lingvo.AppContainer
 import app.lingvo.core.Answer
+import app.lingvo.core.AnswerCheck
+import app.lingvo.core.AnswerChecker
+import app.lingvo.core.AutoResult
+import app.lingvo.core.DiffKind
+import app.lingvo.core.ReviewMode
+import app.lingvo.core.TaskType
+import app.lingvo.data.AnswerMeta
+import app.lingvo.data.SessionStatus
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import app.lingvo.core.CreatureDef
 import app.lingvo.core.DayRecord
 import app.lingvo.core.LanguageSpec
@@ -128,6 +151,7 @@ fun ReviewScreen(container: AppContainer, nav: NavHostController, lang: String) 
     suspend fun load(session: LearningSessionEntity?) {
         revealed = false
         if (session == null) { ui = ReviewUi.Empty(repo.nextDue(spec.code)); return }
+        if (session.status == SessionStatus.ENDED) { ui = ReviewUi.Empty(repo.nextDue(spec.code)); return }
         if (session.done >= session.total || session.queue.isBlank()) { ui = ReviewUi.Finished(session, lastDay); return }
         val headId = SessionProgress.decodeQueue(session.queue).first()
         val card = repo.cardForSession(headId)
@@ -143,14 +167,34 @@ fun ReviewScreen(container: AppContainer, nav: NavHostController, lang: String) 
         load(repo.startOrResumeSession(spec.code))
     }
 
-    fun answer(active: ReviewUi.Active, answer: Answer) {
+    // Синхронизация с островом: ответ из уведомления, капсулы или острова в приложении сразу
+    // меняет карточку и здесь. Свои ответы экран применяет сам (после короткой анимации).
+    val sessionId = (ui as? ReviewUi.Active)?.session?.id
+    LaunchedEffect(sessionId) {
+        if (sessionId == null) return@LaunchedEffect
+        repo.observeSession(sessionId).collect { s ->
+            if (busy) return@collect
+            val current = ui as? ReviewUi.Active ?: return@collect
+            val head = s?.let { SessionProgress.decodeQueue(it.queue).firstOrNull() }
+            if (s == null || s.status != SessionStatus.ACTIVE || head != current.card.id) {
+                if (s != null && s.done > current.session.done) feedback = null
+                load(s)
+            }
+        }
+    }
+
+    fun answer(active: ReviewUi.Active, answer: Answer, meta: AnswerMeta = AnswerMeta()) {
         if (busy) return
         busy = true
         haptic.performHapticFeedback(if (answer == Answer.REMEMBERED) HapticFeedbackType.TextHandleMove else HapticFeedbackType.LongPress)
         scope.launch {
             try {
                 val wasCompleted = lastDay?.completed ?: appState?.streak?.todayCompleted ?: false
-                val result = repo.answer(active.session.id, active.card.id, answer)
+                val result = repo.answer(active.session.id, active.card.id, answer, meta)
+                if (result == null) {
+                    // Эту карточку уже ответили в другом месте (остров) — просто показываем актуальную.
+                    load(repo.session(active.session.id)); return@launch
+                }
                 lastDay = result.day
                 if (!wasCompleted && result.day.completed) dayJustCompleted = true
                 feedback = answer
@@ -164,8 +208,13 @@ fun ReviewScreen(container: AppContainer, nav: NavHostController, lang: String) 
         }
     }
 
+    val reviewMode = settings.lang(spec.code).reviewMode
+    fun setMode(m: ReviewMode) {
+        scope.launch { container.settings.update { st -> st.withLang(spec.code) { it.copy(reviewMode = m) } } }
+    }
+
     Scaffold(containerColor = MaterialTheme.colorScheme.background) { padding ->
-        Column(Modifier.fillMaxSize().padding(padding)) {
+        Column(Modifier.fillMaxSize().padding(padding).imePadding()) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { nav.popBackStack() }) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Назад") }
                 Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
@@ -185,6 +234,12 @@ fun ReviewScreen(container: AppContainer, nav: NavHostController, lang: String) 
                             menu = false
                             active?.let { a -> scope.launch { repo.setSuspended(a.card.id, true); load(repo.startOrResumeSession(spec.code)) } }
                         })
+                        ReviewMode.entries.forEach { m ->
+                            DropdownMenuItem(
+                                text = { Text((if (m == reviewMode) "✓ " else "    ") + m.labelRu) },
+                                onClick = { menu = false; setMode(m) },
+                            )
+                        }
                         DropdownMenuItem(text = { Text("Завершить занятие") }, onClick = { menu = false; confirmEnd = true })
                     }
                 }
@@ -204,7 +259,20 @@ fun ReviewScreen(container: AppContainer, nav: NavHostController, lang: String) 
                 is ReviewUi.Finished -> FinishedView(spec, state.session, appState!!.streak.current, dayJustCompleted, appState!!.companion?.let { it.first to it.second }) {
                     nav.popBackStack()
                 }
-                is ReviewUi.Active -> ActiveCard(
+                is ReviewUi.Active -> if (reviewMode.taskFor(state.card.id, state.card.state.reps) == TaskType.TYPING) TypingCard(
+                    spec = spec,
+                    state = state,
+                    busy = busy,
+                    onSpeak = { container.speaker.speak(state.card.entry.displayTerm, spec)?.let(toast) },
+                    onSwitchToButtons = { setMode(ReviewMode.BUTTONS) },
+                    onConfirm = { check, correct, saveAlternative ->
+                        scope.launch {
+                            if (correct && saveAlternative && check.typed.isNotBlank()) repo.addAlternative(state.card.id, check.typed)
+                            answer(state, AnswerChecker.answerFor(correct),
+                                AnswerMeta(TaskType.TYPING, check.typed, check.result, confirmed = correct))
+                        }
+                    },
+                ) else ActiveCard(
                     spec = spec,
                     state = state,
                     direction = settings.lang(spec.code).direction,
@@ -267,13 +335,17 @@ fun SessionIsland(
             .semantics { contentDescription = "${spec.nameRu}: пройдено $done из $total, серия $streak" },
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (creature != null) CreatureArt(creature, 1, size = 30.dp, mood = if (feedback == Answer.FORGOT) Mood.CALM else Mood.HAPPY, animate = animate)
+        if (creature != null) CreatureArt(creature, 1, size = 30.dp, mood = when (feedback) {
+            Answer.FORGOT -> Mood.SUPPORT
+            Answer.REMEMBERED -> Mood.CHEER
+            null -> Mood.HAPPY
+        }, animate = animate)
         else Text(spec.flag, Modifier.padding(horizontal = 6.dp))
         Spacer(Modifier.width(6.dp))
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text("${spec.flag} $done/$total", color = Color.White, style = MaterialTheme.typography.labelLarge)
-                if (streak > 0) Text("  🔥$streak", color = Color(0xFFFFD166), style = MaterialTheme.typography.labelLarge)
+                if (streak > 0) Text("  🌍$streak", color = Color(0xFFFFD166), style = MaterialTheme.typography.labelLarge)
             }
             Spacer(Modifier.height(3.dp))
             Box(Modifier.width(110.dp).height(4.dp).clip(RoundedCornerShape(2.dp)).background(Color.White.copy(alpha = 0.25f))) {
@@ -408,9 +480,140 @@ private fun FinishedView(
             style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         AnimatedVisibility(dayCompleted, enter = scaleIn() + fadeIn(), exit = scaleOut() + fadeOut()) {
-            Text("День засчитан! Серия $streak 🔥", style = MaterialTheme.typography.titleLarge, color = Color(0xFFE8890C))
+            Text("День засчитан! Серия $streak 🌍", style = MaterialTheme.typography.titleLarge, color = Color(0xFFE8890C))
         }
         Text("Прогресс сохранён.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         BigActionButton("Готово", LocalGradients.current.mint, onClick = onDone)
+    }
+}
+
+/**
+ * Письменный режим: показан перевод, пользователь пишет слово и нажимает «Проверить».
+ * Автопроверка — только подсказка (пробелы, регистр там, где он не важен, сохранённые варианты;
+ * диакритика не игнорируется). Окончательно решает пользователь: «Ответ правильный» / «Ответ неправильный».
+ * Набранный текст и этап проверки переживают сворачивание и поворот экрана (rememberSaveable).
+ */
+@Composable
+private fun TypingCard(
+    spec: LanguageSpec,
+    state: ReviewUi.Active,
+    busy: Boolean,
+    onSpeak: () -> Unit,
+    onSwitchToButtons: () -> Unit,
+    onConfirm: (AnswerCheck, Boolean, Boolean) -> Unit,
+) {
+    val entry = state.card.entry
+    var typed by rememberSaveable(state.card.id) { mutableStateOf("") }
+    var checked by rememberSaveable(state.card.id) { mutableStateOf(false) }
+    var saveAlt by rememberSaveable(state.card.id) { mutableStateOf(false) }
+    val check = remember(checked, typed, state.card.id) { if (checked) AnswerChecker.check(typed, entry, spec) else null }
+    val focus = remember { FocusRequester() }
+    LaunchedEffect(state.card.id, checked) { if (!checked) runCatching { focus.requestFocus() } }
+
+    Column(
+        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Column(
+            Modifier.fillMaxWidth().shadow(8.dp, RoundedCornerShape(26.dp), spotColor = Color(0x333D5AFE))
+                .clip(RoundedCornerShape(26.dp)).background(MaterialTheme.colorScheme.surface).padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text("Напишите на языке «${spec.nameRu}»", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(entry.translation, style = CardTermStyle)
+            if (spec.articles.isNotEmpty() && entry.article.isNotEmpty() && !checked) {
+                Text("Вместе с артиклем.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        if (check == null) {
+            OutlinedTextField(
+                value = typed,
+                onValueChange = { typed = it },
+                modifier = Modifier.fillMaxWidth().focusRequester(focus),
+                label = { Text("Ваш ответ") },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false, imeAction = ImeAction.Done,
+                ),
+                keyboardActions = KeyboardActions(onDone = { checked = true }),
+                textStyle = MaterialTheme.typography.titleLarge,
+            )
+            BigActionButton("Проверить", LocalGradients.current.hero, icon = Icons.Filled.Check, enabled = !busy) { checked = true }
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                TextButton(onClick = { typed = ""; checked = true }) { Text("Не знаю — показать") }
+                TextButton(onClick = onSwitchToButtons) { Text("К кнопкам «Помню»") }
+            }
+        } else {
+            ConfirmCard(check, entry, saveAlt, { saveAlt = it }, onSpeak)
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
+                ConfirmButton("Ответ неправильный", false, !busy, Modifier.weight(1f)) { onConfirm(check, false, false) }
+                ConfirmButton("Ответ правильный", true, !busy, Modifier.weight(1f)) { onConfirm(check, true, saveAlt) }
+            }
+            if (!check.result.looksCorrect) {
+                Text(
+                    "Решаете вы: если ваш вариант тоже верен — нажмите «Ответ правильный».",
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        Spacer(Modifier.height(6.dp))
+    }
+}
+
+@Composable
+private fun ConfirmCard(check: AnswerCheck, entry: app.lingvo.core.VocabEntry, saveAlt: Boolean, onSaveAlt: (Boolean) -> Unit, onSpeak: () -> Unit) {
+    val ok = check.result.looksCorrect
+    val tone = if (ok) Color(0xFF1FB87F) else if (check.result == AutoResult.WRONG || check.result == AutoResult.EMPTY) Color(0xFFFF8A5B) else Color(0xFFE8A20C)
+    Column(
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(24.dp)).background(MaterialTheme.colorScheme.surface)
+            .border(2.dp, tone.copy(alpha = 0.6f), RoundedCornerShape(24.dp)).padding(18.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Text(check.result.labelRu, style = MaterialTheme.typography.titleMedium, color = tone)
+        Text("Твой ответ", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (check.typed.isEmpty()) Text("—", style = MaterialTheme.typography.titleLarge)
+        else Text(
+            buildAnnotatedString {
+                check.diff.forEach { part ->
+                    when (part.kind) {
+                        DiffKind.SAME -> append(part.text)
+                        DiffKind.WRONG -> withStyle(SpanStyle(color = Color(0xFFE8590C), textDecoration = TextDecoration.Underline)) { append(part.text) }
+                        DiffKind.EXTRA -> withStyle(SpanStyle(color = Color(0xFFE8590C), textDecoration = TextDecoration.LineThrough)) { append(part.text) }
+                        DiffKind.MISSING -> withStyle(SpanStyle(color = Color(0xFF1FB87F), fontWeight = FontWeight.Bold)) { append(part.text) }
+                    }
+                }
+            },
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.semantics { contentDescription = "Ваш ответ: ${check.typed}" },
+        )
+        Text("Ожидаемый вариант", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        TermHeader(entry, onSpeak)
+        if (entry.transcription.isNotEmpty()) Text(entry.transcription, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (entry.alternatives.isNotEmpty()) {
+            Text("Тоже подходит: " + entry.alternatives.joinToString(", "), style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        if (!ok && check.typed.isNotEmpty()) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { onSaveAlt(!saveAlt) }) {
+                Checkbox(saveAlt, onSaveAlt)
+                Text("Мой вариант тоже верный — запомнить его", style = MaterialTheme.typography.bodyMedium)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ConfirmButton(text: String, correct: Boolean, enabled: Boolean, modifier: Modifier, onClick: () -> Unit) {
+    val brush = if (correct) Brush.linearGradient(listOf(Color(0xFF3DD68C), Color(0xFF1FB87F)))
+    else Brush.linearGradient(listOf(Color(0xFFFF8A7A), Color(0xFFFF5A5F)))
+    Box(
+        modifier.heightIn(min = 64.dp).clip(RoundedCornerShape(22.dp)).background(brush).clickable(enabled = enabled, onClick = onClick).padding(10.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(if (correct) Icons.Filled.Check else Icons.Filled.Close, null, tint = Color.White, modifier = Modifier.size(22.dp))
+            Spacer(Modifier.width(6.dp))
+            Text(text, color = Color.White, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+        }
     }
 }

@@ -1,19 +1,20 @@
 package app.lingvo.island
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.provider.Settings
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import app.lingvo.core.LanguageSpec
+import app.lingvo.core.Answer
 import app.lingvo.core.Creatures
-import app.lingvo.core.SessionProgress
-import app.lingvo.core.SessionText
 import app.lingvo.data.AppSettings
-import app.lingvo.data.CapsuleContent
-import app.lingvo.data.LearningSessionEntity
+import app.lingvo.data.IslandState
 import app.lingvo.data.LingvoRepository
+import app.lingvo.data.SessionStatus
 import app.lingvo.notify.Notifications
+import app.lingvo.ui.components.CreaturePainter
+import app.lingvo.ui.components.Mood
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,9 +24,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * Компактный интерфейс активной сессии («Dynamic Island»-подобный):
- *  уровень A — одно обновляемое уведомление с прогрессом (Live Update на Android 16+);
- *  уровень B — необязательная плавающая капсула поверх других приложений.
+ * «Остров» занятия — компактный интерфейс в стиле Dynamic Island, который действительно работает:
+ *  - уведомление (Live Update на Android 16+): существо, текущее слово, прогресс, «Не помню» / «Помню»;
+ *  - необязательная плавающая капсула поверх других приложений — то же самое, раскрывается по нажатию;
+ *  - остров внутри приложения (рисует Compose, см. ui/InAppIsland.kt).
+ *
+ * Все три читают одно состояние [LingvoRepository.observeIsland] и отвечают через
+ * [LingvoRepository.answer], который засчитывает ответ только для текущей карточки —
+ * поэтому они всегда синхронны с экраном повторения, и двойного счёта не бывает.
  * Работает только по событиям базы данных — без polling, wake lock и постоянного сервиса.
  */
 class IslandController(
@@ -33,11 +39,15 @@ class IslandController(
     private val repo: LingvoRepository,
     private val scope: CoroutineScope,
 ) {
-    /** Язык → прогресс (done), при котором пользователь нажал «Отложить». */
-    private val snoozed = MutableStateFlow<Map<String, Int>>(emptyMap())
+    /** ID сессии → прогресс (done), при котором пользователь нажал «Отложить». */
+    private val snoozed = MutableStateFlow<Map<Long, Int>>(emptyMap())
     private val foreground = MutableStateFlow(false)
-    private val overlay by lazy { CapsuleOverlay(context) }
-    private val shownLanguages = HashSet<String>()
+    /** Карточка, для которой в уведомлении уже показан перевод: sessionId to entryId. */
+    private val revealed = MutableStateFlow<Pair<Long, String>?>(null)
+    private val overlay by lazy { CapsuleOverlay(context, ::answerFromCapsule) }
+    private var shownSessionId: Long? = null
+    private var bitmapKey: String? = null
+    private var bitmap: Bitmap? = null
 
     fun start() {
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
@@ -45,89 +55,106 @@ class IslandController(
             override fun onStop(owner: LifecycleOwner) { foreground.value = false }
         })
         scope.launch {
-            combine(repo.observeActiveSessions(), repo.settings.flow, snoozed, foreground) { sessions, settings, sn, fg ->
-                State(sessions, settings, sn, fg)
-            }.collect { render(it) }
+            combine(repo.observeIsland(), repo.settings.flow, snoozed, foreground, revealed) { island, settings, sn, fg, rv ->
+                State(island, settings, sn, fg, rv)
+            }.collect { runCatching { render(it) } }
         }
     }
 
-    fun snooze(spec: LanguageSpec) {
+    fun snooze(sessionId: Long) {
         scope.launch {
-            val done = repo.activeSessions().firstOrNull { it.language == spec.code }?.done ?: 0
-            snoozed.update { it + (spec.code to done) }
-            Notifications.cancelSession(context, spec)
+            val done = repo.session(sessionId)?.done ?: 0
+            snoozed.update { it + (sessionId to done) }
         }
     }
+
+    fun reveal(sessionId: Long, entryId: String) { revealed.value = sessionId to entryId }
 
     fun hideCapsuleForNow() {
         scope.launch(Dispatchers.Main) { overlay.dismissUntilNextSession() }
     }
 
+    private fun answerFromCapsule(sessionId: Long, entryId: String, remembered: Boolean) {
+        scope.launch { repo.answer(sessionId, entryId, if (remembered) Answer.REMEMBERED else Answer.FORGOT) }
+    }
+
     private data class State(
-        val sessions: List<LearningSessionEntity>,
+        val island: IslandState?,
         val settings: AppSettings,
-        val snoozed: Map<String, Int>,
+        val snoozed: Map<Long, Int>,
         val foreground: Boolean,
+        val revealed: Pair<Long, String>?,
     )
 
+    private fun creatureBitmap(settings: AppSettings, mood: Mood): Bitmap? {
+        val def = Creatures.byId(settings.favoriteCreature) ?: Creatures.all.first()
+        val key = "${def.id}-$mood"
+        if (key != bitmapKey) {
+            val px = (64 * context.resources.displayMetrics.density).toInt()
+            bitmap = runCatching { CreaturePainter.bitmap(def, 1, mood, px) }.getOrNull()
+            bitmapKey = key
+        }
+        return bitmap
+    }
+
     private suspend fun render(s: State) {
-        val active = s.sessions.filter { it.done < it.total }.associateBy { it.language }
-        // Сбрасываем «отложено», если пользователь продолжил сессию или она закончилась.
-        val stillSnoozed = s.snoozed.filter { (lang, done) -> active[lang]?.done == done }
+        val island = s.island
+        val card = island?.card
+        // «Отложено» действует, пока пользователь не продвинулся в этой сессии.
+        val stillSnoozed = s.snoozed.filter { (id, done) -> island?.session?.id == id && island.session.done == done }
         if (stillSnoozed != s.snoozed) snoozed.value = stillSnoozed
 
-        val specs = repo.courses().map { it.spec }
-        val otherQueues = if (s.settings.capsuleContent == CapsuleContent.BOTH_QUEUES) {
-            SessionText.dueSummary(specs.map { it to repo.dueCount(it.code) }).ifEmpty { null }
-        } else null
-        val streak = runCatching { repo.streak().current }.getOrDefault(0)
-        val creature = Creatures.byId(s.settings.favoriteCreature)
-
-        for (spec in specs) {
-            val session = active[spec.code]
-            val show = session != null && s.settings.sessionNotification && spec.code !in stillSnoozed &&
-                Notifications.channelEnabled(context, Notifications.CHANNEL_SESSION)
-            if (show && session != null) {
-                val word = if (s.settings.showWordInNotification) {
-                    SessionProgress.decodeQueue(session.queue).firstOrNull()?.let { repo.cardForSession(it)?.entry?.displayTerm }
-                } else null
-                Notifications.showSession(
-                    context,
-                    Notifications.SessionInfo(spec, session.id, session.done, session.total, word, otherQueues, streak, creature?.name),
-                    s.settings,
-                )
-                shownLanguages += spec.code
-            } else if (spec.code in shownLanguages || session == null) {
-                Notifications.cancelSession(context, spec)
-                shownLanguages -= spec.code
-            }
+        if (island == null || card == null) {
+            // Сессии больше нет: если она закончилась сама (а не закрыта), показываем поздравление.
+            val finishedId = shownSessionId
+            shownSessionId = null
+            withContext(Dispatchers.Main) { overlay.hide() }
+            if (finishedId != null) {
+                val ses = repo.session(finishedId)
+                val course = ses?.let { repo.course(it.language) }
+                if (ses != null && course != null && ses.status == SessionStatus.FINISHED && s.settings.sessionNotification) {
+                    val def = Creatures.byId(s.settings.favoriteCreature)
+                    Notifications.showIslandFinished(context, course.spec, ses.done, ses.correct, creatureBitmap(s.settings, Mood.CHEER), def?.name)
+                } else Notifications.cancelIsland(context)
+            } else Notifications.cancelIsland(context)
+            return
         }
 
-        val current = s.sessions.firstOrNull { it.done < it.total }
-        val capsuleVisible = current != null && s.settings.capsuleEnabled && !s.foreground && canDrawOverlays(context)
-        val currentSpec = current?.let { c -> specs.firstOrNull { it.code == c.language } }
+        val spec = island.course.spec
+        val ses = island.session
+        val isRevealed = s.revealed == (ses.id to card.id)
+        val streak = runCatching { repo.streak().current }.getOrDefault(0)
+        val def = Creatures.byId(s.settings.favoriteCreature)
+        val showNotification = s.settings.sessionNotification && ses.id !in stillSnoozed &&
+            Notifications.channelEnabled(context, Notifications.CHANNEL_SESSION)
+        if (showNotification) {
+            Notifications.showIsland(
+                context,
+                Notifications.IslandInfo(
+                    spec = spec, sessionId = ses.id, entryId = card.id, word = card.displayTerm, translation = card.translation,
+                    revealed = isRevealed, done = ses.done, total = ses.total, streak = streak,
+                    creature = creatureBitmap(s.settings, Mood.HAPPY), creatureName = def?.name, answers = s.settings.islandAnswers,
+                ),
+                s.settings,
+            )
+        } else Notifications.cancelIsland(context)
+        shownSessionId = ses.id
+
+        val capsuleVisible = s.settings.capsuleEnabled && !s.foreground && canDrawOverlays(context)
+        val bmp = creatureBitmap(s.settings, Mood.HAPPY)
         withContext(Dispatchers.Main) {
-            if (capsuleVisible && current != null && currentSpec != null) {
-                val spec = currentSpec
-                val label = when (s.settings.capsuleContent) {
-                    CapsuleContent.SESSION -> "${spec.flag} ${current.done}/${current.total}"
-                    CapsuleContent.BOTH_QUEUES -> otherQueues ?: "${spec.flag} ${current.done}/${current.total}"
-                }
+            if (capsuleVisible) {
                 overlay.show(
                     CapsuleOverlay.Model(
-                        sessionId = current.id,
-                        language = spec.code,
-                        label = label,
-                        progress = if (current.total == 0) 0f else current.done.toFloat() / current.total,
-                        animate = s.settings.animations,
-                        streak = streak,
-                        colorA = (creature?.colorA ?: 0xFF5B3FD1).toInt(),
-                        colorB = (creature?.colorB ?: 0xFF2F6BFF).toInt(),
+                        sessionId = ses.id, entryId = card.id, language = spec.code,
+                        word = card.displayTerm, translation = card.translation,
+                        progressLabel = "${spec.flag} ${ses.done}/${ses.total}",
+                        progress = if (ses.total == 0) 0f else ses.done.toFloat() / ses.total,
+                        animate = s.settings.animations, creature = bmp, answers = s.settings.islandAnswers,
+                        colorA = (def?.colorB ?: 0xFF7C72E0).toInt(),
                     )
                 )
-            } else {
-                overlay.hide()
-            }
+            } else overlay.hide()
         }
     }
 

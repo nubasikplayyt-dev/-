@@ -10,6 +10,7 @@ import app.lingvo.core.VocabEntry
 import app.lingvo.data.AppDatabase
 import app.lingvo.data.LingvoRepository
 import app.lingvo.data.SettingsStore
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -71,10 +72,10 @@ class MigrationTest {
         }
 
         val room = Room.databaseBuilder(context, AppDatabase::class.java, name)
-            .addMigrations(AppDatabase.MIGRATION_1_2)
+            .addMigrations(AppDatabase.MIGRATION_1_2, AppDatabase.MIGRATION_2_3)
             .allowMainThreadQueries()
             .build()
-        // Открытие проверяет, что схема после миграции совпадает со схемой Room версии 2.
+        // Открытие проверяет, что схема после миграций 1→2→3 совпадает со схемой Room версии 3.
         val courses = room.courses().all()
         assertEquals(listOf("es", "de"), courses.map { it.id })
         assertEquals("Испанский", courses[0].name)
@@ -85,6 +86,9 @@ class MigrationTest {
         assertEquals(1, days.size)
         assertEquals(12, days[0].answers)
         assertNotNull("12 ответов ≥ цели 10 — день выполнен", days[0].completedAt)
+        // Новые поля версии 3 пусты у старых данных — это кнопочные ответы без транскрипции.
+        assertEquals(null, room.logs().all().first().taskType)
+        assertEquals("", room.entries().get("es-1")!!.toDomain().transcription)
         room.close()
     }
 }
@@ -115,11 +119,13 @@ class RepositoryScenarioTest {
         val session = repo.startOrResumeSession(course.id)!!
         assertEquals(5, session.total)
         var last = session
-        ids.forEach { id ->
+        repeat(5) {
             now += 1000
-            last = repo.answer(last.id, id, Answer.REMEMBERED)!!.session
+            val head = app.lingvo.core.SessionProgress.decodeQueue(last.queue).first()
+            last = repo.answer(last.id, head, Answer.REMEMBERED)!!.session
         }
         assertEquals(5, last.done)
+        assertTrue(ids.isNotEmpty())
         val streak = repo.streak()
         assertTrue("цель 5 ответов выполнена", streak.todayCompleted)
         assertEquals(1, streak.current)
@@ -149,6 +155,77 @@ class RepositoryScenarioTest {
         repo.restoreBackup(backup)
         assertEquals(2, repo.courses().size)
         assertTrue(repo.streak().todayCompleted)
+        db.close()
+    }
+}
+
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [34], application = android.app.Application::class)
+class IslandAndTypingTest {
+    private val context: Context = ApplicationProvider.getApplicationContext()
+
+    @Test
+    fun answer_counts_once_and_island_stays_in_sync() = runBlocking {
+        val db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).allowMainThreadQueries().build()
+        var now = 1_800_000_000_000L
+        val repo = LingvoRepository(context, db, SettingsStore(context), clock = { now }, zone = { ZoneId.of("UTC") })
+        val course = repo.createCourse("pt", "Португальский", "🇵🇹")
+        val ids = (1..3).map { i ->
+            val e = VocabEntry(repo.newId(course.spec), course.id, "palavra $i", "слово $i", createdAt = 0, updatedAt = 0)
+            repo.addEntry(e); repo.introduce(e.id); e.id
+        }
+        val session = repo.startOrResumeSession(course.id)!!
+        val island = repo.observeIsland().first()!!
+        val head = app.lingvo.core.SessionProgress.decodeQueue(session.queue).first()
+        assertEquals(head, island.card!!.id)
+
+        // Ответ из уведомления, затем тот же ответ из приложения (или повторная доставка) — засчитан один раз.
+        now += 1000
+        assertNotNull(repo.answer(session.id, head, Answer.REMEMBERED))
+        assertEquals(null, repo.answer(session.id, head, Answer.REMEMBERED))
+        assertEquals(1, db.logs().all().size)
+        assertEquals(1, db.daily().all().single().answers)
+        // Остров сразу показывает следующую карточку.
+        val next = repo.observeIsland().first()!!
+        assertTrue(next.card!!.id != head || next.session.done == 1)
+        assertEquals(1, next.session.done)
+
+        // Письменный ответ: сохраняются тип, текст, автопроверка и ручное подтверждение.
+        val head2 = app.lingvo.core.SessionProgress.decodeQueue(next.session.queue).first()
+        now += 1000
+        repo.answer(next.session.id, head2, app.lingvo.core.AnswerChecker.answerFor(true),
+            app.lingvo.data.AnswerMeta(app.lingvo.core.TaskType.TYPING, "palavra x", app.lingvo.core.AutoResult.CLOSE, confirmed = true))
+        val log = db.logs().all().last()
+        assertEquals("TYPING", log.taskType)
+        assertEquals("palavra x", log.typedAnswer)
+        assertEquals("CLOSE", log.autoResult)
+        assertEquals(1, log.confirmed)
+        assertEquals(3, log.rating) // «Ответ правильный» → GOOD
+
+        // Признанный верным вариант становится допустимым.
+        repo.addAlternative(head2, "palavra x")
+        assertEquals(listOf("palavra x"), db.entries().get(head2)!!.toDomain().alternatives)
+        assertTrue(ids.size == 3)
+        db.close()
+    }
+
+    @Test
+    fun starter_dictionary_is_added_gradually() = runBlocking {
+        val db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).allowMainThreadQueries().build()
+        val repo = LingvoRepository(context, db, SettingsStore(context), clock = { 1_800_000_000_000L }, zone = { ZoneId.of("UTC") })
+        val fr = repo.createCourse("fr", "Французский", "🇫🇷")
+        assertTrue(repo.hasStarter(fr.spec))
+        val first = repo.importStarter(fr.spec)!!
+        assertTrue("первая порция 20–30 слов", first.newEntries.size in 20..30)
+        val pending = repo.pendingStarterBlocks(fr.spec)
+        assertEquals(5, pending.size)
+        val next = repo.importStarter(fr.spec, 1)!!
+        assertTrue(next.newEntries.size in 5..10)
+        assertEquals(4, repo.pendingStarterBlocks(fr.spec).size)
+        // Честно: для языка без набора ничего не добавляется.
+        val sw = repo.createCourse("sw", "Суахили", "🌍")
+        assertTrue(!repo.hasStarter(sw.spec))
+        assertEquals(null, repo.importStarter(sw.spec))
         db.close()
     }
 }

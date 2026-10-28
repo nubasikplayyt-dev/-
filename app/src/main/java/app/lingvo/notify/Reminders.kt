@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import app.lingvo.core.Answer
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
@@ -150,9 +151,24 @@ class NotificationActionReceiver : BroadcastReceiver() {
                     }
                     ACTION_SNOOZE_SESSION -> {
                         // Сессия сохраняется; уведомление скрывается и вернётся напоминанием через 30 минут.
-                        val lang = intent.getStringExtra(EXTRA_LANGUAGE)?.let { app.container.repository.spec(it) }
-                        lang?.let { app.container.island.snooze(it) }
+                        val id = intent.getLongExtra(EXTRA_SESSION_ID, -1)
+                        if (id > 0) app.container.island.snooze(id)
                         ReminderScheduler.snooze(context, 30)
+                    }
+                    ACTION_ANSWER -> {
+                        // Ответ из острова: засчитывается, только если это всё ещё текущая карточка занятия
+                        // (повторное нажатие или ответ, уже данный в приложении, ничего не меняют).
+                        val id = intent.getLongExtra(EXTRA_SESSION_ID, -1)
+                        val entry = intent.getStringExtra(EXTRA_ENTRY_ID)
+                        if (id > 0 && entry != null) {
+                            val answer = if (intent.getBooleanExtra(EXTRA_REMEMBERED, false)) Answer.REMEMBERED else Answer.FORGOT
+                            app.container.repository.answer(id, entry, answer)
+                        }
+                    }
+                    ACTION_REVEAL -> {
+                        val id = intent.getLongExtra(EXTRA_SESSION_ID, -1)
+                        val entry = intent.getStringExtra(EXTRA_ENTRY_ID)
+                        if (id > 0 && entry != null) app.container.island.reveal(id, entry)
                     }
                     ACTION_END_SESSION -> {
                         val id = intent.getLongExtra(EXTRA_SESSION_ID, -1)
@@ -170,6 +186,10 @@ class NotificationActionReceiver : BroadcastReceiver() {
         const val ACTION_SNOOZE_REMINDER = "app.lingvo.action.SNOOZE_REMINDER"
         const val ACTION_SNOOZE_SESSION = "app.lingvo.action.SNOOZE_SESSION"
         const val ACTION_END_SESSION = "app.lingvo.action.END_SESSION"
+        const val ACTION_ANSWER = "app.lingvo.action.ANSWER"
+        const val ACTION_REVEAL = "app.lingvo.action.REVEAL"
+        const val EXTRA_ENTRY_ID = "entry_id"
+        const val EXTRA_REMEMBERED = "remembered"
         const val EXTRA_SESSION_ID = "session_id"
         const val EXTRA_LANGUAGE = "language"
     }

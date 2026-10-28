@@ -1,5 +1,6 @@
 package app.lingvo.ui.screens
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -95,16 +96,30 @@ fun LanguageScreen(container: AppContainer, nav: NavHostController, lang: String
                 },
                 icon = Icons.Filled.School, enabled = o.newLeftToday > 0,
             ) { nav.navigate(Routes.learn(course.id)) }
-            if (o.total < 30 && container.repository.hasStarter(spec)) {
-                BigActionButton("Добавить стартовый набор", g.mint, subtitle = "30 полезных слов с примерами", icon = Icons.Filled.AutoAwesome, enabled = !busy) {
+            // Стартовый словарь — постепенно: следующий тематический блок (5–10 слов) по кнопке.
+            var pending by remember(spec.code) { mutableStateOf<List<app.lingvo.core.StarterBlock>?>(null) }
+            LaunchedEffect(spec.code, o.total) { pending = container.repository.pendingStarterBlocks(spec) }
+            val next = pending?.firstOrNull()
+            if (next != null) {
+                val first = o.total == 0
+                BigActionButton(
+                    if (first) "Добавить стартовый словарь" else "Следующие слова: ${next.title}", g.mint,
+                    subtitle = if (first) "Первые слова для новичков — приветствия, «я/ты», числа"
+                    else "${next.size} простых слов · осталось тем: ${pending!!.size}",
+                    icon = Icons.Filled.AutoAwesome, enabled = !busy,
+                ) {
                     busy = true
                     scope.launch {
-                        runCatching { container.repository.importStarter(spec) }
-                            .onSuccess { toast("Добавлено: ${it.newEntries.size}") }
+                        runCatching { container.repository.importStarter(spec, if (first) app.lingvo.core.Starter.FIRST_BLOCKS else 1) }
+                            .onSuccess { plan -> toast("Добавлено слов: ${plan?.newEntries?.size ?: 0}") }
                             .onFailure { toast("Не удалось: ${it.message}") }
+                        pending = container.repository.pendingStarterBlocks(spec)
                         busy = false
                     }
                 }
+            } else if (pending != null && !container.repository.hasStarter(spec) && o.total == 0) {
+                Text("Для этого языка стартового словаря пока нет. Добавьте слова вручную, списком или импортом.",
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             SoftCard(padding = 8.dp) {
                 Item(Icons.AutoMirrored.Filled.MenuBook, Palette.Ocean, "Мой словарь", "${o.total} карточек") { nav.navigate(Routes.dictionary(course.id)) }

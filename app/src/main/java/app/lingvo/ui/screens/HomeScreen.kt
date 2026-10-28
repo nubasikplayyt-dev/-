@@ -69,7 +69,7 @@ import app.lingvo.ui.components.GradientCard
 import app.lingvo.ui.components.Mood
 import app.lingvo.ui.components.ProgressRing
 import app.lingvo.ui.components.SoftCard
-import app.lingvo.ui.components.StreakGlobe
+import app.lingvo.ui.components.StreakEarth
 import app.lingvo.ui.navigateTab
 import app.lingvo.ui.rememberAppState
 import app.lingvo.ui.rememberToast
@@ -99,20 +99,11 @@ fun HomeScreen(container: AppContainer, nav: NavHostController) {
         Modifier.fillMaxSize().statusBarsPadding().verticalScroll(rememberScrollState()).padding(horizontal = 18.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        // Приветствие и серия
+        // Приветствие (серия — в карточке с Землёй ниже)
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(greeting(), style = MaterialTheme.typography.headlineMedium)
                 Text("Lingvo World", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-            Row(
-                Modifier.clip(RoundedCornerShape(50)).background(g.fire).clickable { nav.navigate(Routes.STREAK) }
-                    .padding(horizontal = 14.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text("🔥", style = MaterialTheme.typography.titleMedium)
-                Spacer(Modifier.width(4.dp))
-                Text("${s.streak.current}", color = Color.White, style = MaterialTheme.typography.titleMedium)
             }
         }
 
@@ -204,7 +195,7 @@ fun HomeScreen(container: AppContainer, nav: NavHostController) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             SoftCard(Modifier.weight(1f), onClick = { nav.navigate(Routes.STREAK) }, padding = 14.dp) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    StreakGlobe(s.streak.current, s.streak.todayCompleted, size = 64.dp, animate = s.settings.animations)
+                    StreakEarth(s.streak.current, s.streak.todayCompleted, size = 64.dp, animate = s.settings.animations)
                     Column(Modifier.padding(start = 6.dp)) {
                         Text("${s.streak.current}", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                         Text(SessionText.plural(s.streak.current, "день", "дня", "дней") + " подряд",
@@ -329,7 +320,7 @@ private fun companionLine(s: AppState): String {
     val name = s.companion?.first?.name ?: "Lingvo"
     return when {
         s.streak.todayCompleted -> "$name счастлив — так держать!"
-        s.streak.atRisk -> "$name ждёт: серия ${s.streak.current} 🔥 под угрозой"
+        s.streak.atRisk -> "$name ждёт: пара слов — и серия ${s.streak.current} продолжится"
         s.streak.todayAnswers > 0 -> "$name радуется: хороший темп!"
         else -> "$name готов к занятию"
     }

@@ -235,6 +235,15 @@ class LingvoRepository(
 
     suspend fun deleteEntry(id: String) = entries.delete(id)
 
+    /** Письменный режим: пользователь признал свой вариант верным — он становится допустимым для этой карточки. */
+    suspend fun addAlternative(id: String, variant: String) = db.withTransaction {
+        val e = entries.get(id) ?: return@withTransaction
+        val clean = Normalizer.clean(variant)
+        val list = VocabularyEntryEntity.splitList(e.alternatives.orEmpty())
+        if (clean.isEmpty() || list.any { it.equals(clean, ignoreCase = false) }) return@withTransaction
+        entries.update(listOf(e.copy(alternatives = VocabularyEntryEntity.joinList(list + clean), updatedAt = now(), locallyEdited = true)))
+    }
+
     suspend fun setSuspended(id: String, suspended: Boolean) = db.withTransaction {
         val st = reviews.get(id) ?: return@withTransaction
         reviews.upsert(st.copy(suspended = suspended))

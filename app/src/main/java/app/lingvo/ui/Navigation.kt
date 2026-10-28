@@ -2,7 +2,10 @@ package app.lingvo.ui
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
@@ -147,6 +150,11 @@ fun LingvoNavHost(
         containerColor = MaterialTheme.colorScheme.background,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
+          Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            // Остров занятия — над вкладками на любом экране, кроме самого занятия и знакомства со словами.
+            if (destination?.route !in setOf(Routes.REVIEW, Routes.LEARN, Routes.ONBOARDING, null)) {
+                InAppIsland(container, nav, if (currentTab == null) Modifier.navigationBarsPadding() else Modifier)
+            }
             if (currentTab != null) NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
                 Tab.entries.forEach { tab ->
                     NavigationBarItem(
@@ -158,6 +166,7 @@ fun LingvoNavHost(
                     )
                 }
             }
+          }
         },
     ) { padding ->
         NavHost(
