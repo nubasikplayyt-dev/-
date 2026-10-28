@@ -101,7 +101,6 @@ class CapsuleOverlay(
         // Только тап и вертикальный свайп; движения пальца НЕ двигают окно.
         v.setOnTouchListener { _, e ->
             when (e.actionMasked) {
-                MotionEvent.ACTION_OUTSIDE -> v.collapse()
                 MotionEvent.ACTION_DOWN -> { downX = e.rawX; downY = e.rawY; gesture = false }
                 MotionEvent.ACTION_MOVE -> {
                     val dy = e.rawY - downY
@@ -124,11 +123,14 @@ class CapsuleOverlay(
     private fun handleTap(v: IslandView, x: Float, y: Float) {
         val m = v.model ?: return
         when (v.hit(x, y)) {
-            IslandView.Hit.FORGOT -> { v.collapse(); onAnswer(m.sessionId, m.entryId, false) }
-            IslandView.Hit.REMEMBERED -> { v.collapse(); onAnswer(m.sessionId, m.entryId, true) }
+            // Карточка остаётся раскрытой: сразу показывается следующее слово, можно отвечать дальше.
+            IslandView.Hit.FORGOT -> { v.markAnswered(false); onAnswer(m.sessionId, m.entryId, false) }
+            IslandView.Hit.REMEMBERED -> { v.markAnswered(true); onAnswer(m.sessionId, m.entryId, true) }
+            IslandView.Hit.CLOSE -> dismissUntilNextSession()
+            IslandView.Hit.COLLAPSE -> v.collapse()
             IslandView.Hit.OPEN -> openSession(m)
             IslandView.Hit.PILL -> if (m.answers) v.expand() else openSession(m)
-            IslandView.Hit.NONE -> v.collapse()
+            IslandView.Hit.NONE -> Unit
         }
     }
 
@@ -145,7 +147,7 @@ class CapsuleOverlay(
      * которую плавно ведёт аниматор, — поэтому раскрытие и сворачивание согласованы, как у плеера.
      */
     class IslandView(context: Context) : View(context) {
-        enum class Hit { PILL, OPEN, FORGOT, REMEMBERED, NONE }
+        enum class Hit { PILL, OPEN, FORGOT, REMEMBERED, COLLAPSE, CLOSE, NONE }
 
         var model: Model? = null
             private set
@@ -176,10 +178,17 @@ class CapsuleOverlay(
             textSize = 15f * fs * d; color = 0xFFFFFFFF.toInt(); typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
             textAlign = Paint.Align.CENTER
         }
+        private val glyph = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            style = Paint.Style.STROKE; strokeCap = Paint.Cap.ROUND; color = 0xFFFFFFFF.toInt()
+        }
         private val rect = RectF()
         private val forgotRect = RectF()
         private val rememberedRect = RectF()
         private val openRect = RectF()
+        private val closeRect = RectF()
+        private val collapseRect = RectF()
+        private var answeredAt = 0L
+        private var answeredRemembered = false
 
         // Размеры пилюли и карточки.
         private val pillW get() = 290 * d
@@ -195,7 +204,8 @@ class CapsuleOverlay(
         private fun animateTo(value: Float) {
             if (target == value) return
             target = value
-            contentDescription = if (value == 1f) "Вопрос: ${model?.word}. Кнопки «Не помню» и «Помню». Свайп вверх — свернуть"
+            contentDescription = if (value == 1f) "Вопрос: ${model?.word}. Кнопки «Не помню» и «Помню». " +
+                "Остаётся открытым: свернуть — свайп вверх или кнопка «‒», закрыть — кнопка «×»"
             else "Остров занятия. Нажмите, чтобы ответить"
             expandAnim?.cancel()
             if (model?.animate == false) { t = value; requestLayout(); invalidate(); return }
@@ -218,18 +228,27 @@ class CapsuleOverlay(
 
         fun hit(x: Float, y: Float): Hit = when {
             t < 0.5f -> Hit.PILL
+            closeRect.contains(x, y) -> Hit.CLOSE
+            collapseRect.contains(x, y) -> Hit.COLLAPSE
             forgotRect.contains(x, y) -> Hit.FORGOT
             rememberedRect.contains(x, y) -> Hit.REMEMBERED
             openRect.contains(x, y) -> Hit.OPEN
             else -> Hit.NONE
         }
 
+        /** Короткая отметка «ответ принят», пока не пришло следующее слово. */
+        fun markAnswered(remembered: Boolean) {
+            answeredAt = System.currentTimeMillis()
+            answeredRemembered = remembered
+            invalidate()
+        }
+
         fun update(m: Model) {
             val previous = model
             model = m
             bar.color = m.colorA
-            // После ответа — новая карточка: остров сворачивается, счётчик и полоса обновляются плавно.
-            if (previous != null && previous.entryId != m.entryId) collapse()
+            // После ответа приходит новая карточка: капсула остаётся раскрытой, меняется только содержимое.
+            if (previous != null && previous.entryId != m.entryId) answeredAt = 0L
             progressAnim?.cancel()
             if (m.animate && previous != null && previous.progress != m.progress) {
                 progressAnim = ValueAnimator.ofFloat(shownProgress, m.progress).apply {
@@ -263,11 +282,14 @@ class CapsuleOverlay(
             val right = w - lerp(12 * d, 16 * d)
             val count = "${m.done}/${m.total}"
             val baseline = top + icon / 2 - (title.descent() + title.ascent()) / 2 - 2 * d
-            canvas.drawText(count, right, baseline, counter)
+            // В раскрытой карточке справа стоят кнопки «свернуть» и «закрыть» — счётчик сдвигается левее.
+            val controls = lerp(0f, 74 * d)
+            val countRight = right - controls
+            canvas.drawText(count, countRight, baseline, counter)
             // В пилюле центр оставлен пустым — там вырез камеры: название языка и существо слева от него,
             // счётчик справа. В раскрытой карточке (ниже выреза) название занимает всю ширину.
             val cameraGap = 26 * d
-            val titleRight = minOf(right - counter.measureText(count) - 8 * d, lerp(w / 2 - cameraGap, w))
+            val titleRight = minOf(countRight - counter.measureText(count) - 8 * d, lerp(w / 2 - cameraGap, w))
             canvas.drawText(TextUtils.ellipsize(m.courseTitle, title, titleRight - left, TextUtils.TruncateAt.END).toString(),
                 left, baseline, title)
             val barY = top + icon / 2 + lerp(8 * d, 12 * d)
@@ -279,16 +301,46 @@ class CapsuleOverlay(
 
             // Содержимое карточки проявляется во второй половине раскрытия.
             val a = ((t - 0.45f) / 0.55f).coerceIn(0f, 1f)
-            if (a <= 0f) { forgotRect.setEmpty(); rememberedRect.setEmpty(); return }
+            if (a <= 0f) {
+                forgotRect.setEmpty(); rememberedRect.setEmpty(); closeRect.setEmpty(); collapseRect.setEmpty(); return
+            }
             val alpha = (a * 255).toInt()
             question.alpha = alpha; hint.alpha = (a * 153).toInt(); btnText.alpha = alpha
+
+            // Свернуть в пилюлю и закрыть до следующего занятия — в правом верхнем углу карточки.
+            val iconR = 15 * d
+            val iconY = top + iconR
+            closeRect.set(w - 14 * d - iconR * 2, iconY - iconR, w - 14 * d, iconY + iconR)
+            collapseRect.set(closeRect.left - 10 * d - iconR * 2, iconY - iconR, closeRect.left - 10 * d, iconY + iconR)
+            // Шапка кликабельна только левее этих кнопок.
+            openRect.set(0f, 0f, collapseRect.left - 4 * d, top + icon + 4 * d)
+            glyph.alpha = (a * 200).toInt()
+            glyph.strokeWidth = 2.2f * d
+            // «‒» свернуть
+            canvas.drawLine(collapseRect.centerX() - 7 * d, collapseRect.centerY(),
+                collapseRect.centerX() + 7 * d, collapseRect.centerY(), glyph)
+            // «×» закрыть
+            canvas.drawLine(closeRect.centerX() - 6 * d, closeRect.centerY() - 6 * d,
+                closeRect.centerX() + 6 * d, closeRect.centerY() + 6 * d, glyph)
+            canvas.drawLine(closeRect.centerX() + 6 * d, closeRect.centerY() - 6 * d,
+                closeRect.centerX() - 6 * d, closeRect.centerY() + 6 * d, glyph)
+
             val qY = top + icon + 34 * d * fs
             canvas.drawText(TextUtils.ellipsize(m.word, question, w - 32 * d, TextUtils.TruncateAt.END).toString(), 16 * d, qY, question)
-            canvas.drawText(TextUtils.ellipsize("Вспомните перевод · нажмите на шапку, чтобы открыть занятие", hint, w - 32 * d,
-                TextUtils.TruncateAt.END).toString(), 16 * d, qY + 20 * d * fs, hint)
+            // Сразу после ответа — короткое подтверждение, потом снова обычная подсказка.
+            val justAnswered = System.currentTimeMillis() - answeredAt < 1500
+            val subtitle = when {
+                justAnswered && answeredRemembered -> "Засчитано: помню ✓"
+                justAnswered -> "Засчитано: повторим ещё раз"
+                else -> "Вспомните перевод · нажмите на шапку, чтобы открыть занятие"
+            }
+            canvas.drawText(TextUtils.ellipsize(subtitle, hint, w - 32 * d, TextUtils.TruncateAt.END).toString(),
+                16 * d, qY + 20 * d * fs, hint)
+            if (justAnswered) postInvalidateDelayed(1500)
             val bTop = qY + 34 * d * fs
             val bBottom = height - 14 * d
             if (bBottom - bTop < 24 * d) { forgotRect.setEmpty(); rememberedRect.setEmpty(); return }
+
             val mid = w / 2f
             forgotRect.set(14 * d, bTop, mid - 6 * d, bBottom)
             rememberedRect.set(mid + 6 * d, bTop, w - 14 * d, bBottom)
