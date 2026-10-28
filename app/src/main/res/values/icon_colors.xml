@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="icon_bg_bullseye">#FFD9E3F0</color>
+    <color name="icon_bg_champion">#FFE7F4EF</color>
+    <color name="icon_bg_chronicle">#FFE7EBFB</color>
+    <color name="icon_bg_classic">#FFE4EFE1</color>
+    <color name="icon_bg_crown_world">#FFDCE7ED</color>
+    <color name="icon_bg_days14">#FFF7F4EE</color>
+    <color name="icon_bg_days30">#FFE7EBD7</color>
+    <color name="icon_bg_dialog_star">#FFE8EDFC</color>
+    <color name="icon_bg_graduate">#FFF3F5E6</color>
+    <color name="icon_bg_horizons">#FFF8F5E4</color>
+    <color name="icon_bg_knowledge_cup">#FFD5EBCF</color>
+    <color name="icon_bg_level_up">#FFD8E7E0</color>
+    <color name="icon_bg_listener">#FFDBEEEE</color>
+    <color name="icon_bg_open_book">#FFE8E9E8</color>
+    <color name="icon_bg_plan">#FFF5F8F8</color>
+    <color name="icon_bg_sniper">#FFF7F8F2</color>
+    <color name="icon_bg_week7">#FFE3EFF8</color>
+    <color name="icon_bg_words100">#FFF9F4E5</color>
+    <color name="icon_bg_world">#FFFAF7F1</color>
+</resources>

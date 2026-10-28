@@ -55,12 +55,15 @@ object ReminderPlanner {
         dueTotal: Int,
         lastActivity: Long?,
         notificationsAllowed: Boolean,
+        goalCompleted: Boolean = false,
+        newAvailable: Int = 0,
     ): ReminderDecision = when {
         !config.enabled -> ReminderDecision(false, "Напоминания выключены")
         !notificationsAllowed -> ReminderDecision(false, "Нет разрешения на уведомления")
         now.dayOfWeek !in config.days -> ReminderDecision(false, "Сегодня напоминания не нужны")
         isQuiet(config, now.toLocalTime()) -> ReminderDecision(false, "Тихие часы")
-        dueTotal <= 0 -> ReminderDecision(false, "Нет карточек к повторению")
+        goalCompleted -> ReminderDecision(false, "Цель дня уже выполнена")
+        dueTotal + newAvailable <= 0 -> ReminderDecision(false, "Нет карточек к повторению и новых слов")
         lastActivity != null && now.toInstant().toEpochMilli() - lastActivity in 0 until RECENT_ACTIVITY_MS ->
             ReminderDecision(false, "Вы недавно занимались")
         else -> ReminderDecision(true, "Есть карточки к повторению")

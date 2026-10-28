@@ -11,7 +11,7 @@ class CanonicalFilesTest {
 
     @Test
     fun `canonical vocabulary files are valid and consistent`() {
-        for (spec in Languages.all) {
+        for (spec in Languages.legacy) {
             val f = file(spec)
             assertTrue(f.exists(), "Нет файла ${f.path}")
             val parsed = VocabularyJson.parse(f.readText(Charsets.UTF_8), spec, 0L)

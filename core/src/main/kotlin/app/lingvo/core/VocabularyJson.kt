@@ -47,13 +47,15 @@ object VocabularyJson {
 
     private fun knownKeys(spec: LanguageSpec) = setOf(
         "id", spec.termKey, "term", "word", "russian", "translation", spec.exampleKey, "example", "example_ru",
+        "example_translation",
         "part_of_speech", "article", "plural", "level", "tags", "notes", "source", "grammar_notes",
         "collocations", "verb_forms", "regional_usage", "created_at", "updated_at",
     )
 
     /**
      * Разбирает файл словаря.
-     * @param expected язык, выбранный пользователем. Если файл объявляет другой язык — ошибка.
+     * @param expected курс, выбранный пользователем. Если файл объявляет другой язык — ошибка.
+     *   null — курс определяется по полю "language" (или старым ключам "spanish"/"german").
      * @throws VocabularyFormatException если файл повреждён, пуст или относится к другому языку.
      */
     fun parse(text: String, expected: LanguageSpec?, now: Long): ParsedVocabulary {
@@ -69,6 +71,7 @@ object VocabularyJson {
 
         val entriesElement: JsonArray
         var declaredLang: String? = null
+        var declaredTranslation: String? = null
         var schema = VOCAB_SCHEMA_VERSION
         var updatedAt: Long? = null
         when (root) {
@@ -76,7 +79,8 @@ object VocabularyJson {
             is JsonObject -> {
                 val e = root["entries"] ?: throw VocabularyFormatException("В файле нет массива \"entries\".")
                 entriesElement = e as? JsonArray ?: throw VocabularyFormatException("Поле \"entries\" должно быть массивом.")
-                declaredLang = (root["language"] as? JsonPrimitive)?.takeIf { it.isString }?.content
+                declaredLang = (root["language"] as? JsonPrimitive)?.takeIf { it.isString }?.content?.trim()?.lowercase()
+                declaredTranslation = (root["translation_language"] as? JsonPrimitive)?.takeIf { it.isString }?.content?.trim()?.lowercase()
                 schema = (root["schema_version"] as? JsonPrimitive)?.intOrNull ?: VOCAB_SCHEMA_VERSION
                 updatedAt = IsoTime.parseOrNull((root["updated_at"] as? JsonPrimitive)?.contentOrEmpty())
             }
@@ -86,18 +90,21 @@ object VocabularyJson {
             throw VocabularyFormatException("Версия формата $schema новее поддерживаемой ($VOCAB_SCHEMA_VERSION). Обновите приложение.")
         }
 
-        val declaredSpec = declaredLang?.let {
-            Languages.byCode(it) ?: throw VocabularyFormatException("Неизвестный язык словаря: \"$it\".")
-        }
-        val inferredSpec = declaredSpec ?: inferLanguage(entriesElement)
+        val fileLang = declaredLang?.takeIf { it.isNotEmpty() } ?: inferLanguage(entriesElement)
         val spec = when {
-            expected == null -> inferredSpec
-                ?: throw VocabularyFormatException("Не удалось определить язык словаря. Выберите язык вручную.")
-            inferredSpec != null && inferredSpec.code != expected.code -> throw VocabularyFormatException(
-                "Файл содержит словарь «${inferredSpec.nameRu}», а для импорта выбран «${expected.nameRu}». " +
-                    "Выберите правильный язык."
+            expected == null -> fileLang?.let { LanguageSpec.forLanguage(it) }
+                ?: throw VocabularyFormatException("Не удалось определить язык словаря. Выберите курс вручную.")
+            fileLang != null && fileLang != expected.languageCode -> throw VocabularyFormatException(
+                "Файл содержит словарь «${LanguageCatalog.infoOrCustom(fileLang).nameRu}», а для импорта выбран курс " +
+                    "«${expected.nameRu}». Выберите подходящий курс или создайте новый."
             )
             else -> expected
+        }
+        if (declaredTranslation != null && declaredTranslation != spec.translationCode) {
+            throw VocabularyFormatException(
+                "Переводы в файле на языке «${LanguageCatalog.infoOrCustom(declaredTranslation).nameRu}», " +
+                    "а в курсе — на «${LanguageCatalog.infoOrCustom(spec.translationCode).nameRu}»."
+            )
         }
 
         val parsed = ArrayList<ParsedEntry>()
@@ -121,32 +128,43 @@ object VocabularyJson {
         return ParsedVocabulary(spec, schema, updatedAt, parsed, problems)
     }
 
-    private fun inferLanguage(entries: JsonArray): LanguageSpec? {
+    /** Язык по старым ключам выражения ("spanish" → es, "german" → de). */
+    private fun inferLanguage(entries: JsonArray): String? {
         for (el in entries) {
             val obj = el as? JsonObject ?: continue
-            Languages.all.firstOrNull { obj.containsKey(it.termKey) }?.let { return it }
+            LanguageCatalog.legacyKeys.entries.firstOrNull { obj.containsKey(it.key) }?.let { return it.value }
         }
         return null
     }
 
+    /** Код изучаемого языка в файле (без полного разбора) — для автоматического выбора курса. */
+    fun peekLanguage(text: String): String? = runCatching {
+        when (val root = json.parseToJsonElement(text.trim().removePrefix("\uFEFF"))) {
+            is JsonObject -> (root["language"] as? JsonPrimitive)?.content?.trim()?.lowercase()?.takeIf { it.isNotEmpty() }
+                ?: (root["entries"] as? JsonArray)?.let(::inferLanguage)
+            is JsonArray -> inferLanguage(root)
+            else -> null
+        }
+    }.getOrNull()
+
     private fun parseEntry(index: Int, obj: JsonObject, spec: LanguageSpec, now: Long): ParsedEntry {
         // Чужой язык внутри файла (например, поле "german" в испанском словаре).
-        Languages.all.filter { it.code != spec.code }.forEach { other ->
-            if (obj.containsKey(other.termKey) && !obj.containsKey(spec.termKey)) {
-                throw VocabularyFormatException("Запись относится к языку «${other.nameRu}».")
+        LanguageCatalog.legacyKeys.forEach { (key, lang) ->
+            if (lang != spec.languageCode && obj.containsKey(key) && !obj.containsKey(spec.termKey) && !obj.containsKey("term")) {
+                throw VocabularyFormatException("Запись относится к языку «${LanguageCatalog.infoOrCustom(lang).nameRu}».")
             }
         }
         val rawTerm = Normalizer.clean(obj.str(spec.termKey).ifEmpty { obj.str("term") }.ifEmpty { obj.str("word") })
-        val translation = Normalizer.clean(obj.str("russian").ifEmpty { obj.str("translation") })
-        if (rawTerm.isEmpty()) throw VocabularyFormatException("Нет обязательного поля \"${spec.termKey}\".")
-        if (translation.isEmpty()) throw VocabularyFormatException("Нет обязательного поля \"russian\" (перевод).")
+        val translation = Normalizer.clean(obj.str(spec.translationKey).ifEmpty { obj.str("russian") }.ifEmpty { obj.str("translation") })
+        if (rawTerm.isEmpty()) throw VocabularyFormatException("Нет обязательного поля \"${spec.termKey}\" (выражение).")
+        if (translation.isEmpty()) throw VocabularyFormatException("Нет обязательного поля \"${spec.translationKey}\" (перевод).")
 
         var article = Normalizer.clean(obj.str("article")).lowercase()
         if (article.isNotEmpty() && spec.articles.isNotEmpty() && article !in spec.articles) {
             throw VocabularyFormatException("Недопустимый артикль \"$article\" для языка «${spec.nameRu}».")
         }
         val pos = PartsOfSpeech.canonical(obj.str("part_of_speech"))
-        if (article.isEmpty() && spec.code == Languages.GERMAN.code && pos == PartsOfSpeech.NOUN) {
+        if (article.isEmpty() && spec.articles.isNotEmpty() && pos == PartsOfSpeech.NOUN) {
             article = Normalizer.detectArticle(rawTerm, spec)
         }
         val id = Normalizer.clean(obj.str("id"))
@@ -162,7 +180,7 @@ object VocabularyJson {
             term = rawTerm,
             translation = translation,
             exampleTarget = Normalizer.clean(obj.str(spec.exampleKey).ifEmpty { obj.str("example") }),
-            exampleRu = Normalizer.clean(obj.str("example_ru")),
+            exampleRu = Normalizer.clean(obj.str("example_ru").ifEmpty { obj.str("example_translation") }),
             partOfSpeech = pos,
             article = article,
             plural = Normalizer.clean(obj.str("plural")),
@@ -185,7 +203,8 @@ object VocabularyJson {
     fun serialize(spec: LanguageSpec, entries: List<VocabEntry>, updatedAt: Long): String {
         val root = buildJsonObject {
             put("schema_version", VOCAB_SCHEMA_VERSION)
-            put("language", spec.code)
+            put("language", spec.languageCode)
+            if (spec.translationCode != "ru") put("translation_language", spec.translationCode)
             put("updated_at", IsoTime.format(updatedAt))
             putJsonArray("entries") {
                 entries.sortedWith(compareBy<VocabEntry> { it.createdAt }.thenBy { it.id }).forEach { add(entryToJson(spec, it)) }
@@ -197,12 +216,12 @@ object VocabularyJson {
     fun entryToJson(spec: LanguageSpec, e: VocabEntry): JsonObject = buildJsonObject {
         put("id", e.id)
         put(spec.termKey, e.term)
-        put("russian", e.translation)
+        put(spec.translationKey, e.translation)
         if (spec.articles.isNotEmpty()) put("article", e.article)
-        if (spec.code == Languages.GERMAN.code || e.plural.isNotEmpty()) put("plural", e.plural)
+        if (spec.languageCode == "de" || e.plural.isNotEmpty()) put("plural", e.plural)
         put("part_of_speech", e.partOfSpeech)
         put(spec.exampleKey, e.exampleTarget)
-        put("example_ru", e.exampleRu)
+        put(if (spec.translationCode == "ru") "example_ru" else "example_translation", e.exampleRu)
         put("grammar_notes", e.grammarNotes)
         putJsonArray("collocations") { e.collocations.forEach { add(JsonPrimitive(it)) } }
         if (e.verbFormsJson.isNotEmpty()) {

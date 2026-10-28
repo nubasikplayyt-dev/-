@@ -18,6 +18,23 @@ enum class Rating(val value: Int, val labelRu: String) {
     }
 }
 
+/**
+ * Ответ в режиме двух кнопок. FSRS остаётся четырёхуровневым внутри; соответствие —
+ * рекомендованное авторами FSRS для бинарной оценки (pass/fail):
+ *   «Помню»    → [Rating.GOOD]  — стабильность растёт, интервал увеличивается;
+ *   «Не помню» → [Rating.AGAIN] — ошибка (lapse), переизучение через короткий шаг.
+ * Оценки HARD/EASY из истории старых версий продолжают корректно учитываться алгоритмом.
+ */
+enum class Answer(val labelRu: String, val rating: Rating) {
+    REMEMBERED("Помню", Rating.GOOD),
+    FORGOT("Не помню", Rating.AGAIN);
+
+    companion object {
+        /** Для статистики: оценка из истории считается «вспомнил», если это не AGAIN. */
+        fun of(rating: Rating): Answer = if (rating == Rating.AGAIN) FORGOT else REMEMBERED
+    }
+}
+
 enum class CardState { NEW, LEARNING, REVIEW, RELEARNING }
 
 /** Состояние карточки в алгоритме. Время — миллисекунды Unix. */
@@ -82,6 +99,8 @@ class Fsrs(val params: FsrsParams = FsrsParams()) {
         val raw = stability / FACTOR * (params.desiredRetention.pow(1.0 / DECAY) - 1.0)
         return raw.roundToLong().coerceIn(1L, params.maximumIntervalDays.toLong())
     }
+
+    fun review(card: SrsState, answer: Answer, now: Long): SrsState = review(card, answer.rating, now)
 
     fun review(card: SrsState, rating: Rating, now: Long): SrsState {
         val g = rating.value

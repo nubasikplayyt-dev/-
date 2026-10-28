@@ -18,12 +18,49 @@ data class BackupFile(
     @SerialName("review_states") val reviewStates: List<BackupReviewState>,
     @SerialName("review_history") val reviewHistory: List<BackupHistory>,
     val settings: Map<String, String> = emptyMap(),
+    /** С версии 2: языковые курсы. В копиях версии 1 курсы восстанавливаются из карточек (es, de). */
+    val courses: List<BackupCourse> = emptyList(),
+    /** С версии 2: достижения, области карты, существа, иконки. */
+    val unlocks: List<BackupUnlock> = emptyList(),
+    /** С версии 2: дневной прогресс для серий. */
+    @SerialName("daily_progress") val dailyProgress: List<BackupDay> = emptyList(),
 ) {
     companion object {
-        const val FORMAT = "lingvo-island-backup"
-        const val VERSION = 1
+        const val FORMAT = "lingvo-world-backup"
+        /** Копии старой версии (Lingvo Island) тоже принимаются. */
+        const val LEGACY_FORMAT = "lingvo-island-backup"
+        const val VERSION = 2
     }
 }
+
+@Serializable
+data class BackupCourse(
+    val id: String,
+    @SerialName("language_code") val languageCode: String,
+    val name: String,
+    val flag: String,
+    @SerialName("translation_code") val translationCode: String = "ru",
+    @SerialName("translation_name") val translationName: String = "Русский",
+    @SerialName("created_at") val createdAt: Long = 0,
+    @SerialName("sort_order") val sortOrder: Int = 0,
+)
+
+@Serializable
+data class BackupUnlock(
+    val kind: String,
+    @SerialName("item_id") val itemId: String,
+    @SerialName("unlocked_at") val unlockedAt: Long,
+    val level: Int = 1,
+)
+
+@Serializable
+data class BackupDay(
+    @SerialName("epoch_day") val epochDay: Long,
+    val answers: Int,
+    val remembered: Int,
+    val goal: Int,
+    @SerialName("completed_at") val completedAt: Long? = null,
+)
 
 @Serializable
 data class BackupEntry(
@@ -89,13 +126,16 @@ object BackupCodec {
         } catch (e: IllegalArgumentException) {
             throw VocabularyFormatException("Файл не является резервной копией приложения или повреждён.")
         }
-        if (backup.format != BackupFile.FORMAT) throw VocabularyFormatException("Это не резервная копия LingvoIsland.")
+        if (backup.format != BackupFile.FORMAT && backup.format != BackupFile.LEGACY_FORMAT) {
+            throw VocabularyFormatException("Это не резервная копия Lingvo World.")
+        }
         if (backup.formatVersion > BackupFile.VERSION) throw VocabularyFormatException("Резервная копия создана более новой версией приложения.")
         val ids = backup.entries.map { it.id }
         if (ids.size != ids.toSet().size) throw VocabularyFormatException("В резервной копии повторяются ID карточек.")
         val idSet = ids.toSet()
+        val courseIds = coursesOf(backup).map { it.id }.toSet()
         backup.entries.forEach {
-            if (Languages.byCode(it.language) == null) throw VocabularyFormatException("Неизвестный язык «${it.language}» в резервной копии.")
+            if (it.language !in courseIds) throw VocabularyFormatException("Карточка ${it.id} относится к неизвестному курсу «${it.language}».")
             if (it.term.isBlank() || it.translation.isBlank()) throw VocabularyFormatException("Карточка ${it.id} без выражения или перевода.")
         }
         backup.reviewStates.forEach {
@@ -103,5 +143,12 @@ object BackupCodec {
             runCatching { CardState.valueOf(it.state) }.getOrElse { _ -> throw VocabularyFormatException("Неизвестное состояние карточки: ${it.state}.") }
         }
         return backup
+    }
+
+    /** Курсы копии; для копий версии 1 — испанский и немецкий, если в них есть карточки этих языков. */
+    fun coursesOf(backup: BackupFile): List<BackupCourse> = backup.courses.ifEmpty {
+        backup.entries.map { it.language }.distinct().mapNotNull { Languages.legacyCourse(it) }.map {
+            BackupCourse(it.id, it.languageCode, it.name, it.flag)
+        }
     }
 }

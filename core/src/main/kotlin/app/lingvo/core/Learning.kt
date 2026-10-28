@@ -133,3 +133,46 @@ object SessionText {
         }
     }
 }
+
+/** Разнообразные дружелюбные тексты напоминаний. Выбор детерминирован днём, чтобы не повторяться подряд. */
+object ReminderTexts {
+    data class Context(
+        val counts: List<Pair<LanguageSpec, Int>>,
+        val streak: Int,
+        val atRisk: Boolean,
+        val todayAnswers: Int,
+        val goal: Int,
+        val creatureName: String?,
+    )
+
+    data class Text(val title: String, val body: String)
+
+    fun pick(ctx: Context, daySeed: Long): Text {
+        val nonZero = ctx.counts.filter { it.second > 0 }
+        val total = nonZero.sumOf { it.second }
+        val left = (ctx.goal - ctx.todayAnswers).coerceAtLeast(0)
+        val what = when {
+            nonZero.size == 1 -> "${nonZero[0].first.flag} ${nonZero[0].first.nameRu.lowercase()}"
+            nonZero.isNotEmpty() -> nonZero.joinToString(" · ") { "${it.first.flag} ${it.second}" }
+            else -> "новые слова"
+        }
+        val variants = buildList {
+            if (ctx.atRisk) {
+                add(Text("Серия ${ctx.streak} ${SessionText.plural(ctx.streak, "день", "дня", "дней")} ждёт тебя 🔥",
+                    "До цели дня — $left ${SessionText.plural(left, "ответ", "ответа", "ответов")}. Не дай огоньку погаснуть!"))
+                add(Text("Не потеряй серию 🔥 ${ctx.streak}", "Пара минут — и день засчитан. $what уже ждёт."))
+            }
+            if (ctx.creatureName != null) {
+                add(Text("${ctx.creatureName} скучает 🐾", "Загляни на пару минут: $what. Цель дня — ${ctx.goal}."))
+            }
+            if (total > 0) {
+                add(Text(SessionText.reminderTitle(nonZero), SessionText.reminderBody(nonZero)))
+                add(Text("Слова соскучились 💬", "К повторению: $total. Удели им ${SessionText.estimateMinutes(total)} мин."))
+                add(Text("Мир Lingvo World ждёт 🌍", "Ещё немного — и откроется новая область карты. Сегодня: $what."))
+            } else {
+                add(Text("Время новых слов ✨", "Познакомься с новыми словами — они сразу попадут в повторение."))
+            }
+        }
+        return variants[(Math.floorMod(daySeed, variants.size.toLong())).toInt()]
+    }
+}
