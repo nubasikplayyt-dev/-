@@ -3,15 +3,17 @@
 Android-приложение Lingvo World для изучения любых языков: языковые курсы с произвольной парой
 «изучаемый → перевод», интервальное повторение FSRS-5 с кнопками «Помню»/«Не помню», ежедневные серии,
 достижения, карта языкового мира, существа-полиглоты, альтернативные иконки, импорт JSON, напоминания
-и компактный «Dynamic Island»-подобный интерфейс (Live Update-уведомление + необязательная капсула).
+письменный режим с ручным подтверждением, стартовые словари для новичков и «остров» занятия
+(своя версия Dynamic Island: уведомление с кнопками ответа, остров в приложении и необязательная капсула).
 
 ## Структура
 
 | Путь | Что это |
 |---|---|
-| `vocabulary/spanish_vocabulary.json` | **Канонический испанский словарь** (встраивается в APK как стартовый набор) |
+| `vocabulary/spanish_vocabulary.json` | **Канонический испанский словарь** пользователя (пополняет Claude) |
 | `vocabulary/german_vocabulary.json` | **Канонический немецкий словарь** |
-| `vocabulary/<код>_vocabulary.json` | Словари других языков (например, `it_vocabulary.json`); тоже становятся стартовыми наборами |
+| `vocabulary/<код>_vocabulary.json` | Словари других языков (например, `it_vocabulary.json`) |
+| `app/src/main/assets/starters/` | Стартовые словари для новичков (`<язык>-<перевод>.json`), генерирует `tools/make_starters.py` — руками не править |
 | `design/icons/source/` | Исходные изображения иконок; `tools/make_icons.py` генерирует из них ресурсы |
 | `tools/vocab_tool.py` | Безопасное пополнение и проверка словарей (только stdlib Python) |
 | `core/` | Чистая Kotlin-логика без Android: курсы и языки, FSRS, разбор/валидация JSON, слияние при импорте, серии, достижения/карта/существа/иконки (`Game.kt`), напоминания, резервные копии. Тесты: `core/src/test` |
@@ -26,6 +28,7 @@ python3 tools/vocab_tool.py add de new.json       # добавить карто�
 python3 tools/vocab_tool.py add it new.json       # любой язык: создаст vocabulary/it_vocabulary.json
 python3 tools/vocab_tool.py stats
 python3 tools/make_icons.py                       # перегенерировать иконки из design/icons/source
+python3 tools/make_starters.py                    # перегенерировать стартовые словари
 ./gradlew :core:test -PcoreOnly=true              # тесты ядра (не нужен Android SDK)
 ./gradlew :core:test :app:testDebugUnitTest :app:lintDebug :app:assembleDebug   # полная сборка (нужен Android SDK)
 ```
@@ -121,6 +124,8 @@ CI (`.github/workflows/android.yml`) на каждый push проверяет �
 Испанский: те же поля, но `spanish` и `example_es`; `article` (`el`/`la`/`los`/`las`) — по желанию.
 Другие языки: `term` и `example_<код>` (например, `example_it`). Перевод не на русский: `translation`,
 `example_translation` и `"translation_language"` в шапке.
+Необязательные поля: `transcription` (чтение/произношение — пиньинь, ромадзи, латиница, IPA) и `alternatives`
+(массив допустимых вариантов для письменного режима).
 Неизвестные поля сохраняются приложением при импорте и экспорте.
 
 ## Правила для изменений кода
@@ -134,4 +139,8 @@ CI (`.github/workflows/android.yml`) на каждый push проверяет �
 - Серии считаются по локальной дате в момент ответа (`daily_progress`), открытие приложения ничего не записывает.
 - Новые достижения/области/существа добавляются в `core/Game.kt` без изменения схемы БД.
 - Не добавлять постоянные фоновые сервисы, wake lock, polling, скрытые API.
+- Ответы (кнопки, письменный режим, остров) — только через `LingvoRepository.answer()`: он засчитывает ответ
+  лишь для текущей карточки сессии. Остров читает `observeIsland()`; см. docs/DYNAMIC_ISLAND.md.
+- Существа и Земля рисуются `CreaturePainter`/`EarthPainter` (android.graphics) — один код для экранов, уведомления и капсулы.
+- Стартовые словари: новые языки добавлять в `tools/make_starters.py` и `Starter.available`; тест `StarterTest` проверяет файлы.
 - Тексты интерфейса и ошибок — на русском.
