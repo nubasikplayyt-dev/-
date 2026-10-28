@@ -1,0 +1,1206 @@
+{
+ "schema_version": 1,
+ "language": "nl",
+ "updated_at": "2026-10-28T00:00:00Z",
+ "starter": true,
+ "entries": [
+  {
+   "id": "start-nl-001",
+   "term": "hallo",
+   "russian": "привет",
+   "article": "",
+   "part_of_speech": "phrase",
+   "alternatives": [
+    "hoi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-002",
+   "term": "tot ziens",
+   "russian": "до свидания",
+   "article": "",
+   "part_of_speech": "phrase",
+   "alternatives": [
+    "doei"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-003",
+   "term": "ja",
+   "russian": "да",
+   "article": "",
+   "part_of_speech": "phrase",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-004",
+   "term": "nee",
+   "russian": "нет",
+   "article": "",
+   "part_of_speech": "phrase",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-005",
+   "term": "alstublieft",
+   "russian": "пожалуйста",
+   "article": "",
+   "part_of_speech": "phrase",
+   "alternatives": [
+    "alsjeblieft"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-006",
+   "term": "dank je",
+   "russian": "спасибо",
+   "article": "",
+   "part_of_speech": "phrase",
+   "alternatives": [
+    "dank u",
+    "bedankt"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-007",
+   "term": "sorry",
+   "russian": "извините",
+   "article": "",
+   "part_of_speech": "phrase",
+   "alternatives": [
+    "pardon"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-008",
+   "term": "goedemorgen",
+   "russian": "доброе утро",
+   "article": "",
+   "part_of_speech": "phrase",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-009",
+   "term": "ik",
+   "russian": "я",
+   "article": "",
+   "part_of_speech": "pronoun",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-010",
+   "term": "jij",
+   "russian": "ты",
+   "article": "",
+   "part_of_speech": "pronoun",
+   "alternatives": [
+    "je"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-011",
+   "term": "hij",
+   "russian": "он",
+   "article": "",
+   "part_of_speech": "pronoun",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-012",
+   "term": "zij",
+   "russian": "она",
+   "article": "",
+   "part_of_speech": "pronoun",
+   "alternatives": [
+    "ze"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-013",
+   "term": "wij",
+   "russian": "мы",
+   "article": "",
+   "part_of_speech": "pronoun",
+   "alternatives": [
+    "we"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-014",
+   "term": "wie?",
+   "russian": "кто?",
+   "article": "",
+   "part_of_speech": "pronoun",
+   "alternatives": [
+    "wie"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-015",
+   "term": "wat?",
+   "russian": "что?",
+   "article": "",
+   "part_of_speech": "pronoun",
+   "alternatives": [
+    "wat"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-016",
+   "term": "waar?",
+   "russian": "где?",
+   "article": "",
+   "part_of_speech": "adverb",
+   "alternatives": [
+    "waar"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-017",
+   "term": "wanneer?",
+   "russian": "когда?",
+   "article": "",
+   "part_of_speech": "adverb",
+   "alternatives": [
+    "wanneer"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-018",
+   "term": "hoe?",
+   "russian": "как?",
+   "article": "",
+   "part_of_speech": "adverb",
+   "alternatives": [
+    "hoe"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-019",
+   "term": "één",
+   "russian": "один",
+   "article": "",
+   "part_of_speech": "numeral",
+   "alternatives": [
+    "een"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-020",
+   "term": "twee",
+   "russian": "два",
+   "article": "",
+   "part_of_speech": "numeral",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-021",
+   "term": "drie",
+   "russian": "три",
+   "article": "",
+   "part_of_speech": "numeral",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-022",
+   "term": "vier",
+   "russian": "четыре",
+   "article": "",
+   "part_of_speech": "numeral",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-023",
+   "term": "vijf",
+   "russian": "пять",
+   "article": "",
+   "part_of_speech": "numeral",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-024",
+   "term": "zes",
+   "russian": "шесть",
+   "article": "",
+   "part_of_speech": "numeral",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-025",
+   "term": "zeven",
+   "russian": "семь",
+   "article": "",
+   "part_of_speech": "numeral",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-026",
+   "term": "acht",
+   "russian": "восемь",
+   "article": "",
+   "part_of_speech": "numeral",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-027",
+   "term": "negen",
+   "russian": "девять",
+   "article": "",
+   "part_of_speech": "numeral",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-028",
+   "term": "tien",
+   "russian": "десять",
+   "article": "",
+   "part_of_speech": "numeral",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-029",
+   "term": "de moeder",
+   "russian": "мама",
+   "article": "de",
+   "part_of_speech": "noun",
+   "alternatives": [
+    "mama"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-030",
+   "term": "de vader",
+   "russian": "папа",
+   "article": "de",
+   "part_of_speech": "noun",
+   "alternatives": [
+    "papa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-031",
+   "term": "de broer",
+   "russian": "брат",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-032",
+   "term": "de zus",
+   "russian": "сестра",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-033",
+   "term": "de vriend",
+   "russian": "друг",
+   "article": "de",
+   "part_of_speech": "noun",
+   "alternatives": [
+    "de vriendin"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-034",
+   "term": "de man",
+   "russian": "мужчина",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-035",
+   "term": "de vrouw",
+   "russian": "женщина",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-036",
+   "term": "het kind",
+   "russian": "ребёнок",
+   "article": "het",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-037",
+   "term": "het huis",
+   "russian": "дом",
+   "article": "het",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-038",
+   "term": "de deur",
+   "russian": "дверь",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-039",
+   "term": "de tafel",
+   "russian": "стол",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-040",
+   "term": "het bed",
+   "russian": "кровать",
+   "article": "het",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-041",
+   "term": "het boek",
+   "russian": "книга",
+   "article": "het",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-042",
+   "term": "de telefoon",
+   "russian": "телефон",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-043",
+   "term": "het raam",
+   "russian": "окно",
+   "article": "het",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-044",
+   "term": "het water",
+   "russian": "вода",
+   "article": "het",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-045",
+   "term": "het brood",
+   "russian": "хлеб",
+   "article": "het",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-046",
+   "term": "de koffie",
+   "russian": "кофе",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-047",
+   "term": "de thee",
+   "russian": "чай",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-048",
+   "term": "de melk",
+   "russian": "молоко",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-049",
+   "term": "de appel",
+   "russian": "яблоко",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-050",
+   "term": "de vis",
+   "russian": "рыба",
+   "article": "de",
+   "part_of_speech": "noun",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-051",
+   "term": "zijn",
+   "russian": "быть",
+   "article": "",
+   "part_of_speech": "verb",
+   "grammar_notes": "ik ben, jij bent, hij is",
+   "example_nl": "Ik ben student.",
+   "example_ru": "Я студент.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-052",
+   "term": "hebben",
+   "russian": "иметь",
+   "article": "",
+   "part_of_speech": "verb",
+   "grammar_notes": "ik heb, hij heeft",
+   "example_nl": "Ik heb een kat.",
+   "example_ru": "У меня есть кот.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-053",
+   "term": "willen",
+   "russian": "хотеть",
+   "article": "",
+   "part_of_speech": "verb",
+   "grammar_notes": "ik wil",
+   "example_nl": "Ik wil water.",
+   "example_ru": "Я хочу воды.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-054",
+   "term": "gaan",
+   "russian": "идти",
+   "article": "",
+   "part_of_speech": "verb",
+   "grammar_notes": "ik ga",
+   "example_nl": "Ik ga naar huis.",
+   "example_ru": "Я иду домой.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-055",
+   "term": "eten",
+   "russian": "есть (кушать)",
+   "article": "",
+   "part_of_speech": "verb",
+   "example_nl": "Wij eten brood.",
+   "example_ru": "Мы едим хлеб.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-056",
+   "term": "drinken",
+   "russian": "пить",
+   "article": "",
+   "part_of_speech": "verb",
+   "example_nl": "Ik drink thee.",
+   "example_ru": "Я пью чай.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-057",
+   "term": "spreken",
+   "russian": "говорить",
+   "article": "",
+   "part_of_speech": "verb",
+   "alternatives": [
+    "praten"
+   ],
+   "example_nl": "Hij spreekt langzaam.",
+   "example_ru": "Он говорит медленно.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-058",
+   "term": "weten",
+   "russian": "знать",
+   "article": "",
+   "part_of_speech": "verb",
+   "grammar_notes": "ik weet",
+   "example_nl": "Ik weet het niet.",
+   "example_ru": "Я не знаю.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-059",
+   "term": "groot",
+   "russian": "большой",
+   "article": "",
+   "part_of_speech": "adjective",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-060",
+   "term": "klein",
+   "russian": "маленький",
+   "article": "",
+   "part_of_speech": "adjective",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-061",
+   "term": "goed",
+   "russian": "хороший",
+   "article": "",
+   "part_of_speech": "adjective",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-062",
+   "term": "slecht",
+   "russian": "плохой",
+   "article": "",
+   "part_of_speech": "adjective",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-063",
+   "term": "nieuw",
+   "russian": "новый",
+   "article": "",
+   "part_of_speech": "adjective",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-064",
+   "term": "heet",
+   "russian": "горячий",
+   "article": "",
+   "part_of_speech": "adjective",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-065",
+   "term": "koud",
+   "russian": "холодный",
+   "article": "",
+   "part_of_speech": "adjective",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-nl-066",
+   "term": "mooi",
+   "russian": "красивый",
+   "article": "",
+   "part_of_speech": "adjective",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  }
+ ]
+}

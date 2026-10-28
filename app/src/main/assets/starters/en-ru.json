@@ -1,0 +1,1208 @@
+{
+ "schema_version": 1,
+ "language": "en",
+ "updated_at": "2026-10-28T00:00:00Z",
+ "starter": true,
+ "entries": [
+  {
+   "id": "start-en-001",
+   "term": "hello",
+   "russian": "привет",
+   "part_of_speech": "phrase",
+   "transcription": "/həˈləʊ/",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-002",
+   "term": "goodbye",
+   "russian": "до свидания",
+   "part_of_speech": "phrase",
+   "transcription": "/ɡʊdˈbaɪ/",
+   "alternatives": [
+    "bye"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-003",
+   "term": "yes",
+   "russian": "да",
+   "part_of_speech": "phrase",
+   "transcription": "/jes/",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-004",
+   "term": "no",
+   "russian": "нет",
+   "part_of_speech": "phrase",
+   "transcription": "/nəʊ/",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-005",
+   "term": "please",
+   "russian": "пожалуйста",
+   "part_of_speech": "phrase",
+   "transcription": "/pliːz/",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-006",
+   "term": "thank you",
+   "russian": "спасибо",
+   "part_of_speech": "phrase",
+   "transcription": "/ˈθæŋk juː/",
+   "alternatives": [
+    "thanks"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-007",
+   "term": "sorry",
+   "russian": "извините",
+   "part_of_speech": "phrase",
+   "transcription": "/ˈsɒri/",
+   "alternatives": [
+    "excuse me"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-008",
+   "term": "good morning",
+   "russian": "доброе утро",
+   "part_of_speech": "phrase",
+   "transcription": "/ɡʊd ˈmɔːnɪŋ/",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-009",
+   "term": "I",
+   "russian": "я",
+   "part_of_speech": "pronoun",
+   "transcription": "/aɪ/",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-010",
+   "term": "you",
+   "russian": "ты",
+   "part_of_speech": "pronoun",
+   "transcription": "/juː/",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-011",
+   "term": "he",
+   "russian": "он",
+   "part_of_speech": "pronoun",
+   "transcription": "/hiː/",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-012",
+   "term": "she",
+   "russian": "она",
+   "part_of_speech": "pronoun",
+   "transcription": "/ʃiː/",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-013",
+   "term": "we",
+   "russian": "мы",
+   "part_of_speech": "pronoun",
+   "transcription": "/wiː/",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-014",
+   "term": "who",
+   "russian": "кто?",
+   "part_of_speech": "pronoun",
+   "transcription": "/huː/",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-015",
+   "term": "what",
+   "russian": "что?",
+   "part_of_speech": "pronoun",
+   "transcription": "/wɒt/",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-016",
+   "term": "where",
+   "russian": "где?",
+   "part_of_speech": "adverb",
+   "transcription": "/weə/",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-017",
+   "term": "when",
+   "russian": "когда?",
+   "part_of_speech": "adverb",
+   "transcription": "/wen/",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-018",
+   "term": "how",
+   "russian": "как?",
+   "part_of_speech": "adverb",
+   "transcription": "/haʊ/",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-019",
+   "term": "one",
+   "russian": "один",
+   "part_of_speech": "numeral",
+   "transcription": "/wʌn/",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-020",
+   "term": "two",
+   "russian": "два",
+   "part_of_speech": "numeral",
+   "transcription": "/tuː/",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-021",
+   "term": "three",
+   "russian": "три",
+   "part_of_speech": "numeral",
+   "transcription": "/θriː/",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-022",
+   "term": "four",
+   "russian": "четыре",
+   "part_of_speech": "numeral",
+   "transcription": "/fɔː/",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-023",
+   "term": "five",
+   "russian": "пять",
+   "part_of_speech": "numeral",
+   "transcription": "/faɪv/",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-024",
+   "term": "six",
+   "russian": "шесть",
+   "part_of_speech": "numeral",
+   "transcription": "/sɪks/",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-025",
+   "term": "seven",
+   "russian": "семь",
+   "part_of_speech": "numeral",
+   "transcription": "/ˈsevn/",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-026",
+   "term": "eight",
+   "russian": "восемь",
+   "part_of_speech": "numeral",
+   "transcription": "/eɪt/",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-027",
+   "term": "nine",
+   "russian": "девять",
+   "part_of_speech": "numeral",
+   "transcription": "/naɪn/",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-028",
+   "term": "ten",
+   "russian": "десять",
+   "part_of_speech": "numeral",
+   "transcription": "/ten/",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-029",
+   "term": "mother",
+   "russian": "мама",
+   "part_of_speech": "noun",
+   "transcription": "/ˈmʌðə/",
+   "alternatives": [
+    "mom",
+    "mum"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-030",
+   "term": "father",
+   "russian": "папа",
+   "part_of_speech": "noun",
+   "transcription": "/ˈfɑːðə/",
+   "alternatives": [
+    "dad"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-031",
+   "term": "brother",
+   "russian": "брат",
+   "part_of_speech": "noun",
+   "transcription": "/ˈbrʌðə/",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-032",
+   "term": "sister",
+   "russian": "сестра",
+   "part_of_speech": "noun",
+   "transcription": "/ˈsɪstə/",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-033",
+   "term": "friend",
+   "russian": "друг",
+   "part_of_speech": "noun",
+   "transcription": "/frend/",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-034",
+   "term": "man",
+   "russian": "мужчина",
+   "part_of_speech": "noun",
+   "transcription": "/mæn/",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-035",
+   "term": "woman",
+   "russian": "женщина",
+   "part_of_speech": "noun",
+   "transcription": "/ˈwʊmən/",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-036",
+   "term": "child",
+   "russian": "ребёнок",
+   "part_of_speech": "noun",
+   "transcription": "/tʃaɪld/",
+   "alternatives": [
+    "kid"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-037",
+   "term": "house",
+   "russian": "дом",
+   "part_of_speech": "noun",
+   "transcription": "/haʊs/",
+   "alternatives": [
+    "home"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-038",
+   "term": "door",
+   "russian": "дверь",
+   "part_of_speech": "noun",
+   "transcription": "/dɔː/",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-039",
+   "term": "table",
+   "russian": "стол",
+   "part_of_speech": "noun",
+   "transcription": "/ˈteɪbl/",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-040",
+   "term": "bed",
+   "russian": "кровать",
+   "part_of_speech": "noun",
+   "transcription": "/bed/",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-041",
+   "term": "book",
+   "russian": "книга",
+   "part_of_speech": "noun",
+   "transcription": "/bʊk/",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-042",
+   "term": "phone",
+   "russian": "телефон",
+   "part_of_speech": "noun",
+   "transcription": "/fəʊn/",
+   "alternatives": [
+    "telephone"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-043",
+   "term": "window",
+   "russian": "окно",
+   "part_of_speech": "noun",
+   "transcription": "/ˈwɪndəʊ/",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-044",
+   "term": "water",
+   "russian": "вода",
+   "part_of_speech": "noun",
+   "transcription": "/ˈwɔːtə/",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-045",
+   "term": "bread",
+   "russian": "хлеб",
+   "part_of_speech": "noun",
+   "transcription": "/bred/",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-046",
+   "term": "coffee",
+   "russian": "кофе",
+   "part_of_speech": "noun",
+   "transcription": "/ˈkɒfi/",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-047",
+   "term": "tea",
+   "russian": "чай",
+   "part_of_speech": "noun",
+   "transcription": "/tiː/",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-048",
+   "term": "milk",
+   "russian": "молоко",
+   "part_of_speech": "noun",
+   "transcription": "/mɪlk/",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-049",
+   "term": "apple",
+   "russian": "яблоко",
+   "part_of_speech": "noun",
+   "transcription": "/ˈæpl/",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-050",
+   "term": "fish",
+   "russian": "рыба",
+   "part_of_speech": "noun",
+   "transcription": "/fɪʃ/",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-051",
+   "term": "to be",
+   "russian": "быть",
+   "part_of_speech": "verb",
+   "transcription": "/biː/",
+   "alternatives": [
+    "be"
+   ],
+   "grammar_notes": "I am, you are, he is",
+   "example_en": "I am a student.",
+   "example_ru": "Я студент.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-052",
+   "term": "to have",
+   "russian": "иметь",
+   "part_of_speech": "verb",
+   "transcription": "/hæv/",
+   "alternatives": [
+    "have"
+   ],
+   "grammar_notes": "he has",
+   "example_en": "I have a cat.",
+   "example_ru": "У меня есть кот.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-053",
+   "term": "to want",
+   "russian": "хотеть",
+   "part_of_speech": "verb",
+   "transcription": "/wɒnt/",
+   "alternatives": [
+    "want"
+   ],
+   "example_en": "I want some water.",
+   "example_ru": "Я хочу воды.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-054",
+   "term": "to go",
+   "russian": "идти",
+   "part_of_speech": "verb",
+   "transcription": "/ɡəʊ/",
+   "alternatives": [
+    "go"
+   ],
+   "example_en": "I am going home.",
+   "example_ru": "Я иду домой.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-055",
+   "term": "to eat",
+   "russian": "есть (кушать)",
+   "part_of_speech": "verb",
+   "transcription": "/iːt/",
+   "alternatives": [
+    "eat"
+   ],
+   "example_en": "We eat bread.",
+   "example_ru": "Мы едим хлеб.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-056",
+   "term": "to drink",
+   "russian": "пить",
+   "part_of_speech": "verb",
+   "transcription": "/drɪŋk/",
+   "alternatives": [
+    "drink"
+   ],
+   "example_en": "I drink tea.",
+   "example_ru": "Я пью чай.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-057",
+   "term": "to speak",
+   "russian": "говорить",
+   "part_of_speech": "verb",
+   "transcription": "/spiːk/",
+   "alternatives": [
+    "speak",
+    "talk",
+    "to talk"
+   ],
+   "example_en": "He speaks slowly.",
+   "example_ru": "Он говорит медленно.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-058",
+   "term": "to know",
+   "russian": "знать",
+   "part_of_speech": "verb",
+   "transcription": "/nəʊ/",
+   "alternatives": [
+    "know"
+   ],
+   "example_en": "I don't know.",
+   "example_ru": "Я не знаю.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-059",
+   "term": "big",
+   "russian": "большой",
+   "part_of_speech": "adjective",
+   "transcription": "/bɪɡ/",
+   "alternatives": [
+    "large"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-060",
+   "term": "small",
+   "russian": "маленький",
+   "part_of_speech": "adjective",
+   "transcription": "/smɔːl/",
+   "alternatives": [
+    "little"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-061",
+   "term": "good",
+   "russian": "хороший",
+   "part_of_speech": "adjective",
+   "transcription": "/ɡʊd/",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-062",
+   "term": "bad",
+   "russian": "плохой",
+   "part_of_speech": "adjective",
+   "transcription": "/bæd/",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-063",
+   "term": "new",
+   "russian": "новый",
+   "part_of_speech": "adjective",
+   "transcription": "/njuː/",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-064",
+   "term": "hot",
+   "russian": "горячий",
+   "part_of_speech": "adjective",
+   "transcription": "/hɒt/",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-065",
+   "term": "cold",
+   "russian": "холодный",
+   "part_of_speech": "adjective",
+   "transcription": "/kəʊld/",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-en-066",
+   "term": "beautiful",
+   "russian": "красивый",
+   "part_of_speech": "adjective",
+   "transcription": "/ˈbjuːtɪfl/",
+   "alternatives": [
+    "pretty"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  }
+ ]
+}

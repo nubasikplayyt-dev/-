@@ -18,7 +18,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         UnlockEntity::class,
         DailyProgressEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -35,7 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun create(context: Context): AppDatabase =
             Room.databaseBuilder(context, AppDatabase::class.java, "lingvo.db")
                 // Только явные миграции, без destructive fallback: прогресс пользователя нельзя терять.
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .build()
 
         /**
@@ -79,6 +79,21 @@ abstract class AppDatabase : RoomDatabase() {
                         "SELECT CAST(julianday(date(reviewed_at / 1000, 'unixepoch', 'localtime')) - 2440587.5 AS INTEGER) AS d, " +
                         "rating, reviewed_at FROM review_log) GROUP BY d"
                 )
+            }
+        }
+    
+        /**
+         * 2 → 3: письменный режим и транскрипция. Только добавление nullable-столбцов —
+         * существующие карточки, прогресс и история не меняются.
+         */
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `vocabulary_entry` ADD COLUMN `transcription` TEXT")
+                db.execSQL("ALTER TABLE `vocabulary_entry` ADD COLUMN `alternatives` TEXT")
+                db.execSQL("ALTER TABLE `review_log` ADD COLUMN `task_type` TEXT")
+                db.execSQL("ALTER TABLE `review_log` ADD COLUMN `typed_answer` TEXT")
+                db.execSQL("ALTER TABLE `review_log` ADD COLUMN `auto_result` TEXT")
+                db.execSQL("ALTER TABLE `review_log` ADD COLUMN `confirmed` INTEGER")
             }
         }
     }

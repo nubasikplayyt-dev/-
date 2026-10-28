@@ -12,6 +12,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import app.lingvo.core.AppIcons
 import app.lingvo.core.DailyStreak
 import app.lingvo.core.ReminderConfig
+import app.lingvo.core.ReviewMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -42,6 +43,8 @@ data class LanguageSettings(
     val newPerDay: Int = 10,
     val direction: Direction = Direction.MIXED,
     val remindersEnabled: Boolean = true,
+    /** Кнопки «Помню/Не помню», письменный ответ или вперемешку. */
+    val reviewMode: ReviewMode = ReviewMode.BUTTONS,
 )
 
 data class AppSettings(
@@ -55,6 +58,8 @@ data class AppSettings(
     val showWordInNotification: Boolean = false,
     val hideOnLockScreen: Boolean = true,
     val sessionNotification: Boolean = true,
+    /** Кнопки «Помню»/«Не помню» прямо в острове-уведомлении и капсуле. */
+    val islandAnswers: Boolean = true,
     val capsuleEnabled: Boolean = false,
     val capsuleContent: CapsuleContent = CapsuleContent.SESSION,
     val animations: Boolean = true,
@@ -80,6 +85,9 @@ class SettingsStore(private val context: Context) {
         const val NEW_PER_DAY = "new_per_day_"
         const val DIRECTION = "direction_"
         const val REMIND = "remind_"
+        const val MODE = "review_mode_"
+        fun mode(code: String) = stringPreferencesKey(MODE + code)
+        val islandAnswers = booleanPreferencesKey("island_answers")
         fun newPerDay(code: String) = intPreferencesKey(NEW_PER_DAY + code)
         fun direction(code: String) = stringPreferencesKey(DIRECTION + code)
         fun remind(code: String) = booleanPreferencesKey(REMIND + code)
@@ -121,7 +129,7 @@ class SettingsStore(private val context: Context) {
         val d = AppSettings()
         val names = p.asMap().keys.map { it.name }
         val courseIds = names.mapNotNull { n ->
-            listOf(K.NEW_PER_DAY, K.DIRECTION, K.REMIND).firstOrNull { n.startsWith(it) }?.let { n.removePrefix(it) }
+            listOf(K.NEW_PER_DAY, K.DIRECTION, K.REMIND, K.MODE).firstOrNull { n.startsWith(it) }?.let { n.removePrefix(it) }
         }.toSet()
         return AppSettings(
             languages = courseIds.associateWith { id ->
@@ -129,6 +137,7 @@ class SettingsStore(private val context: Context) {
                     newPerDay = p[K.newPerDay(id)] ?: 10,
                     direction = p[K.direction(id)]?.let { runCatching { Direction.valueOf(it) }.getOrNull() } ?: Direction.MIXED,
                     remindersEnabled = p[K.remind(id)] ?: true,
+                    reviewMode = p[K.mode(id)]?.let { runCatching { ReviewMode.valueOf(it) }.getOrNull() } ?: ReviewMode.BUTTONS,
                 )
             },
             dailyGoal = p[K.dailyGoal] ?: d.dailyGoal,
@@ -146,6 +155,7 @@ class SettingsStore(private val context: Context) {
             showWordInNotification = p[K.showWord] ?: false,
             hideOnLockScreen = p[K.hideLock] ?: true,
             sessionNotification = p[K.sessionNotification] ?: true,
+            islandAnswers = p[K.islandAnswers] ?: true,
             capsuleEnabled = p[K.capsule] ?: false,
             capsuleContent = p[K.capsuleContent]?.let { runCatching { CapsuleContent.valueOf(it) }.getOrNull() } ?: CapsuleContent.SESSION,
             animations = p[K.animations] ?: true,
@@ -170,7 +180,7 @@ class SettingsStore(private val context: Context) {
     /** Удаляет настройки курса (при удалении курса). */
     suspend fun removeCourse(id: String) {
         context.dataStore.edit {
-            it.remove(K.newPerDay(id)); it.remove(K.direction(id)); it.remove(K.remind(id))
+            it.remove(K.newPerDay(id)); it.remove(K.direction(id)); it.remove(K.remind(id)); it.remove(K.mode(id))
         }
     }
 
@@ -179,6 +189,7 @@ class SettingsStore(private val context: Context) {
             p[K.newPerDay(code)] = l.newPerDay
             p[K.direction(code)] = l.direction.name
             p[K.remind(code)] = l.remindersEnabled
+            p[K.mode(code)] = l.reviewMode.name
         }
         p[K.dailyGoal] = s.dailyGoal
         p[K.activeCourse] = s.activeCourseId
@@ -193,6 +204,7 @@ class SettingsStore(private val context: Context) {
         p[K.showWord] = s.showWordInNotification
         p[K.hideLock] = s.hideOnLockScreen
         p[K.sessionNotification] = s.sessionNotification
+        p[K.islandAnswers] = s.islandAnswers
         p[K.capsule] = s.capsuleEnabled
         p[K.capsuleContent] = s.capsuleContent.name
         p[K.animations] = s.animations

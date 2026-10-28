@@ -161,6 +161,7 @@ class ImportPlanner(
         Field("verb_forms", { it.verbFormsJson }, { e, v -> e.copy(verbFormsJson = v) }),
         Field("regional_usage", { it.regionalUsage }, { e, v -> e.copy(regionalUsage = v) }),
         Field("source", { it.source }, { e, v -> e.copy(source = v) }),
+        Field("transcription", { it.transcription }, { e, v -> e.copy(transcription = v) }),
         Field("notes", { it.notes }, { e, v -> e.copy(notes = v) }, personal = true),
     )
 
@@ -187,6 +188,8 @@ class ImportPlanner(
 
         val mergedTags = Normalizer.tags(before.tags + incoming.tags)
         if (mergedTags.size != before.tags.size) { after = after.copy(tags = mergedTags); changed += "tags" }
+        val mergedAlt = (before.alternatives + incoming.alternatives).distinctBy { Normalizer.clean(it) }
+        if (mergedAlt.size != before.alternatives.size) { after = after.copy(alternatives = mergedAlt); changed += "alternatives" }
         val mergedColl = (before.collocations + incoming.collocations)
             .distinctBy { Normalizer.key(it) }
         if (mergedColl.size != before.collocations.size) { after = after.copy(collocations = mergedColl); changed += "collocations" }

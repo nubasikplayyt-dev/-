@@ -1,0 +1,1392 @@
+{
+ "schema_version": 1,
+ "language": "ko",
+ "updated_at": "2026-10-28T00:00:00Z",
+ "starter": true,
+ "entries": [
+  {
+   "id": "start-ko-001",
+   "term": "안녕하세요",
+   "russian": "привет",
+   "part_of_speech": "phrase",
+   "transcription": "annyeonghaseyo",
+   "alternatives": [
+    "안녕",
+    "annyeonghaseyo"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-002",
+   "term": "안녕히 가세요",
+   "russian": "до свидания",
+   "part_of_speech": "phrase",
+   "transcription": "annyeonghi gaseyo",
+   "alternatives": [
+    "안녕히 계세요",
+    "annyeonghi gaseyo",
+    "annyeonghigaseyo"
+   ],
+   "grammar_notes": "уходящему; остающемуся — 안녕히 계세요",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-003",
+   "term": "네",
+   "russian": "да",
+   "part_of_speech": "phrase",
+   "transcription": "ne",
+   "alternatives": [
+    "예",
+    "ne"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-004",
+   "term": "아니요",
+   "russian": "нет",
+   "part_of_speech": "phrase",
+   "transcription": "aniyo",
+   "alternatives": [
+    "aniyo"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-005",
+   "term": "주세요",
+   "russian": "пожалуйста",
+   "part_of_speech": "phrase",
+   "transcription": "juseyo",
+   "alternatives": [
+    "juseyo"
+   ],
+   "grammar_notes": "«дайте, пожалуйста» (после названия вещи)",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-006",
+   "term": "감사합니다",
+   "russian": "спасибо",
+   "part_of_speech": "phrase",
+   "transcription": "gamsahamnida",
+   "alternatives": [
+    "고마워요",
+    "gamsahamnida"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-007",
+   "term": "죄송합니다",
+   "russian": "извините",
+   "part_of_speech": "phrase",
+   "transcription": "joesonghamnida",
+   "alternatives": [
+    "미안해요",
+    "joesonghamnida"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-008",
+   "term": "좋은 아침",
+   "russian": "доброе утро",
+   "part_of_speech": "phrase",
+   "transcription": "joeun achim",
+   "alternatives": [
+    "joeun achim",
+    "joeunachim"
+   ],
+   "grammar_notes": "дословно; чаще говорят 안녕하세요",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-009",
+   "term": "저",
+   "russian": "я",
+   "part_of_speech": "pronoun",
+   "transcription": "jeo",
+   "alternatives": [
+    "나",
+    "jeo"
+   ],
+   "grammar_notes": "вежливо; неформально — 나 na",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-010",
+   "term": "너",
+   "russian": "ты",
+   "part_of_speech": "pronoun",
+   "transcription": "neo",
+   "alternatives": [
+    "neo"
+   ],
+   "grammar_notes": "только с близкими",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-011",
+   "term": "그",
+   "russian": "он",
+   "part_of_speech": "pronoun",
+   "transcription": "geu",
+   "alternatives": [
+    "geu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-012",
+   "term": "그녀",
+   "russian": "она",
+   "part_of_speech": "pronoun",
+   "transcription": "geunyeo",
+   "alternatives": [
+    "geunyeo"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-013",
+   "term": "우리",
+   "russian": "мы",
+   "part_of_speech": "pronoun",
+   "transcription": "uri",
+   "alternatives": [
+    "uri"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-014",
+   "term": "누구",
+   "russian": "кто?",
+   "part_of_speech": "pronoun",
+   "transcription": "nugu",
+   "alternatives": [
+    "nugu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-015",
+   "term": "뭐",
+   "russian": "что?",
+   "part_of_speech": "pronoun",
+   "transcription": "mwo",
+   "alternatives": [
+    "무엇",
+    "mwo"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-016",
+   "term": "어디",
+   "russian": "где?",
+   "part_of_speech": "adverb",
+   "transcription": "eodi",
+   "alternatives": [
+    "eodi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-017",
+   "term": "언제",
+   "russian": "когда?",
+   "part_of_speech": "adverb",
+   "transcription": "eonje",
+   "alternatives": [
+    "eonje"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-018",
+   "term": "어떻게",
+   "russian": "как?",
+   "part_of_speech": "adverb",
+   "transcription": "eotteoke",
+   "alternatives": [
+    "eotteoke"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-019",
+   "term": "일",
+   "russian": "один",
+   "part_of_speech": "numeral",
+   "transcription": "il",
+   "alternatives": [
+    "하나",
+    "il"
+   ],
+   "grammar_notes": "китайско-корейский счёт; собственный — 하나 hana",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-020",
+   "term": "이",
+   "russian": "два",
+   "part_of_speech": "numeral",
+   "transcription": "i",
+   "alternatives": [
+    "둘",
+    "i"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-021",
+   "term": "삼",
+   "russian": "три",
+   "part_of_speech": "numeral",
+   "transcription": "sam",
+   "alternatives": [
+    "셋",
+    "sam"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-022",
+   "term": "사",
+   "russian": "четыре",
+   "part_of_speech": "numeral",
+   "transcription": "sa",
+   "alternatives": [
+    "넷",
+    "sa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-023",
+   "term": "오",
+   "russian": "пять",
+   "part_of_speech": "numeral",
+   "transcription": "o",
+   "alternatives": [
+    "다섯",
+    "o"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-024",
+   "term": "육",
+   "russian": "шесть",
+   "part_of_speech": "numeral",
+   "transcription": "yuk",
+   "alternatives": [
+    "여섯",
+    "yuk"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-025",
+   "term": "칠",
+   "russian": "семь",
+   "part_of_speech": "numeral",
+   "transcription": "chil",
+   "alternatives": [
+    "일곱",
+    "chil"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-026",
+   "term": "팔",
+   "russian": "восемь",
+   "part_of_speech": "numeral",
+   "transcription": "pal",
+   "alternatives": [
+    "여덟",
+    "pal"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-027",
+   "term": "구",
+   "russian": "девять",
+   "part_of_speech": "numeral",
+   "transcription": "gu",
+   "alternatives": [
+    "아홉",
+    "gu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-028",
+   "term": "십",
+   "russian": "десять",
+   "part_of_speech": "numeral",
+   "transcription": "sip",
+   "alternatives": [
+    "열",
+    "sip"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-029",
+   "term": "엄마",
+   "russian": "мама",
+   "part_of_speech": "noun",
+   "transcription": "eomma",
+   "alternatives": [
+    "어머니",
+    "eomma"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-030",
+   "term": "아빠",
+   "russian": "папа",
+   "part_of_speech": "noun",
+   "transcription": "appa",
+   "alternatives": [
+    "아버지",
+    "appa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-031",
+   "term": "형",
+   "russian": "старший брат",
+   "part_of_speech": "noun",
+   "transcription": "hyeong",
+   "alternatives": [
+    "오빠",
+    "hyeong"
+   ],
+   "grammar_notes": "старший брат (говорит мужчина); у девушки — 오빠 oppa",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-032",
+   "term": "언니",
+   "russian": "старшая сестра",
+   "part_of_speech": "noun",
+   "transcription": "eonni",
+   "alternatives": [
+    "누나",
+    "eonni"
+   ],
+   "grammar_notes": "старшая сестра (говорит девушка); у парня — 누나 nuna",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-033",
+   "term": "친구",
+   "russian": "друг",
+   "part_of_speech": "noun",
+   "transcription": "chingu",
+   "alternatives": [
+    "chingu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-034",
+   "term": "남자",
+   "russian": "мужчина",
+   "part_of_speech": "noun",
+   "transcription": "namja",
+   "alternatives": [
+    "namja"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-035",
+   "term": "여자",
+   "russian": "женщина",
+   "part_of_speech": "noun",
+   "transcription": "yeoja",
+   "alternatives": [
+    "yeoja"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-036",
+   "term": "아이",
+   "russian": "ребёнок",
+   "part_of_speech": "noun",
+   "transcription": "ai",
+   "alternatives": [
+    "ai"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-037",
+   "term": "집",
+   "russian": "дом",
+   "part_of_speech": "noun",
+   "transcription": "jip",
+   "alternatives": [
+    "jip"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-038",
+   "term": "문",
+   "russian": "дверь",
+   "part_of_speech": "noun",
+   "transcription": "mun",
+   "alternatives": [
+    "mun"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-039",
+   "term": "책상",
+   "russian": "стол",
+   "part_of_speech": "noun",
+   "transcription": "chaeksang",
+   "alternatives": [
+    "테이블",
+    "chaeksang"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-040",
+   "term": "침대",
+   "russian": "кровать",
+   "part_of_speech": "noun",
+   "transcription": "chimdae",
+   "alternatives": [
+    "chimdae"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-041",
+   "term": "책",
+   "russian": "книга",
+   "part_of_speech": "noun",
+   "transcription": "chaek",
+   "alternatives": [
+    "chaek"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-042",
+   "term": "핸드폰",
+   "russian": "телефон",
+   "part_of_speech": "noun",
+   "transcription": "haendeupon",
+   "alternatives": [
+    "전화",
+    "haendeupon"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-043",
+   "term": "창문",
+   "russian": "окно",
+   "part_of_speech": "noun",
+   "transcription": "changmun",
+   "alternatives": [
+    "changmun"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-044",
+   "term": "물",
+   "russian": "вода",
+   "part_of_speech": "noun",
+   "transcription": "mul",
+   "alternatives": [
+    "mul"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-045",
+   "term": "빵",
+   "russian": "хлеб",
+   "part_of_speech": "noun",
+   "transcription": "ppang",
+   "alternatives": [
+    "ppang"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-046",
+   "term": "커피",
+   "russian": "кофе",
+   "part_of_speech": "noun",
+   "transcription": "keopi",
+   "alternatives": [
+    "keopi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-047",
+   "term": "차",
+   "russian": "чай",
+   "part_of_speech": "noun",
+   "transcription": "cha",
+   "alternatives": [
+    "cha"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-048",
+   "term": "우유",
+   "russian": "молоко",
+   "part_of_speech": "noun",
+   "transcription": "uyu",
+   "alternatives": [
+    "uyu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-049",
+   "term": "사과",
+   "russian": "яблоко",
+   "part_of_speech": "noun",
+   "transcription": "sagwa",
+   "alternatives": [
+    "sagwa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-050",
+   "term": "생선",
+   "russian": "рыба",
+   "part_of_speech": "noun",
+   "transcription": "saengseon",
+   "alternatives": [
+    "물고기",
+    "saengseon"
+   ],
+   "grammar_notes": "как еда; живая — 물고기",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-051",
+   "term": "이다",
+   "russian": "быть",
+   "part_of_speech": "verb",
+   "transcription": "ida",
+   "alternatives": [
+    "ida"
+   ],
+   "grammar_notes": "связка: 학생이에요 — «(я) студент»",
+   "example_ko": "저는 학생이에요. (Jeoneun haksaeng-ieyo.)",
+   "example_ru": "Я студент.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-052",
+   "term": "있다",
+   "russian": "есть, имеется",
+   "part_of_speech": "verb",
+   "transcription": "itda",
+   "alternatives": [
+    "있어요",
+    "itda"
+   ],
+   "example_ko": "고양이가 있어요. (Goyang-iga isseoyo.)",
+   "example_ru": "У меня есть кот.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-053",
+   "term": "원하다",
+   "russian": "хотеть",
+   "part_of_speech": "verb",
+   "transcription": "wonhada",
+   "alternatives": [
+    "-고 싶다",
+    "wonhada"
+   ],
+   "grammar_notes": "«хочу сделать» — -고 싶어요",
+   "example_ko": "물 마시고 싶어요. (Mul masigo sipeoyo.)",
+   "example_ru": "Я хочу пить воду.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-054",
+   "term": "가다",
+   "russian": "идти",
+   "part_of_speech": "verb",
+   "transcription": "gada",
+   "alternatives": [
+    "가요",
+    "gada"
+   ],
+   "example_ko": "학교에 가요. (Hakgyoe gayo.)",
+   "example_ru": "Я иду в школу.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-055",
+   "term": "먹다",
+   "russian": "есть (кушать)",
+   "part_of_speech": "verb",
+   "transcription": "meokda",
+   "alternatives": [
+    "먹어요",
+    "meokda"
+   ],
+   "example_ko": "빵을 먹어요. (Ppang-eul meogeoyo.)",
+   "example_ru": "Я ем хлеб.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-056",
+   "term": "마시다",
+   "russian": "пить",
+   "part_of_speech": "verb",
+   "transcription": "masida",
+   "alternatives": [
+    "마셔요",
+    "masida"
+   ],
+   "example_ko": "차를 마셔요. (Chareul masyeoyo.)",
+   "example_ru": "Я пью чай.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-057",
+   "term": "말하다",
+   "russian": "говорить",
+   "part_of_speech": "verb",
+   "transcription": "malhada",
+   "alternatives": [
+    "말해요",
+    "malhada"
+   ],
+   "example_ko": "그는 천천히 말해요. (Geuneun cheoncheonhi malhaeyo.)",
+   "example_ru": "Он говорит медленно.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-058",
+   "term": "알다",
+   "russian": "знать",
+   "part_of_speech": "verb",
+   "transcription": "alda",
+   "alternatives": [
+    "알아요",
+    "alda"
+   ],
+   "example_ko": "몰라요. (Mollayo.)",
+   "example_ru": "Я не знаю.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-059",
+   "term": "크다",
+   "russian": "большой",
+   "part_of_speech": "adjective",
+   "transcription": "keuda",
+   "alternatives": [
+    "keuda"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-060",
+   "term": "작다",
+   "russian": "маленький",
+   "part_of_speech": "adjective",
+   "transcription": "jakda",
+   "alternatives": [
+    "jakda"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-061",
+   "term": "좋다",
+   "russian": "хороший",
+   "part_of_speech": "adjective",
+   "transcription": "jota",
+   "alternatives": [
+    "jota"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-062",
+   "term": "나쁘다",
+   "russian": "плохой",
+   "part_of_speech": "adjective",
+   "transcription": "nappeuda",
+   "alternatives": [
+    "nappeuda"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-063",
+   "term": "새롭다",
+   "russian": "новый",
+   "part_of_speech": "adjective",
+   "transcription": "saeropda",
+   "alternatives": [
+    "새",
+    "saeropda"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-064",
+   "term": "뜨겁다",
+   "russian": "горячий",
+   "part_of_speech": "adjective",
+   "transcription": "tteugeopda",
+   "alternatives": [
+    "tteugeopda"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-065",
+   "term": "차갑다",
+   "russian": "холодный",
+   "part_of_speech": "adjective",
+   "transcription": "chagapda",
+   "alternatives": [
+    "춥다",
+    "chagapda"
+   ],
+   "grammar_notes": "о погоде — 춥다",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ko-066",
+   "term": "예쁘다",
+   "russian": "красивый",
+   "part_of_speech": "adjective",
+   "transcription": "yeppeuda",
+   "alternatives": [
+    "아름답다",
+    "yeppeuda"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  }
+ ]
+}

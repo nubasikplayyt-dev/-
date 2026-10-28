@@ -1,0 +1,1363 @@
+{
+ "schema_version": 1,
+ "language": "zh",
+ "updated_at": "2026-10-28T00:00:00Z",
+ "starter": true,
+ "entries": [
+  {
+   "id": "start-zh-001",
+   "term": "你好",
+   "russian": "привет",
+   "part_of_speech": "phrase",
+   "transcription": "nǐ hǎo",
+   "alternatives": [
+    "ni hao",
+    "nihao"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-002",
+   "term": "再见",
+   "russian": "до свидания",
+   "part_of_speech": "phrase",
+   "transcription": "zàijiàn",
+   "alternatives": [
+    "zaijian"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-003",
+   "term": "对",
+   "russian": "да, верно",
+   "part_of_speech": "phrase",
+   "transcription": "duì",
+   "alternatives": [
+    "是",
+    "dui"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-004",
+   "term": "不",
+   "russian": "нет",
+   "part_of_speech": "phrase",
+   "transcription": "bù",
+   "alternatives": [
+    "不是",
+    "bu"
+   ],
+   "grammar_notes": "нет; «не являюсь» — 不是 bú shì",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-005",
+   "term": "请",
+   "russian": "пожалуйста",
+   "part_of_speech": "phrase",
+   "transcription": "qǐng",
+   "alternatives": [
+    "qing"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-006",
+   "term": "谢谢",
+   "russian": "спасибо",
+   "part_of_speech": "phrase",
+   "transcription": "xièxie",
+   "alternatives": [
+    "xiexie"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-007",
+   "term": "对不起",
+   "russian": "извините",
+   "part_of_speech": "phrase",
+   "transcription": "duìbuqǐ",
+   "alternatives": [
+    "不好意思",
+    "duibuqi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-008",
+   "term": "早上好",
+   "russian": "доброе утро",
+   "part_of_speech": "phrase",
+   "transcription": "zǎoshang hǎo",
+   "alternatives": [
+    "早",
+    "zaoshang hao",
+    "zaoshanghao"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-009",
+   "term": "我",
+   "russian": "я",
+   "part_of_speech": "pronoun",
+   "transcription": "wǒ",
+   "alternatives": [
+    "wo"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-010",
+   "term": "你",
+   "russian": "ты",
+   "part_of_speech": "pronoun",
+   "transcription": "nǐ",
+   "alternatives": [
+    "ni"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-011",
+   "term": "他",
+   "russian": "он",
+   "part_of_speech": "pronoun",
+   "transcription": "tā",
+   "alternatives": [
+    "ta"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-012",
+   "term": "她",
+   "russian": "она",
+   "part_of_speech": "pronoun",
+   "transcription": "tā",
+   "alternatives": [
+    "ta"
+   ],
+   "grammar_notes": "звучит так же, как 他",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-013",
+   "term": "我们",
+   "russian": "мы",
+   "part_of_speech": "pronoun",
+   "transcription": "wǒmen",
+   "alternatives": [
+    "women"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-014",
+   "term": "谁",
+   "russian": "кто?",
+   "part_of_speech": "pronoun",
+   "transcription": "shéi",
+   "alternatives": [
+    "shei"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-015",
+   "term": "什么",
+   "russian": "что?",
+   "part_of_speech": "pronoun",
+   "transcription": "shénme",
+   "alternatives": [
+    "shenme"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-016",
+   "term": "哪里",
+   "russian": "где?",
+   "part_of_speech": "adverb",
+   "transcription": "nǎlǐ",
+   "alternatives": [
+    "哪儿",
+    "nali"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-017",
+   "term": "什么时候",
+   "russian": "когда?",
+   "part_of_speech": "adverb",
+   "transcription": "shénme shíhou",
+   "alternatives": [
+    "shenme shihou",
+    "shenmeshihou"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-018",
+   "term": "怎么",
+   "russian": "как?",
+   "part_of_speech": "adverb",
+   "transcription": "zěnme",
+   "alternatives": [
+    "zenme"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-019",
+   "term": "一",
+   "russian": "один",
+   "part_of_speech": "numeral",
+   "transcription": "yī",
+   "alternatives": [
+    "yi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-020",
+   "term": "二",
+   "russian": "два",
+   "part_of_speech": "numeral",
+   "transcription": "èr",
+   "alternatives": [
+    "er"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-021",
+   "term": "三",
+   "russian": "три",
+   "part_of_speech": "numeral",
+   "transcription": "sān",
+   "alternatives": [
+    "san"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-022",
+   "term": "四",
+   "russian": "четыре",
+   "part_of_speech": "numeral",
+   "transcription": "sì",
+   "alternatives": [
+    "si"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-023",
+   "term": "五",
+   "russian": "пять",
+   "part_of_speech": "numeral",
+   "transcription": "wǔ",
+   "alternatives": [
+    "wu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-024",
+   "term": "六",
+   "russian": "шесть",
+   "part_of_speech": "numeral",
+   "transcription": "liù",
+   "alternatives": [
+    "liu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-025",
+   "term": "七",
+   "russian": "семь",
+   "part_of_speech": "numeral",
+   "transcription": "qī",
+   "alternatives": [
+    "qi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-026",
+   "term": "八",
+   "russian": "восемь",
+   "part_of_speech": "numeral",
+   "transcription": "bā",
+   "alternatives": [
+    "ba"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-027",
+   "term": "九",
+   "russian": "девять",
+   "part_of_speech": "numeral",
+   "transcription": "jiǔ",
+   "alternatives": [
+    "jiu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-028",
+   "term": "十",
+   "russian": "десять",
+   "part_of_speech": "numeral",
+   "transcription": "shí",
+   "alternatives": [
+    "shi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-029",
+   "term": "妈妈",
+   "russian": "мама",
+   "part_of_speech": "noun",
+   "transcription": "māma",
+   "alternatives": [
+    "mama"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-030",
+   "term": "爸爸",
+   "russian": "папа",
+   "part_of_speech": "noun",
+   "transcription": "bàba",
+   "alternatives": [
+    "baba"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-031",
+   "term": "哥哥",
+   "russian": "старший брат",
+   "part_of_speech": "noun",
+   "transcription": "gēge",
+   "alternatives": [
+    "弟弟",
+    "gege"
+   ],
+   "grammar_notes": "младший брат — 弟弟 dìdi",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-032",
+   "term": "姐姐",
+   "russian": "старшая сестра",
+   "part_of_speech": "noun",
+   "transcription": "jiějie",
+   "alternatives": [
+    "妹妹",
+    "jiejie"
+   ],
+   "grammar_notes": "младшая сестра — 妹妹 mèimei",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-033",
+   "term": "朋友",
+   "russian": "друг",
+   "part_of_speech": "noun",
+   "transcription": "péngyou",
+   "alternatives": [
+    "pengyou"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-034",
+   "term": "男人",
+   "russian": "мужчина",
+   "part_of_speech": "noun",
+   "transcription": "nánrén",
+   "alternatives": [
+    "nanren"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-035",
+   "term": "女人",
+   "russian": "женщина",
+   "part_of_speech": "noun",
+   "transcription": "nǚrén",
+   "alternatives": [
+    "nuren"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-036",
+   "term": "孩子",
+   "russian": "ребёнок",
+   "part_of_speech": "noun",
+   "transcription": "háizi",
+   "alternatives": [
+    "haizi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-037",
+   "term": "房子",
+   "russian": "дом",
+   "part_of_speech": "noun",
+   "transcription": "fángzi",
+   "alternatives": [
+    "家",
+    "fangzi"
+   ],
+   "grammar_notes": "«дом, семья» — 家 jiā",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-038",
+   "term": "门",
+   "russian": "дверь",
+   "part_of_speech": "noun",
+   "transcription": "mén",
+   "alternatives": [
+    "men"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-039",
+   "term": "桌子",
+   "russian": "стол",
+   "part_of_speech": "noun",
+   "transcription": "zhuōzi",
+   "alternatives": [
+    "zhuozi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-040",
+   "term": "床",
+   "russian": "кровать",
+   "part_of_speech": "noun",
+   "transcription": "chuáng",
+   "alternatives": [
+    "chuang"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-041",
+   "term": "书",
+   "russian": "книга",
+   "part_of_speech": "noun",
+   "transcription": "shū",
+   "alternatives": [
+    "shu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-042",
+   "term": "手机",
+   "russian": "мобильный телефон",
+   "part_of_speech": "noun",
+   "transcription": "shǒujī",
+   "alternatives": [
+    "电话",
+    "shouji"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-043",
+   "term": "窗户",
+   "russian": "окно",
+   "part_of_speech": "noun",
+   "transcription": "chuānghu",
+   "alternatives": [
+    "chuanghu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-044",
+   "term": "水",
+   "russian": "вода",
+   "part_of_speech": "noun",
+   "transcription": "shuǐ",
+   "alternatives": [
+    "shui"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-045",
+   "term": "面包",
+   "russian": "хлеб",
+   "part_of_speech": "noun",
+   "transcription": "miànbāo",
+   "alternatives": [
+    "mianbao"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-046",
+   "term": "咖啡",
+   "russian": "кофе",
+   "part_of_speech": "noun",
+   "transcription": "kāfēi",
+   "alternatives": [
+    "kafei"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-047",
+   "term": "茶",
+   "russian": "чай",
+   "part_of_speech": "noun",
+   "transcription": "chá",
+   "alternatives": [
+    "cha"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-048",
+   "term": "牛奶",
+   "russian": "молоко",
+   "part_of_speech": "noun",
+   "transcription": "niúnǎi",
+   "alternatives": [
+    "niunai"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-049",
+   "term": "苹果",
+   "russian": "яблоко",
+   "part_of_speech": "noun",
+   "transcription": "píngguǒ",
+   "alternatives": [
+    "pingguo"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-050",
+   "term": "鱼",
+   "russian": "рыба",
+   "part_of_speech": "noun",
+   "transcription": "yú",
+   "alternatives": [
+    "yu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-051",
+   "term": "是",
+   "russian": "быть",
+   "part_of_speech": "verb",
+   "transcription": "shì",
+   "alternatives": [
+    "shi"
+   ],
+   "grammar_notes": "связка «являться»: 我是学生",
+   "example_zh": "我是学生。（Wǒ shì xuésheng.）",
+   "example_ru": "Я студент.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-052",
+   "term": "有",
+   "russian": "иметь",
+   "part_of_speech": "verb",
+   "transcription": "yǒu",
+   "alternatives": [
+    "you"
+   ],
+   "example_zh": "我有一只猫。（Wǒ yǒu yì zhī māo.）",
+   "example_ru": "У меня есть кот.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-053",
+   "term": "想",
+   "russian": "хотеть",
+   "part_of_speech": "verb",
+   "transcription": "xiǎng",
+   "alternatives": [
+    "要",
+    "xiang"
+   ],
+   "example_zh": "我想喝水。（Wǒ xiǎng hē shuǐ.）",
+   "example_ru": "Я хочу пить воду.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-054",
+   "term": "去",
+   "russian": "идти",
+   "part_of_speech": "verb",
+   "transcription": "qù",
+   "alternatives": [
+    "qu"
+   ],
+   "example_zh": "我去学校。（Wǒ qù xuéxiào.）",
+   "example_ru": "Я иду в школу.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-055",
+   "term": "吃",
+   "russian": "есть (кушать)",
+   "part_of_speech": "verb",
+   "transcription": "chī",
+   "alternatives": [
+    "chi"
+   ],
+   "example_zh": "我们吃面包。（Wǒmen chī miànbāo.）",
+   "example_ru": "Мы едим хлеб.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-056",
+   "term": "喝",
+   "russian": "пить",
+   "part_of_speech": "verb",
+   "transcription": "hē",
+   "alternatives": [
+    "he"
+   ],
+   "example_zh": "我喝茶。（Wǒ hē chá.）",
+   "example_ru": "Я пью чай.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-057",
+   "term": "说",
+   "russian": "говорить",
+   "part_of_speech": "verb",
+   "transcription": "shuō",
+   "alternatives": [
+    "shuo"
+   ],
+   "example_zh": "他说得很慢。（Tā shuō de hěn màn.）",
+   "example_ru": "Он говорит медленно.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-058",
+   "term": "知道",
+   "russian": "знать",
+   "part_of_speech": "verb",
+   "transcription": "zhīdào",
+   "alternatives": [
+    "zhidao"
+   ],
+   "example_zh": "我不知道。（Wǒ bù zhīdào.）",
+   "example_ru": "Я не знаю.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-059",
+   "term": "大",
+   "russian": "большой",
+   "part_of_speech": "adjective",
+   "transcription": "dà",
+   "alternatives": [
+    "da"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-060",
+   "term": "小",
+   "russian": "маленький",
+   "part_of_speech": "adjective",
+   "transcription": "xiǎo",
+   "alternatives": [
+    "xiao"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-061",
+   "term": "好",
+   "russian": "хороший",
+   "part_of_speech": "adjective",
+   "transcription": "hǎo",
+   "alternatives": [
+    "hao"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-062",
+   "term": "坏",
+   "russian": "плохой",
+   "part_of_speech": "adjective",
+   "transcription": "huài",
+   "alternatives": [
+    "huai"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-063",
+   "term": "新",
+   "russian": "новый",
+   "part_of_speech": "adjective",
+   "transcription": "xīn",
+   "alternatives": [
+    "xin"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-064",
+   "term": "热",
+   "russian": "горячий",
+   "part_of_speech": "adjective",
+   "transcription": "rè",
+   "alternatives": [
+    "re"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-065",
+   "term": "冷",
+   "russian": "холодный",
+   "part_of_speech": "adjective",
+   "transcription": "lěng",
+   "alternatives": [
+    "leng"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-zh-066",
+   "term": "漂亮",
+   "russian": "красивый",
+   "part_of_speech": "adjective",
+   "transcription": "piàoliang",
+   "alternatives": [
+    "piaoliang"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  }
+ ]
+}

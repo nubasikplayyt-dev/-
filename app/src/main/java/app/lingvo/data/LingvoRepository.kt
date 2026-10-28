@@ -40,6 +40,15 @@ import app.lingvo.core.StatusClassifier
 import app.lingvo.core.VocabEntry
 import app.lingvo.core.VocabularyJson
 import app.lingvo.core.orderForReview
+import app.lingvo.core.Starter
+import app.lingvo.core.StarterBlock
+import app.lingvo.core.TaskType
+import app.lingvo.core.AutoResult
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -60,6 +69,24 @@ data class Card(
 }
 
 data class AnswerResult(val session: LearningSessionEntity, val nextDue: Long, val day: DayRecord)
+
+/** Как был получен ответ: кнопки или письменный режим с ручным подтверждением. */
+data class AnswerMeta(
+    val taskType: TaskType = TaskType.BUTTONS,
+    val typedAnswer: String? = null,
+    val autoResult: AutoResult? = null,
+    /** Ручное подтверждение пользователя в письменном режиме. */
+    val confirmed: Boolean? = null,
+)
+
+/** Состояние «острова»: текущая карточка активной сессии — общий источник для приложения, уведомления и капсулы. */
+data class IslandState(
+    val session: LearningSessionEntity,
+    val course: Course,
+    val card: VocabEntry?,
+) {
+    val remaining: Int get() = (session.total - session.done).coerceAtLeast(0)
+}
 
 class LingvoRepository(
     private val context: Context,
@@ -168,8 +195,20 @@ class LingvoRepository(
     }
 
     /** Есть ли встроенный стартовый набор для курса (сейчас — испанский и немецкий с переводом на русский). */
-    fun hasStarter(spec: LanguageSpec): Boolean =
-        spec.translationCode == "ru" && runCatching { context.assets.open(spec.fileName).close() }.isSuccess
+    fun hasStarter(spec: LanguageSpec): Boolean = Starter.has(spec.languageCode, spec.translationCode)
+
+    private suspend fun starterText(spec: LanguageSpec): String? = if (!hasStarter(spec)) null else withContext(Dispatchers.IO) {
+        runCatching {
+            context.assets.open(Starter.assetPath(spec.languageCode, spec.translationCode)).bufferedReader().use { it.readText() }
+        }.getOrNull()
+    }
+
+    /** Блоки стартового словаря, которые ещё не добавлены в курс. */
+    suspend fun pendingStarterBlocks(spec: LanguageSpec): List<StarterBlock> {
+        val text = starterText(spec) ?: return emptyList()
+        val ids = entries.allIds().toSet()
+        return Starter.pendingBlocks(Starter.blocks(text, spec.code), ids)
+    }
 
     // ---------- Редактирование словаря ----------
 
@@ -286,10 +325,18 @@ class LingvoRepository(
         entries.byLanguage(spec.code).map { it.toDomain() }
     }
 
-    /** Стартовый набор из APK (те же канонические файлы, что лежат в репозитории). */
-    suspend fun importStarter(spec: LanguageSpec): ImportPlan {
-        val text = withContext(Dispatchers.IO) { context.assets.open(spec.fileName).bufferedReader().use { it.readText() } }
-        return applyImport(parseVocabulary(text, spec), ConflictPolicy.KEEP_LOCAL, "Стартовый набор")
+    /**
+     * Добавляет в курс следующие [blocks] блоков стартового словаря (по умолчанию — первую порцию).
+     * Уже добавленные блоки пропускаются, совпадающие слова пользователя не перезаписываются.
+     * null — для этого языка стартового словаря нет.
+     */
+    suspend fun importStarter(spec: LanguageSpec, blocks: Int = Starter.FIRST_BLOCKS): ImportPlan? {
+        val text = starterText(spec) ?: return null
+        val pending = Starter.pendingBlocks(Starter.blocks(text, spec.code), entries.allIds().toSet()).take(blocks)
+        if (pending.isEmpty()) return null
+        val json = Starter.select(text, pending.map { it.number }.toSet(), spec)
+        val title = pending.joinToString(", ") { it.title }
+        return applyImport(parseVocabulary(json, spec), ConflictPolicy.KEEP_LOCAL, "Стартовый словарь: $title")
     }
 
     // ---------- Резервные копии ----------
@@ -309,13 +356,18 @@ class LingvoRepository(
                             grammarNotes = it.grammarNotes, collocations = VocabularyEntryEntity.splitList(it.collocations),
                             verbFormsJson = it.verbForms, regionalUsage = it.regionalUsage, extra = it.extra,
                             createdAt = it.createdAt, updatedAt = it.updatedAt, locallyEdited = it.locallyEdited,
+                            transcription = it.transcription.orEmpty(),
+                            alternatives = VocabularyEntryEntity.splitList(it.alternatives.orEmpty()),
                         )
                     },
                     reviewStates = reviews.all().map {
                         BackupReviewState(it.entryId, it.state, it.stability, it.difficulty, it.due, it.lastReview,
                             it.reps, it.lapses, it.step, it.introducedAt, it.suspended)
                     },
-                    reviewHistory = logs.all().map { BackupHistory(it.entryId, it.language, it.rating, it.reviewedAt, it.stateBefore, it.elapsedMs) },
+                    reviewHistory = logs.all().map {
+                        BackupHistory(it.entryId, it.language, it.rating, it.reviewedAt, it.stateBefore, it.elapsedMs,
+                            it.taskType, it.typedAnswer, it.autoResult, it.confirmed?.let { c -> c == 1 })
+                    },
                     settings = settings.exportMap(),
                     courses = courses.all().map {
                         BackupCourse(it.id, it.languageCode, it.name, it.flag, it.translationCode, it.translationName, it.createdAt, it.sortOrder)
@@ -354,6 +406,7 @@ class LingvoRepository(
                     grammarNotes = it.grammarNotes, collocations = VocabularyEntryEntity.joinList(it.collocations),
                     verbForms = it.verbFormsJson, regionalUsage = it.regionalUsage, extra = it.extra,
                     createdAt = it.createdAt, updatedAt = it.updatedAt, locallyEdited = it.locallyEdited,
+                    transcription = it.transcription, alternatives = VocabularyEntryEntity.joinList(it.alternatives),
                 )
             })
             val statesById = backup.reviewStates.associateBy { it.entryId }
@@ -365,7 +418,8 @@ class LingvoRepository(
             })
             logs.insertAll(backup.reviewHistory.map {
                 ReviewLogEntity(entryId = it.entryId, language = it.language, rating = it.rating, reviewedAt = it.reviewedAt,
-                    stateBefore = it.stateBefore, elapsedMs = it.elapsedMs)
+                    stateBefore = it.stateBefore, elapsedMs = it.elapsedMs, taskType = it.taskType,
+                    typedAnswer = it.typedAnswer, autoResult = it.autoResult, confirmed = it.confirmed?.let { c -> if (c) 1 else 0 })
             })
         }
         if (backup.settings.isNotEmpty()) settings.importMap(backup.settings)
@@ -447,18 +501,24 @@ class LingvoRepository(
     }
 
     /**
-     * Ответ «Помню»/«Не помню» сохраняется сразу: состояние FSRS, история, позиция сессии и прогресс
-     * дня — в одной транзакции.
+     * Ответ «Помню»/«Не помню» (или подтверждённый письменный ответ) сохраняется сразу: состояние FSRS,
+     * история, позиция сессии и прогресс дня — в одной транзакции.
+     *
+     * Ответ принимается только для карточки, которая сейчас первая в очереди активной сессии.
+     * Поэтому повторное нажатие, ответ из уведомления после ответа в приложении (и наоборот)
+     * или повторная доставка действия ничего не засчитывают дважды — возвращается null.
      */
-    suspend fun answer(sessionId: Long, entryId: String, answer: Answer): AnswerResult {
+    suspend fun answer(sessionId: Long, entryId: String, answer: Answer, meta: AnswerMeta = AnswerMeta()): AnswerResult? {
         val goal = settings.current().dailyGoal
-        return db.withTransaction { answerInTransaction(sessionId, entryId, answer.rating, goal) }
+        return db.withTransaction { answerInTransaction(sessionId, entryId, answer.rating, goal, meta) }
     }
 
-    private suspend fun answerInTransaction(sessionId: Long, entryId: String, rating: Rating, goal: Int): AnswerResult {
+    private suspend fun answerInTransaction(sessionId: Long, entryId: String, rating: Rating, goal: Int, meta: AnswerMeta): AnswerResult? {
         val t = now()
-        val session = sessions.get(sessionId) ?: error("Сессия не найдена")
-        val st = reviews.get(entryId) ?: error("Карточка не найдена")
+        val session = sessions.get(sessionId) ?: return null
+        if (session.status != SessionStatus.ACTIVE) return null
+        if (SessionProgress.decodeQueue(session.queue).firstOrNull() != entryId) return null
+        val st = reviews.get(entryId) ?: return null
         val before = st.toSrs()
         val after = fsrs.review(before, rating, t)
         reviews.upsert(st.withSrs(after))
@@ -466,6 +526,8 @@ class LingvoRepository(
             ReviewLogEntity(
                 entryId = entryId, language = st.language, rating = rating.value, reviewedAt = t,
                 stateBefore = before.state.name, elapsedMs = before.lastReview?.let { t - it } ?: 0L,
+                taskType = meta.taskType.name, typedAnswer = meta.typedAnswer, autoResult = meta.autoResult?.name,
+                confirmed = meta.confirmed?.let { if (it) 1 else 0 },
             )
         )
         val progress = SessionProgress(SessionProgress.decodeQueue(session.queue), session.done, session.total)
@@ -517,6 +579,34 @@ class LingvoRepository(
     }
 
     suspend fun activeSessions() = sessions.allActive()
+
+    /**
+     * Текущее состояние острова: самая свежая активная сессия и её первая карточка.
+     * Один источник для экрана повторения, острова в приложении, уведомления и капсулы —
+     * ответ в любом месте сразу виден во всех остальных.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun observeIsland(): Flow<IslandState?> =
+        combine(sessions.observeActive(), courses.observeAll()) { active, all ->
+            val s = active.maxByOrNull { it.updatedAt } ?: return@combine null
+            val c = all.firstOrNull { it.id == s.language }?.toDomain() ?: return@combine null
+            s to c
+        }.distinctUntilChanged().flatMapLatest { pair ->
+            if (pair == null) flowOf(null) else {
+                val (s, c) = pair
+                val head = SessionProgress.decodeQueue(s.queue).firstOrNull()
+                if (head == null) flowOf(IslandState(s, c, null))
+                else entries.observe(head).map { IslandState(s, c, it?.entry?.toDomain()) }
+            }
+        }
+
+    /** Island-сессия по ID с текущей карточкой — для одноразовых действий (уведомление, капсула). */
+    suspend fun islandFor(sessionId: Long): IslandState? {
+        val s = sessions.get(sessionId) ?: return null
+        val c = courses.get(s.language)?.toDomain() ?: return null
+        val head = SessionProgress.decodeQueue(s.queue).firstOrNull()
+        return IslandState(s, c, head?.let { entries.get(it)?.toDomain() })
+    }
 
     // ---------- Серии, достижения, карта, существа ----------
 

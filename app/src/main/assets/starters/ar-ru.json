@@ -1,0 +1,1367 @@
+{
+ "schema_version": 1,
+ "language": "ar",
+ "updated_at": "2026-10-28T00:00:00Z",
+ "starter": true,
+ "entries": [
+  {
+   "id": "start-ar-001",
+   "term": "مرحبا",
+   "russian": "привет",
+   "part_of_speech": "phrase",
+   "transcription": "marḥaban",
+   "alternatives": [
+    "marhaban"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-002",
+   "term": "مع السلامة",
+   "russian": "до свидания",
+   "part_of_speech": "phrase",
+   "transcription": "maʿa s-salāma",
+   "alternatives": [
+    "maa s-salama",
+    "maas-salama"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-003",
+   "term": "نعم",
+   "russian": "да",
+   "part_of_speech": "phrase",
+   "transcription": "naʿam",
+   "alternatives": [
+    "naam"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-004",
+   "term": "لا",
+   "russian": "нет",
+   "part_of_speech": "phrase",
+   "transcription": "lā",
+   "alternatives": [
+    "la"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-005",
+   "term": "من فضلك",
+   "russian": "пожалуйста",
+   "part_of_speech": "phrase",
+   "transcription": "min faḍlik",
+   "alternatives": [
+    "min fadlik",
+    "minfadlik"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-006",
+   "term": "شكرا",
+   "russian": "спасибо",
+   "part_of_speech": "phrase",
+   "transcription": "shukran",
+   "alternatives": [
+    "شكراً",
+    "shukran"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-007",
+   "term": "آسف",
+   "russian": "извините",
+   "part_of_speech": "phrase",
+   "transcription": "āsif",
+   "alternatives": [
+    "آسفة",
+    "asif"
+   ],
+   "grammar_notes": "говорит мужчина; женщина — آسفة āsifa",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-008",
+   "term": "صباح الخير",
+   "russian": "доброе утро",
+   "part_of_speech": "phrase",
+   "transcription": "ṣabāḥ al-khayr",
+   "alternatives": [
+    "sabah al-khayr",
+    "sabahal-khayr"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-009",
+   "term": "أنا",
+   "russian": "я",
+   "part_of_speech": "pronoun",
+   "transcription": "anā",
+   "alternatives": [
+    "ana"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-010",
+   "term": "أنت",
+   "russian": "ты",
+   "part_of_speech": "pronoun",
+   "transcription": "anta",
+   "alternatives": [
+    "أنتِ",
+    "anta"
+   ],
+   "grammar_notes": "к мужчине; к женщине — أنتِ anti",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-011",
+   "term": "هو",
+   "russian": "он",
+   "part_of_speech": "pronoun",
+   "transcription": "huwa",
+   "alternatives": [
+    "huwa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-012",
+   "term": "هي",
+   "russian": "она",
+   "part_of_speech": "pronoun",
+   "transcription": "hiya",
+   "alternatives": [
+    "hiya"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-013",
+   "term": "نحن",
+   "russian": "мы",
+   "part_of_speech": "pronoun",
+   "transcription": "naḥnu",
+   "alternatives": [
+    "nahnu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-014",
+   "term": "من",
+   "russian": "кто?",
+   "part_of_speech": "pronoun",
+   "transcription": "man",
+   "alternatives": [
+    "man"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-015",
+   "term": "ماذا",
+   "russian": "что?",
+   "part_of_speech": "pronoun",
+   "transcription": "mādhā",
+   "alternatives": [
+    "ما",
+    "madha"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-016",
+   "term": "أين",
+   "russian": "где?",
+   "part_of_speech": "adverb",
+   "transcription": "ayna",
+   "alternatives": [
+    "ayna"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-017",
+   "term": "متى",
+   "russian": "когда?",
+   "part_of_speech": "adverb",
+   "transcription": "matā",
+   "alternatives": [
+    "mata"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-018",
+   "term": "كيف",
+   "russian": "как?",
+   "part_of_speech": "adverb",
+   "transcription": "kayfa",
+   "alternatives": [
+    "kayfa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-019",
+   "term": "واحد",
+   "russian": "один",
+   "part_of_speech": "numeral",
+   "transcription": "wāḥid",
+   "alternatives": [
+    "wahid"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-020",
+   "term": "اثنان",
+   "russian": "два",
+   "part_of_speech": "numeral",
+   "transcription": "ithnān",
+   "alternatives": [
+    "ithnan"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-021",
+   "term": "ثلاثة",
+   "russian": "три",
+   "part_of_speech": "numeral",
+   "transcription": "thalātha",
+   "alternatives": [
+    "thalatha"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-022",
+   "term": "أربعة",
+   "russian": "четыре",
+   "part_of_speech": "numeral",
+   "transcription": "arbaʿa",
+   "alternatives": [
+    "arbaa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-023",
+   "term": "خمسة",
+   "russian": "пять",
+   "part_of_speech": "numeral",
+   "transcription": "khamsa",
+   "alternatives": [
+    "khamsa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-024",
+   "term": "ستة",
+   "russian": "шесть",
+   "part_of_speech": "numeral",
+   "transcription": "sitta",
+   "alternatives": [
+    "sitta"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-025",
+   "term": "سبعة",
+   "russian": "семь",
+   "part_of_speech": "numeral",
+   "transcription": "sabʿa",
+   "alternatives": [
+    "saba"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-026",
+   "term": "ثمانية",
+   "russian": "восемь",
+   "part_of_speech": "numeral",
+   "transcription": "thamāniya",
+   "alternatives": [
+    "thamaniya"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-027",
+   "term": "تسعة",
+   "russian": "девять",
+   "part_of_speech": "numeral",
+   "transcription": "tisʿa",
+   "alternatives": [
+    "tisa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-028",
+   "term": "عشرة",
+   "russian": "десять",
+   "part_of_speech": "numeral",
+   "transcription": "ʿashara",
+   "alternatives": [
+    "ashara"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-029",
+   "term": "أم",
+   "russian": "мама",
+   "part_of_speech": "noun",
+   "transcription": "umm",
+   "alternatives": [
+    "ماما",
+    "umm"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-030",
+   "term": "أب",
+   "russian": "папа",
+   "part_of_speech": "noun",
+   "transcription": "ab",
+   "alternatives": [
+    "بابا",
+    "ab"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-031",
+   "term": "أخ",
+   "russian": "брат",
+   "part_of_speech": "noun",
+   "transcription": "akh",
+   "alternatives": [
+    "akh"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-032",
+   "term": "أخت",
+   "russian": "сестра",
+   "part_of_speech": "noun",
+   "transcription": "ukht",
+   "alternatives": [
+    "ukht"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-033",
+   "term": "صديق",
+   "russian": "друг",
+   "part_of_speech": "noun",
+   "transcription": "ṣadīq",
+   "alternatives": [
+    "sadiq"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-034",
+   "term": "رجل",
+   "russian": "мужчина",
+   "part_of_speech": "noun",
+   "transcription": "rajul",
+   "alternatives": [
+    "rajul"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-035",
+   "term": "امرأة",
+   "russian": "женщина",
+   "part_of_speech": "noun",
+   "transcription": "imraʾa",
+   "alternatives": [
+    "imraa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-036",
+   "term": "طفل",
+   "russian": "ребёнок",
+   "part_of_speech": "noun",
+   "transcription": "ṭifl",
+   "alternatives": [
+    "tifl"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-037",
+   "term": "بيت",
+   "russian": "дом",
+   "part_of_speech": "noun",
+   "transcription": "bayt",
+   "alternatives": [
+    "منزل",
+    "bayt"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-038",
+   "term": "باب",
+   "russian": "дверь",
+   "part_of_speech": "noun",
+   "transcription": "bāb",
+   "alternatives": [
+    "bab"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-039",
+   "term": "طاولة",
+   "russian": "стол",
+   "part_of_speech": "noun",
+   "transcription": "ṭāwila",
+   "alternatives": [
+    "tawila"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-040",
+   "term": "سرير",
+   "russian": "кровать",
+   "part_of_speech": "noun",
+   "transcription": "sarīr",
+   "alternatives": [
+    "sarir"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-041",
+   "term": "كتاب",
+   "russian": "книга",
+   "part_of_speech": "noun",
+   "transcription": "kitāb",
+   "alternatives": [
+    "kitab"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-042",
+   "term": "هاتف",
+   "russian": "телефон",
+   "part_of_speech": "noun",
+   "transcription": "hātif",
+   "alternatives": [
+    "جوال",
+    "hatif"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-043",
+   "term": "نافذة",
+   "russian": "окно",
+   "part_of_speech": "noun",
+   "transcription": "nāfidha",
+   "alternatives": [
+    "nafidha"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-044",
+   "term": "ماء",
+   "russian": "вода",
+   "part_of_speech": "noun",
+   "transcription": "māʾ",
+   "alternatives": [
+    "ma"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-045",
+   "term": "خبز",
+   "russian": "хлеб",
+   "part_of_speech": "noun",
+   "transcription": "khubz",
+   "alternatives": [
+    "khubz"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-046",
+   "term": "قهوة",
+   "russian": "кофе",
+   "part_of_speech": "noun",
+   "transcription": "qahwa",
+   "alternatives": [
+    "qahwa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-047",
+   "term": "شاي",
+   "russian": "чай",
+   "part_of_speech": "noun",
+   "transcription": "shāy",
+   "alternatives": [
+    "shay"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-048",
+   "term": "حليب",
+   "russian": "молоко",
+   "part_of_speech": "noun",
+   "transcription": "ḥalīb",
+   "alternatives": [
+    "halib"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-049",
+   "term": "تفاحة",
+   "russian": "яблоко",
+   "part_of_speech": "noun",
+   "transcription": "tuffāḥa",
+   "alternatives": [
+    "tuffaha"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-050",
+   "term": "سمك",
+   "russian": "рыба",
+   "part_of_speech": "noun",
+   "transcription": "samak",
+   "alternatives": [
+    "samak"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-051",
+   "term": "كان",
+   "russian": "быть",
+   "part_of_speech": "verb",
+   "transcription": "kāna",
+   "alternatives": [
+    "kana"
+   ],
+   "grammar_notes": "«был»; в настоящем времени связка опускается: أنا طالب — я студент",
+   "example_ar": "أنا طالب. (anā ṭālib)",
+   "example_ru": "Я студент.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-052",
+   "term": "عندي",
+   "russian": "у меня есть (иметь)",
+   "part_of_speech": "verb",
+   "transcription": "ʿindī",
+   "alternatives": [
+    "indi"
+   ],
+   "grammar_notes": "«у меня есть»; дословно «у меня»",
+   "example_ar": "عندي قطة. (ʿindī qiṭṭa)",
+   "example_ru": "У меня есть кошка.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-053",
+   "term": "أراد",
+   "russian": "хотеть",
+   "part_of_speech": "verb",
+   "transcription": "arāda",
+   "alternatives": [
+    "أريد",
+    "arada"
+   ],
+   "grammar_notes": "«я хочу» — أريد urīdu",
+   "example_ar": "أريد ماء. (urīdu māʾ)",
+   "example_ru": "Я хочу воды.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-054",
+   "term": "ذهب",
+   "russian": "идти",
+   "part_of_speech": "verb",
+   "transcription": "dhahaba",
+   "alternatives": [
+    "أذهب",
+    "dhahaba"
+   ],
+   "example_ar": "أذهب إلى البيت. (adhhabu ilā l-bayt)",
+   "example_ru": "Я иду домой.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-055",
+   "term": "أكل",
+   "russian": "есть (кушать)",
+   "part_of_speech": "verb",
+   "transcription": "akala",
+   "alternatives": [
+    "آكل",
+    "akala"
+   ],
+   "example_ar": "نأكل الخبز. (naʾkulu l-khubz)",
+   "example_ru": "Мы едим хлеб.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-056",
+   "term": "شرب",
+   "russian": "пить",
+   "part_of_speech": "verb",
+   "transcription": "shariba",
+   "alternatives": [
+    "أشرب",
+    "shariba"
+   ],
+   "example_ar": "أشرب الشاي. (ashrabu sh-shāy)",
+   "example_ru": "Я пью чай.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-057",
+   "term": "تكلم",
+   "russian": "говорить",
+   "part_of_speech": "verb",
+   "transcription": "takallama",
+   "alternatives": [
+    "أتكلم",
+    "takallama"
+   ],
+   "example_ar": "هو يتكلم ببطء. (huwa yatakallamu bi-buṭʾ)",
+   "example_ru": "Он говорит медленно.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-058",
+   "term": "عرف",
+   "russian": "знать",
+   "part_of_speech": "verb",
+   "transcription": "ʿarafa",
+   "alternatives": [
+    "أعرف",
+    "arafa"
+   ],
+   "example_ar": "لا أعرف. (lā aʿrif)",
+   "example_ru": "Я не знаю.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-059",
+   "term": "كبير",
+   "russian": "большой",
+   "part_of_speech": "adjective",
+   "transcription": "kabīr",
+   "alternatives": [
+    "kabir"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-060",
+   "term": "صغير",
+   "russian": "маленький",
+   "part_of_speech": "adjective",
+   "transcription": "ṣaghīr",
+   "alternatives": [
+    "saghir"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-061",
+   "term": "جيد",
+   "russian": "хороший",
+   "part_of_speech": "adjective",
+   "transcription": "jayyid",
+   "alternatives": [
+    "jayyid"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-062",
+   "term": "سيئ",
+   "russian": "плохой",
+   "part_of_speech": "adjective",
+   "transcription": "sayyiʾ",
+   "alternatives": [
+    "sayyi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-063",
+   "term": "جديد",
+   "russian": "новый",
+   "part_of_speech": "adjective",
+   "transcription": "jadīd",
+   "alternatives": [
+    "jadid"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-064",
+   "term": "حار",
+   "russian": "горячий",
+   "part_of_speech": "adjective",
+   "transcription": "ḥārr",
+   "alternatives": [
+    "ساخن",
+    "harr"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-065",
+   "term": "بارد",
+   "russian": "холодный",
+   "part_of_speech": "adjective",
+   "transcription": "bārid",
+   "alternatives": [
+    "barid"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ar-066",
+   "term": "جميل",
+   "russian": "красивый",
+   "part_of_speech": "adjective",
+   "transcription": "jamīl",
+   "alternatives": [
+    "jamil"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  }
+ ]
+}

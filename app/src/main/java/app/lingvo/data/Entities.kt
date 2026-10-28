@@ -40,6 +40,10 @@ data class VocabularyEntryEntity(
     @ColumnInfo(name = "updated_at") val updatedAt: Long,
     /** Пользователь менял карточку в приложении — импорт не перезапишет её молча. */
     @ColumnInfo(name = "locally_edited") val locallyEdited: Boolean,
+    /** Транскрипция / чтение (с версии БД 3). */
+    val transcription: String? = null,
+    /** Допустимые варианты ответа для письменного режима, через перевод строки (с версии БД 3). */
+    val alternatives: String? = null,
 ) {
     fun toDomain() = VocabEntry(
         id = id, language = language, term = term, translation = translation,
@@ -47,6 +51,7 @@ data class VocabularyEntryEntity(
         article = article, plural = plural, level = level, tags = splitList(tags), notes = notes,
         source = source, grammarNotes = grammarNotes, collocations = splitList(collocations),
         verbFormsJson = verbForms, regionalUsage = regionalUsage, extraJson = extra,
+        transcription = transcription.orEmpty(), alternatives = splitList(alternatives.orEmpty()),
         createdAt = createdAt, updatedAt = updatedAt,
     )
 
@@ -59,6 +64,7 @@ data class VocabularyEntryEntity(
             tags = joinList(e.tags), notes = e.notes, source = e.source, grammarNotes = e.grammarNotes,
             collocations = joinList(e.collocations), verbForms = e.verbFormsJson, regionalUsage = e.regionalUsage,
             extra = e.extraJson, createdAt = e.createdAt, updatedAt = e.updatedAt, locallyEdited = locallyEdited,
+            transcription = e.transcription, alternatives = joinList(e.alternatives),
         )
 
         fun splitList(s: String): List<String> = s.split('\n').filter { it.isNotBlank() }
@@ -115,6 +121,14 @@ data class ReviewLogEntity(
     @ColumnInfo(name = "reviewed_at") val reviewedAt: Long,
     @ColumnInfo(name = "state_before") val stateBefore: String,
     @ColumnInfo(name = "elapsed_ms") val elapsedMs: Long,
+    /** Тип задания: BUTTONS или TYPING (с версии БД 3; null — старые записи, это кнопки). */
+    @ColumnInfo(name = "task_type") val taskType: String? = null,
+    /** Что ввёл пользователь в письменном режиме. */
+    @ColumnInfo(name = "typed_answer") val typedAnswer: String? = null,
+    /** Результат автоматической проверки ([app.lingvo.core.AutoResult]). */
+    @ColumnInfo(name = "auto_result") val autoResult: String? = null,
+    /** Ручное подтверждение: 1 — «Ответ правильный», 0 — «Ответ неправильный». */
+    val confirmed: Int? = null,
 )
 
 object SessionStatus {

@@ -40,8 +40,6 @@ android {
         buildConfig = true
     }
 
-    // Канонические словари из корня репозитория встраиваются в APK как стартовый набор.
-    sourceSets["main"].assets.srcDir(rootProject.file("vocabulary"))
 
     testOptions {
         unitTests.isReturnDefaultValues = true

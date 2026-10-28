@@ -117,7 +117,7 @@ class RepositoryScenarioTest {
         var last = session
         ids.forEach { id ->
             now += 1000
-            last = repo.answer(last.id, id, Answer.REMEMBERED).session
+            last = repo.answer(last.id, id, Answer.REMEMBERED)!!.session
         }
         assertEquals(5, last.done)
         val streak = repo.streak()

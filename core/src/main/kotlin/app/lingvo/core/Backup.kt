@@ -81,6 +81,8 @@ data class BackupEntry(
     val collocations: List<String> = emptyList(),
     @SerialName("verb_forms") val verbFormsJson: String = "",
     @SerialName("regional_usage") val regionalUsage: String = "",
+    val transcription: String = "",
+    val alternatives: List<String> = emptyList(),
     val extra: String = "",
     @SerialName("created_at") val createdAt: Long,
     @SerialName("updated_at") val updatedAt: Long,
@@ -110,6 +112,11 @@ data class BackupHistory(
     @SerialName("reviewed_at") val reviewedAt: Long,
     @SerialName("state_before") val stateBefore: String,
     @SerialName("elapsed_ms") val elapsedMs: Long = 0,
+    /** С версии 3: тип задания ("BUTTONS"/"TYPING"), введённый ответ, автопроверка, ручное подтверждение. */
+    @SerialName("task_type") val taskType: String? = null,
+    @SerialName("typed_answer") val typedAnswer: String? = null,
+    @SerialName("auto_result") val autoResult: String? = null,
+    val confirmed: Boolean? = null,
 )
 
 object BackupCodec {

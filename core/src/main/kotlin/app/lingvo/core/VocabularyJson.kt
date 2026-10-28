@@ -49,7 +49,7 @@ object VocabularyJson {
         "id", spec.termKey, "term", "word", "russian", "translation", spec.exampleKey, "example", "example_ru",
         "example_translation",
         "part_of_speech", "article", "plural", "level", "tags", "notes", "source", "grammar_notes",
-        "collocations", "verb_forms", "regional_usage", "created_at", "updated_at",
+        "collocations", "verb_forms", "regional_usage", "created_at", "updated_at", "transcription", "alternatives",
     )
 
     /**
@@ -180,7 +180,7 @@ object VocabularyJson {
             term = rawTerm,
             translation = translation,
             exampleTarget = Normalizer.clean(obj.str(spec.exampleKey).ifEmpty { obj.str("example") }),
-            exampleRu = Normalizer.clean(obj.str("example_ru").ifEmpty { obj.str("example_translation") }),
+            exampleRu = Normalizer.clean(exampleTranslation(obj, spec)),
             partOfSpeech = pos,
             article = article,
             plural = Normalizer.clean(obj.str("plural")),
@@ -192,11 +192,23 @@ object VocabularyJson {
             collocations = obj.strList("collocations").map(Normalizer::clean).filter { it.isNotEmpty() },
             verbFormsJson = verbForms?.let { json.encodeToString(JsonElement.serializer(), it) }.orEmpty(),
             regionalUsage = Normalizer.clean(obj.str("regional_usage")),
+            transcription = Normalizer.clean(obj.str("transcription")),
+            alternatives = obj.strList("alternatives").map(Normalizer::clean).filter { it.isNotEmpty() },
             extraJson = if (extra.isEmpty()) "" else json.encodeToString(JsonObject.serializer(), extra),
             createdAt = createdAt ?: updatedAt ?: now,
             updatedAt = updatedAt ?: createdAt ?: now,
         )
         return ParsedEntry(index, entry, hasId = id.isNotEmpty(), hasCreatedAt = createdAt != null)
+    }
+
+    /**
+     * Перевод примера: "example_ru" при переводе на русский, иначе "example_translation".
+     * Если изучаемый язык — русский, "example_ru" — это сам пример, а не его перевод.
+     */
+    private fun exampleTranslation(obj: JsonObject, spec: LanguageSpec): String = when {
+        spec.translationCode == "ru" -> obj.str("example_ru").ifEmpty { obj.str("example_translation") }
+        spec.exampleKey == "example_ru" -> obj.str("example_translation")
+        else -> obj.str("example_translation").ifEmpty { obj.str("example_ru") }
     }
 
     /** Сериализует словарь в канонический формат (UTF-8, schema_version 1). */
@@ -228,6 +240,8 @@ object VocabularyJson {
             put("verb_forms", runCatching { json.parseToJsonElement(e.verbFormsJson) }.getOrElse { JsonPrimitive(e.verbFormsJson) })
         }
         if (e.regionalUsage.isNotEmpty()) put("regional_usage", e.regionalUsage)
+        if (e.transcription.isNotEmpty()) put("transcription", e.transcription)
+        if (e.alternatives.isNotEmpty()) putJsonArray("alternatives") { e.alternatives.forEach { add(JsonPrimitive(it)) } }
         put("level", e.level)
         putJsonArray("tags") { e.tags.forEach { add(JsonPrimitive(it)) } }
         put("notes", e.notes)

@@ -37,7 +37,9 @@ object Normalizer {
         val t = clean(term)
         val a = clean(article)
         if (a.isEmpty() || t.isEmpty()) return t
-        return if (t.lowercase(Locale.ROOT).startsWith(a.lowercase(Locale.ROOT) + " ")) t else "$a $t"
+        // Артикль с апострофом (l', l’) пишется слитно: l'ami.
+        val sep = if (a.endsWith("'") || a.endsWith("’")) "" else " "
+        return if (t.lowercase(Locale.ROOT).startsWith(a.lowercase(Locale.ROOT) + sep)) t else "$a$sep$t"
     }
 
     /** Отделяет ведущий артикль ("die Voraussetzung" → "die"). */

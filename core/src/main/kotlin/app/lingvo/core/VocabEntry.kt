@@ -24,6 +24,10 @@ data class VocabEntry(
     /** Формы глагола в исходном JSON-виде (объект или строка), сохраняются без потерь. */
     val verbFormsJson: String = "",
     val regionalUsage: String = "",
+    /** Произношение / транскрипция / чтение (пиньинь, ромадзи, латиница) — если полезно. */
+    val transcription: String = "",
+    /** Допустимые варианты написания для письменного режима (синонимы, другая запись, латиница). */
+    val alternatives: List<String> = emptyList(),
     /** Неизвестные поля из файла (JSON-объект), чтобы экспорт ничего не терял. */
     val extraJson: String = "",
     val createdAt: Long,
@@ -40,6 +44,8 @@ object PartsOfSpeech {
     const val ADJECTIVE = "adjective"
     const val ADVERB = "adverb"
     const val PHRASE = "phrase"
+    const val PRONOUN = "pronoun"
+    const val NUMERAL = "numeral"
     const val OTHER = "other"
 
     val labelsRu = linkedMapOf(
@@ -48,6 +54,8 @@ object PartsOfSpeech {
         ADJECTIVE to "Прилагательное",
         ADVERB to "Наречие",
         PHRASE to "Выражение",
+        PRONOUN to "Местоимение",
+        NUMERAL to "Числительное",
         OTHER to "Другое",
     )
 
@@ -56,7 +64,8 @@ object PartsOfSpeech {
         "v" to VERB, "verb" to VERB, "глагол" to VERB, "гл" to VERB,
         "adj" to ADJECTIVE, "adjective" to ADJECTIVE, "прилагательное" to ADJECTIVE, "прил" to ADJECTIVE,
         "adv" to ADVERB, "adverb" to ADVERB, "наречие" to ADVERB, "нар" to ADVERB,
-        "phrase" to PHRASE, "expression" to PHRASE, "idiom" to PHRASE, "collocation" to PHRASE,
+        "phrase" to PHRASE, "pronoun" to PRONOUN, "местоимение" to PRONOUN, "numeral" to NUMERAL, "number" to NUMERAL,
+        "числительное" to NUMERAL, "expression" to PHRASE, "idiom" to PHRASE, "collocation" to PHRASE,
         "выражение" to PHRASE, "словосочетание" to PHRASE, "устойчивое выражение" to PHRASE,
     )
 

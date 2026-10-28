@@ -1,0 +1,1433 @@
+{
+ "schema_version": 1,
+ "language": "ja",
+ "updated_at": "2026-10-28T00:00:00Z",
+ "starter": true,
+ "entries": [
+  {
+   "id": "start-ja-001",
+   "term": "こんにちは",
+   "russian": "привет",
+   "part_of_speech": "phrase",
+   "transcription": "konnichiwa",
+   "alternatives": [
+    "konnichiwa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-002",
+   "term": "さようなら",
+   "russian": "до свидания",
+   "part_of_speech": "phrase",
+   "transcription": "sayōnara",
+   "alternatives": [
+    "またね",
+    "sayonara"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-003",
+   "term": "はい",
+   "russian": "да",
+   "part_of_speech": "phrase",
+   "transcription": "hai",
+   "alternatives": [
+    "hai"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-004",
+   "term": "いいえ",
+   "russian": "нет",
+   "part_of_speech": "phrase",
+   "transcription": "iie",
+   "alternatives": [
+    "iie"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-005",
+   "term": "お願いします",
+   "russian": "пожалуйста",
+   "part_of_speech": "phrase",
+   "transcription": "onegaishimasu",
+   "alternatives": [
+    "ください",
+    "onegaishimasu"
+   ],
+   "grammar_notes": "просьба; «дайте, пожалуйста» — ください kudasai",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-006",
+   "term": "ありがとう",
+   "russian": "спасибо",
+   "part_of_speech": "phrase",
+   "transcription": "arigatō",
+   "alternatives": [
+    "ありがとうございます",
+    "arigato"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-007",
+   "term": "すみません",
+   "russian": "извините",
+   "part_of_speech": "phrase",
+   "transcription": "sumimasen",
+   "alternatives": [
+    "ごめんなさい",
+    "sumimasen"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-008",
+   "term": "おはようございます",
+   "russian": "доброе утро",
+   "part_of_speech": "phrase",
+   "transcription": "ohayō gozaimasu",
+   "alternatives": [
+    "おはよう",
+    "ohayo gozaimasu",
+    "ohayogozaimasu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-009",
+   "term": "私",
+   "russian": "я",
+   "part_of_speech": "pronoun",
+   "transcription": "watashi",
+   "alternatives": [
+    "わたし",
+    "watashi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-010",
+   "term": "あなた",
+   "russian": "ты",
+   "part_of_speech": "pronoun",
+   "transcription": "anata",
+   "alternatives": [
+    "anata"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-011",
+   "term": "彼",
+   "russian": "он",
+   "part_of_speech": "pronoun",
+   "transcription": "kare",
+   "alternatives": [
+    "かれ",
+    "kare"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-012",
+   "term": "彼女",
+   "russian": "она",
+   "part_of_speech": "pronoun",
+   "transcription": "kanojo",
+   "alternatives": [
+    "かのじょ",
+    "kanojo"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-013",
+   "term": "私たち",
+   "russian": "мы",
+   "part_of_speech": "pronoun",
+   "transcription": "watashitachi",
+   "alternatives": [
+    "わたしたち",
+    "watashitachi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-014",
+   "term": "誰",
+   "russian": "кто?",
+   "part_of_speech": "pronoun",
+   "transcription": "dare",
+   "alternatives": [
+    "だれ",
+    "dare"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-015",
+   "term": "何",
+   "russian": "что?",
+   "part_of_speech": "pronoun",
+   "transcription": "nani",
+   "alternatives": [
+    "なに",
+    "なん",
+    "nani"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-016",
+   "term": "どこ",
+   "russian": "где?",
+   "part_of_speech": "adverb",
+   "transcription": "doko",
+   "alternatives": [
+    "doko"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-017",
+   "term": "いつ",
+   "russian": "когда?",
+   "part_of_speech": "adverb",
+   "transcription": "itsu",
+   "alternatives": [
+    "itsu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-018",
+   "term": "どう",
+   "russian": "как?",
+   "part_of_speech": "adverb",
+   "transcription": "dō",
+   "alternatives": [
+    "どうやって",
+    "do"
+   ],
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-019",
+   "term": "一",
+   "russian": "один",
+   "part_of_speech": "numeral",
+   "transcription": "ichi",
+   "alternatives": [
+    "いち",
+    "ichi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-020",
+   "term": "二",
+   "russian": "два",
+   "part_of_speech": "numeral",
+   "transcription": "ni",
+   "alternatives": [
+    "に",
+    "ni"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-021",
+   "term": "三",
+   "russian": "три",
+   "part_of_speech": "numeral",
+   "transcription": "san",
+   "alternatives": [
+    "さん",
+    "san"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-022",
+   "term": "四",
+   "russian": "четыре",
+   "part_of_speech": "numeral",
+   "transcription": "yon",
+   "alternatives": [
+    "よん",
+    "し",
+    "yon"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-023",
+   "term": "五",
+   "russian": "пять",
+   "part_of_speech": "numeral",
+   "transcription": "go",
+   "alternatives": [
+    "ご",
+    "go"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-024",
+   "term": "六",
+   "russian": "шесть",
+   "part_of_speech": "numeral",
+   "transcription": "roku",
+   "alternatives": [
+    "ろく",
+    "roku"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-025",
+   "term": "七",
+   "russian": "семь",
+   "part_of_speech": "numeral",
+   "transcription": "nana",
+   "alternatives": [
+    "なな",
+    "しち",
+    "nana"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-026",
+   "term": "八",
+   "russian": "восемь",
+   "part_of_speech": "numeral",
+   "transcription": "hachi",
+   "alternatives": [
+    "はち",
+    "hachi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-027",
+   "term": "九",
+   "russian": "девять",
+   "part_of_speech": "numeral",
+   "transcription": "kyū",
+   "alternatives": [
+    "きゅう",
+    "く",
+    "kyu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-028",
+   "term": "十",
+   "russian": "десять",
+   "part_of_speech": "numeral",
+   "transcription": "jū",
+   "alternatives": [
+    "じゅう",
+    "ju"
+   ],
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-029",
+   "term": "お母さん",
+   "russian": "мама",
+   "part_of_speech": "noun",
+   "transcription": "okāsan",
+   "alternatives": [
+    "おかあさん",
+    "母",
+    "はは",
+    "okasan"
+   ],
+   "grammar_notes": "о своей маме — 母 haha",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-030",
+   "term": "お父さん",
+   "russian": "папа",
+   "part_of_speech": "noun",
+   "transcription": "otōsan",
+   "alternatives": [
+    "おとうさん",
+    "父",
+    "ちち",
+    "otosan"
+   ],
+   "grammar_notes": "о своём папе — 父 chichi",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-031",
+   "term": "兄",
+   "russian": "старший брат",
+   "part_of_speech": "noun",
+   "transcription": "ani",
+   "alternatives": [
+    "あに",
+    "ani"
+   ],
+   "grammar_notes": "младший брат — 弟 otōto",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-032",
+   "term": "姉",
+   "russian": "старшая сестра",
+   "part_of_speech": "noun",
+   "transcription": "ane",
+   "alternatives": [
+    "あね",
+    "ane"
+   ],
+   "grammar_notes": "младшая сестра — 妹 imōto",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-033",
+   "term": "友達",
+   "russian": "друг",
+   "part_of_speech": "noun",
+   "transcription": "tomodachi",
+   "alternatives": [
+    "ともだち",
+    "tomodachi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-034",
+   "term": "男の人",
+   "russian": "мужчина",
+   "part_of_speech": "noun",
+   "transcription": "otoko no hito",
+   "alternatives": [
+    "おとこのひと",
+    "otoko no hito",
+    "otokonohito"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-035",
+   "term": "女の人",
+   "russian": "женщина",
+   "part_of_speech": "noun",
+   "transcription": "onna no hito",
+   "alternatives": [
+    "おんなのひと",
+    "onna no hito",
+    "onnanohito"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-036",
+   "term": "子供",
+   "russian": "ребёнок",
+   "part_of_speech": "noun",
+   "transcription": "kodomo",
+   "alternatives": [
+    "こども",
+    "kodomo"
+   ],
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-037",
+   "term": "家",
+   "russian": "дом",
+   "part_of_speech": "noun",
+   "transcription": "ie",
+   "alternatives": [
+    "いえ",
+    "うち",
+    "ie"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-038",
+   "term": "ドア",
+   "russian": "дверь",
+   "part_of_speech": "noun",
+   "transcription": "doa",
+   "alternatives": [
+    "doa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-039",
+   "term": "机",
+   "russian": "стол",
+   "part_of_speech": "noun",
+   "transcription": "tsukue",
+   "alternatives": [
+    "つくえ",
+    "テーブル",
+    "tsukue"
+   ],
+   "grammar_notes": "письменный стол; обеденный — テーブル",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-040",
+   "term": "ベッド",
+   "russian": "кровать",
+   "part_of_speech": "noun",
+   "transcription": "beddo",
+   "alternatives": [
+    "beddo"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-041",
+   "term": "本",
+   "russian": "книга",
+   "part_of_speech": "noun",
+   "transcription": "hon",
+   "alternatives": [
+    "ほん",
+    "hon"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-042",
+   "term": "電話",
+   "russian": "телефон",
+   "part_of_speech": "noun",
+   "transcription": "denwa",
+   "alternatives": [
+    "でんわ",
+    "スマホ",
+    "denwa"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-043",
+   "term": "窓",
+   "russian": "окно",
+   "part_of_speech": "noun",
+   "transcription": "mado",
+   "alternatives": [
+    "まど",
+    "mado"
+   ],
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-044",
+   "term": "水",
+   "russian": "вода",
+   "part_of_speech": "noun",
+   "transcription": "mizu",
+   "alternatives": [
+    "みず",
+    "mizu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-045",
+   "term": "パン",
+   "russian": "хлеб",
+   "part_of_speech": "noun",
+   "transcription": "pan",
+   "alternatives": [
+    "pan"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-046",
+   "term": "コーヒー",
+   "russian": "кофе",
+   "part_of_speech": "noun",
+   "transcription": "kōhī",
+   "alternatives": [
+    "kohi"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-047",
+   "term": "お茶",
+   "russian": "чай",
+   "part_of_speech": "noun",
+   "transcription": "ocha",
+   "alternatives": [
+    "おちゃ",
+    "ocha"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-048",
+   "term": "牛乳",
+   "russian": "молоко",
+   "part_of_speech": "noun",
+   "transcription": "gyūnyū",
+   "alternatives": [
+    "ぎゅうにゅう",
+    "ミルク",
+    "gyunyu"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-049",
+   "term": "りんご",
+   "russian": "яблоко",
+   "part_of_speech": "noun",
+   "transcription": "ringo",
+   "alternatives": [
+    "リンゴ",
+    "ringo"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-050",
+   "term": "魚",
+   "russian": "рыба",
+   "part_of_speech": "noun",
+   "transcription": "sakana",
+   "alternatives": [
+    "さかな",
+    "sakana"
+   ],
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-051",
+   "term": "です",
+   "russian": "быть",
+   "part_of_speech": "verb",
+   "transcription": "desu",
+   "alternatives": [
+    "desu"
+   ],
+   "grammar_notes": "вежливая связка: 学生です — «(я) студент»",
+   "example_ja": "私は学生です。（Watashi wa gakusei desu.）",
+   "example_ru": "Я студент.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-052",
+   "term": "ある",
+   "russian": "иметь",
+   "part_of_speech": "verb",
+   "transcription": "aru",
+   "alternatives": [
+    "あります",
+    "aru"
+   ],
+   "grammar_notes": "«есть, имеется» (о предметах; о живых — いる)",
+   "example_ja": "時間があります。（Jikan ga arimasu.）",
+   "example_ru": "У меня есть время.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-053",
+   "term": "欲しい",
+   "russian": "хотеть",
+   "part_of_speech": "verb",
+   "transcription": "hoshii",
+   "alternatives": [
+    "ほしい",
+    "hoshii"
+   ],
+   "grammar_notes": "«хочу (вещь)» — прилагательное; «хочу сделать» — 〜たい",
+   "example_ja": "水が欲しいです。（Mizu ga hoshii desu.）",
+   "example_ru": "Я хочу воды.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-054",
+   "term": "行く",
+   "russian": "идти",
+   "part_of_speech": "verb",
+   "transcription": "iku",
+   "alternatives": [
+    "いく",
+    "行きます",
+    "iku"
+   ],
+   "example_ja": "学校に行きます。（Gakkō ni ikimasu.）",
+   "example_ru": "Я иду в школу.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-055",
+   "term": "食べる",
+   "russian": "есть (кушать)",
+   "part_of_speech": "verb",
+   "transcription": "taberu",
+   "alternatives": [
+    "たべる",
+    "食べます",
+    "taberu"
+   ],
+   "example_ja": "パンを食べます。（Pan o tabemasu.）",
+   "example_ru": "Я ем хлеб.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-056",
+   "term": "飲む",
+   "russian": "пить",
+   "part_of_speech": "verb",
+   "transcription": "nomu",
+   "alternatives": [
+    "のむ",
+    "飲みます",
+    "nomu"
+   ],
+   "example_ja": "お茶を飲みます。（Ocha o nomimasu.）",
+   "example_ru": "Я пью чай.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-057",
+   "term": "話す",
+   "russian": "говорить",
+   "part_of_speech": "verb",
+   "transcription": "hanasu",
+   "alternatives": [
+    "はなす",
+    "話します",
+    "hanasu"
+   ],
+   "example_ja": "彼はゆっくり話します。（Kare wa yukkuri hanashimasu.）",
+   "example_ru": "Он говорит медленно.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-058",
+   "term": "知る",
+   "russian": "знать",
+   "part_of_speech": "verb",
+   "transcription": "shiru",
+   "alternatives": [
+    "しる",
+    "知っています",
+    "shiru"
+   ],
+   "grammar_notes": "«знаю» — 知っています",
+   "example_ja": "知りません。（Shirimasen.）",
+   "example_ru": "Я не знаю.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-059",
+   "term": "大きい",
+   "russian": "большой",
+   "part_of_speech": "adjective",
+   "transcription": "ōkii",
+   "alternatives": [
+    "おおきい",
+    "okii"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-060",
+   "term": "小さい",
+   "russian": "маленький",
+   "part_of_speech": "adjective",
+   "transcription": "chiisai",
+   "alternatives": [
+    "ちいさい",
+    "chiisai"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-061",
+   "term": "いい",
+   "russian": "хороший",
+   "part_of_speech": "adjective",
+   "transcription": "ii",
+   "alternatives": [
+    "良い",
+    "よい",
+    "ii"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-062",
+   "term": "悪い",
+   "russian": "плохой",
+   "part_of_speech": "adjective",
+   "transcription": "warui",
+   "alternatives": [
+    "わるい",
+    "warui"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-063",
+   "term": "新しい",
+   "russian": "новый",
+   "part_of_speech": "adjective",
+   "transcription": "atarashii",
+   "alternatives": [
+    "あたらしい",
+    "atarashii"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-064",
+   "term": "熱い",
+   "russian": "горячий",
+   "part_of_speech": "adjective",
+   "transcription": "atsui",
+   "alternatives": [
+    "あつい",
+    "atsui"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-065",
+   "term": "冷たい",
+   "russian": "холодный",
+   "part_of_speech": "adjective",
+   "transcription": "tsumetai",
+   "alternatives": [
+    "つめたい",
+    "寒い",
+    "tsumetai"
+   ],
+   "grammar_notes": "о погоде — 寒い samui",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ja-066",
+   "term": "きれい",
+   "russian": "красивый",
+   "part_of_speech": "adjective",
+   "transcription": "kirei",
+   "alternatives": [
+    "綺麗",
+    "美しい",
+    "kirei"
+   ],
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  }
+ ]
+}

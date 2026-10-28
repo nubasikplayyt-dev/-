@@ -1,0 +1,1177 @@
+{
+ "schema_version": 1,
+ "language": "ru",
+ "updated_at": "2026-10-28T00:00:00Z",
+ "starter": true,
+ "entries": [
+  {
+   "id": "start-ru-001",
+   "term": "привет",
+   "translation": "hello",
+   "part_of_speech": "phrase",
+   "grammar_notes": "privét",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-002",
+   "term": "до свидания",
+   "translation": "goodbye",
+   "part_of_speech": "phrase",
+   "alternatives": [
+    "пока"
+   ],
+   "grammar_notes": "do svidániya",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-003",
+   "term": "да",
+   "translation": "yes",
+   "part_of_speech": "phrase",
+   "grammar_notes": "da",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-004",
+   "term": "нет",
+   "translation": "no",
+   "part_of_speech": "phrase",
+   "grammar_notes": "net",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-005",
+   "term": "пожалуйста",
+   "translation": "please",
+   "part_of_speech": "phrase",
+   "grammar_notes": "pozhálujsta",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-006",
+   "term": "спасибо",
+   "translation": "thank you",
+   "part_of_speech": "phrase",
+   "grammar_notes": "spasíbo",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-007",
+   "term": "извините",
+   "translation": "sorry; excuse me",
+   "part_of_speech": "phrase",
+   "alternatives": [
+    "простите"
+   ],
+   "grammar_notes": "izviníte",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-008",
+   "term": "доброе утро",
+   "translation": "good morning",
+   "part_of_speech": "phrase",
+   "grammar_notes": "dóbroye útro",
+   "level": "A1",
+   "tags": [
+    "Приветствия и вежливость"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 1,
+   "block_title": "Приветствия и вежливость",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-009",
+   "term": "я",
+   "translation": "I",
+   "part_of_speech": "pronoun",
+   "grammar_notes": "ya",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-010",
+   "term": "ты",
+   "translation": "you",
+   "part_of_speech": "pronoun",
+   "grammar_notes": "ty",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-011",
+   "term": "он",
+   "translation": "he",
+   "part_of_speech": "pronoun",
+   "grammar_notes": "on",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-012",
+   "term": "она",
+   "translation": "she",
+   "part_of_speech": "pronoun",
+   "grammar_notes": "oná",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-013",
+   "term": "мы",
+   "translation": "we",
+   "part_of_speech": "pronoun",
+   "grammar_notes": "my",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-014",
+   "term": "кто?",
+   "translation": "who?",
+   "part_of_speech": "pronoun",
+   "alternatives": [
+    "кто"
+   ],
+   "grammar_notes": "kto",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-015",
+   "term": "что?",
+   "translation": "what?",
+   "part_of_speech": "pronoun",
+   "alternatives": [
+    "что"
+   ],
+   "grammar_notes": "chto",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-016",
+   "term": "где?",
+   "translation": "where?",
+   "part_of_speech": "adverb",
+   "alternatives": [
+    "где"
+   ],
+   "grammar_notes": "gde",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-017",
+   "term": "когда?",
+   "translation": "when?",
+   "part_of_speech": "adverb",
+   "alternatives": [
+    "когда"
+   ],
+   "grammar_notes": "kogdá",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-018",
+   "term": "как?",
+   "translation": "how?",
+   "part_of_speech": "adverb",
+   "alternatives": [
+    "как"
+   ],
+   "grammar_notes": "kak",
+   "level": "A1",
+   "tags": [
+    "Я, ты и вопросы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 2,
+   "block_title": "Я, ты и вопросы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-019",
+   "term": "один",
+   "translation": "one",
+   "part_of_speech": "numeral",
+   "grammar_notes": "odín",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-020",
+   "term": "два",
+   "translation": "two",
+   "part_of_speech": "numeral",
+   "grammar_notes": "dva",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-021",
+   "term": "три",
+   "translation": "three",
+   "part_of_speech": "numeral",
+   "grammar_notes": "tri",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-022",
+   "term": "четыре",
+   "translation": "four",
+   "part_of_speech": "numeral",
+   "grammar_notes": "chetýre",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-023",
+   "term": "пять",
+   "translation": "five",
+   "part_of_speech": "numeral",
+   "grammar_notes": "pyat'",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-024",
+   "term": "шесть",
+   "translation": "six",
+   "part_of_speech": "numeral",
+   "grammar_notes": "shest'",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-025",
+   "term": "семь",
+   "translation": "seven",
+   "part_of_speech": "numeral",
+   "grammar_notes": "sem'",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-026",
+   "term": "восемь",
+   "translation": "eight",
+   "part_of_speech": "numeral",
+   "grammar_notes": "vósem'",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-027",
+   "term": "девять",
+   "translation": "nine",
+   "part_of_speech": "numeral",
+   "grammar_notes": "dévyat'",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-028",
+   "term": "десять",
+   "translation": "ten",
+   "part_of_speech": "numeral",
+   "grammar_notes": "désyat'",
+   "level": "A1",
+   "tags": [
+    "Числа 1–10"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 3,
+   "block_title": "Числа 1–10",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-029",
+   "term": "мама",
+   "translation": "mother",
+   "part_of_speech": "noun",
+   "alternatives": [
+    "мать"
+   ],
+   "grammar_notes": "máma",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-030",
+   "term": "папа",
+   "translation": "father",
+   "part_of_speech": "noun",
+   "alternatives": [
+    "отец"
+   ],
+   "grammar_notes": "pápa",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-031",
+   "term": "брат",
+   "translation": "brother",
+   "part_of_speech": "noun",
+   "grammar_notes": "brat",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-032",
+   "term": "сестра",
+   "translation": "sister",
+   "part_of_speech": "noun",
+   "grammar_notes": "sestrá",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-033",
+   "term": "друг",
+   "translation": "friend",
+   "part_of_speech": "noun",
+   "grammar_notes": "drug",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-034",
+   "term": "мужчина",
+   "translation": "man",
+   "part_of_speech": "noun",
+   "grammar_notes": "muzhchína",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-035",
+   "term": "женщина",
+   "translation": "woman",
+   "part_of_speech": "noun",
+   "grammar_notes": "zhénshchina",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-036",
+   "term": "ребёнок",
+   "translation": "child",
+   "part_of_speech": "noun",
+   "alternatives": [
+    "ребенок"
+   ],
+   "grammar_notes": "rebyónok",
+   "level": "A1",
+   "tags": [
+    "Семья и люди"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 4,
+   "block_title": "Семья и люди",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-037",
+   "term": "дом",
+   "translation": "house; home",
+   "part_of_speech": "noun",
+   "grammar_notes": "dom",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-038",
+   "term": "дверь",
+   "translation": "door",
+   "part_of_speech": "noun",
+   "grammar_notes": "dver'",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-039",
+   "term": "стол",
+   "translation": "table",
+   "part_of_speech": "noun",
+   "grammar_notes": "stol",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-040",
+   "term": "кровать",
+   "translation": "bed",
+   "part_of_speech": "noun",
+   "grammar_notes": "krovát'",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-041",
+   "term": "книга",
+   "translation": "book",
+   "part_of_speech": "noun",
+   "grammar_notes": "kníga",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-042",
+   "term": "телефон",
+   "translation": "phone",
+   "part_of_speech": "noun",
+   "grammar_notes": "telefón",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-043",
+   "term": "окно",
+   "translation": "window",
+   "part_of_speech": "noun",
+   "grammar_notes": "oknó",
+   "level": "A1",
+   "tags": [
+    "Дом и вещи"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 5,
+   "block_title": "Дом и вещи",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-044",
+   "term": "вода",
+   "translation": "water",
+   "part_of_speech": "noun",
+   "grammar_notes": "vodá",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-045",
+   "term": "хлеб",
+   "translation": "bread",
+   "part_of_speech": "noun",
+   "grammar_notes": "khleb",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-046",
+   "term": "кофе",
+   "translation": "coffee",
+   "part_of_speech": "noun",
+   "grammar_notes": "kófe; мужской род: чёрный кофе",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-047",
+   "term": "чай",
+   "translation": "tea",
+   "part_of_speech": "noun",
+   "grammar_notes": "chay",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-048",
+   "term": "молоко",
+   "translation": "milk",
+   "part_of_speech": "noun",
+   "grammar_notes": "molokó",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-049",
+   "term": "яблоко",
+   "translation": "apple",
+   "part_of_speech": "noun",
+   "grammar_notes": "yábloko",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-050",
+   "term": "рыба",
+   "translation": "fish",
+   "part_of_speech": "noun",
+   "grammar_notes": "rýba",
+   "level": "A1",
+   "tags": [
+    "Еда и напитки"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 6,
+   "block_title": "Еда и напитки",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-051",
+   "term": "быть",
+   "translation": "to be",
+   "part_of_speech": "verb",
+   "grammar_notes": "byt'; в настоящем времени обычно опускается: я студент",
+   "example_ru": "Я студент.",
+   "example_translation": "I am a student.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-052",
+   "term": "иметь",
+   "translation": "to have",
+   "part_of_speech": "verb",
+   "grammar_notes": "imét'; обычно говорят «у меня есть»",
+   "example_ru": "У меня есть кот.",
+   "example_translation": "I have a cat.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-053",
+   "term": "хотеть",
+   "translation": "to want",
+   "part_of_speech": "verb",
+   "grammar_notes": "khotét'",
+   "example_ru": "Я хочу воды.",
+   "example_translation": "I want some water.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-054",
+   "term": "идти",
+   "translation": "to go",
+   "part_of_speech": "verb",
+   "grammar_notes": "idtí",
+   "example_ru": "Я иду домой.",
+   "example_translation": "I am going home.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-055",
+   "term": "есть",
+   "translation": "to eat",
+   "part_of_speech": "verb",
+   "grammar_notes": "yest'",
+   "example_ru": "Мы едим хлеб.",
+   "example_translation": "We eat bread.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-056",
+   "term": "пить",
+   "translation": "to drink",
+   "part_of_speech": "verb",
+   "grammar_notes": "pit'",
+   "example_ru": "Я пью чай.",
+   "example_translation": "I drink tea.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-057",
+   "term": "говорить",
+   "translation": "to speak",
+   "part_of_speech": "verb",
+   "grammar_notes": "govorít'",
+   "example_ru": "Он говорит медленно.",
+   "example_translation": "He speaks slowly.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-058",
+   "term": "знать",
+   "translation": "to know",
+   "part_of_speech": "verb",
+   "grammar_notes": "znat'",
+   "example_ru": "Я не знаю.",
+   "example_translation": "I don't know.",
+   "level": "A1",
+   "tags": [
+    "Главные глаголы"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 7,
+   "block_title": "Главные глаголы",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-059",
+   "term": "большой",
+   "translation": "big",
+   "part_of_speech": "adjective",
+   "grammar_notes": "bol'shóy",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-060",
+   "term": "маленький",
+   "translation": "small",
+   "part_of_speech": "adjective",
+   "grammar_notes": "málen'kiy",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-061",
+   "term": "хороший",
+   "translation": "good",
+   "part_of_speech": "adjective",
+   "grammar_notes": "khoróshiy",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-062",
+   "term": "плохой",
+   "translation": "bad",
+   "part_of_speech": "adjective",
+   "grammar_notes": "plokhóy",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-063",
+   "term": "новый",
+   "translation": "new",
+   "part_of_speech": "adjective",
+   "grammar_notes": "nóvyy",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-064",
+   "term": "горячий",
+   "translation": "hot",
+   "part_of_speech": "adjective",
+   "grammar_notes": "goryáchiy",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-065",
+   "term": "холодный",
+   "translation": "cold",
+   "part_of_speech": "adjective",
+   "grammar_notes": "kholódnyy",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  },
+  {
+   "id": "start-ru-066",
+   "term": "красивый",
+   "translation": "beautiful",
+   "part_of_speech": "adjective",
+   "grammar_notes": "krasívyy",
+   "level": "A1",
+   "tags": [
+    "Простые описания"
+   ],
+   "notes": "",
+   "source": "Стартовый словарь",
+   "block": 8,
+   "block_title": "Простые описания",
+   "created_at": "2026-10-28T00:00:00Z",
+   "updated_at": "2026-10-28T00:00:00Z"
+  }
+ ],
+ "translation_language": "en"
+}
