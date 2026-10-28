@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
@@ -33,6 +34,8 @@ class AppContainer(app: Application) {
     val island = IslandController(app, repository, scope)
     val speaker = Speaker(app) { scope.launch { settings.incrementListens() } }
     val wordImages = WordImages(app)
+    val cloud = app.lingvo.cloud.Cloud(app)
+    val friends = app.lingvo.cloud.FriendsRepository(cloud, database.friends(), settings, repository)
 
     init {
         // Новые слова пользователя — в очередь на картинку (если генерация включена в настройках).
@@ -63,6 +66,19 @@ class LingvoApp : Application() {
                 .distinctUntilChangedBy { it.reminder }
                 .collect { ReminderScheduler.reschedule(this@LingvoApp, it) }
         }
+        // Обмен прогрессом: сводка уходит друзьям при запуске и после занятий (не чаще раза в минуту).
+        container.scope.launch {
+            container.appState
+                .map { it.snapshot.answers }
+                .distinctUntilChanged()
+                .debounce(60_000)
+                .collect {
+                    val s = container.settings.current()
+                    if (!s.friendsEnabled) return@collect
+                    runCatching { container.friends.refreshAll() }
+                    if (s.friendNotifications) runCatching { notifyOvertaken() }
+                }
+        }
         // Достижения, области карты, существа и иконки пересчитываются при любом изменении реальных показателей.
         container.scope.launch {
             runCatching { container.repository.evaluateWorld() }.onFailure { Log.e("LingvoApp", "evaluate", it) }
@@ -73,4 +89,17 @@ class LingvoApp : Application() {
                 .collect { runCatching { container.repository.evaluateWorld() }.onFailure { e -> Log.e("LingvoApp", "evaluate", e) } }
         }
     }
+    /** Сообщает, если друг обошёл вас за эту неделю (только если уведомления включены). */
+    private suspend fun notifyOvertaken() {
+        val me = container.friends.mySummary()
+        val friends = container.friends.observeFriends().first().associate { it.code to it.progress }
+        val ahead = app.lingvo.core.Competition.overtookMe(me.weekPoints, friends, notifiedThisWeek, me.weekKey)
+        if (notifiedWeekKey != me.weekKey) { notifiedThisWeek.clear(); notifiedWeekKey = me.weekKey }
+        val first = ahead.firstOrNull() ?: return
+        notifiedThisWeek += first.nick
+        app.lingvo.notify.Notifications.showFriendAhead(this, first.nick, first.weekPoints, me.weekPoints)
+    }
+
+    private val notifiedThisWeek = mutableSetOf<String>()
+    private var notifiedWeekKey = 0
 }

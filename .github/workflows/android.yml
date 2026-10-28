@@ -9,6 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    env:
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      LINGVO_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      LINGVO_KEY_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
 
@@ -18,6 +23,23 @@ jobs:
           java-version: "17"
 
       - uses: gradle/actions/setup-gradle@v4
+
+      # Настройки Firebase и ключ подписи берутся из секретов репозитория.
+      # Без них сборка проходит как раньше, только облачные функции выключены.
+      - name: Firebase config
+        if: ${{ env.GOOGLE_SERVICES_JSON != '' }}
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: printf '%s' "$GOOGLE_SERVICES_JSON" > app/google-services.json
+
+      - name: Signing key
+        if: ${{ env.KEYSTORE_BASE64 != '' }}
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/keys"
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/keys/lingvo.jks"
+          echo "LINGVO_KEYSTORE_FILE=$RUNNER_TEMP/keys/lingvo.jks" >> "$GITHUB_ENV"
 
       - name: Validate vocabulary files
         run: python3 tools/vocab_tool.py validate

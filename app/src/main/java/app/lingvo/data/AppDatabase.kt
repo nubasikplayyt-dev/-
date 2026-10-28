@@ -17,8 +17,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         CourseEntity::class,
         UnlockEntity::class,
         DailyProgressEntity::class,
+        FriendEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -30,12 +31,13 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun courses(): CourseDao
     abstract fun unlocks(): UnlockDao
     abstract fun daily(): DailyDao
+    abstract fun friends(): FriendDao
 
     companion object {
         fun create(context: Context): AppDatabase =
             Room.databaseBuilder(context, AppDatabase::class.java, "lingvo.db")
                 // Только явные миграции, без destructive fallback: прогресс пользователя нельзя терять.
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                 .build()
 
         /**
@@ -94,6 +96,22 @@ abstract class AppDatabase : RoomDatabase() {
                 db.execSQL("ALTER TABLE `review_log` ADD COLUMN `typed_answer` TEXT")
                 db.execSQL("ALTER TABLE `review_log` ADD COLUMN `auto_result` TEXT")
                 db.execSQL("ALTER TABLE `review_log` ADD COLUMN `confirmed` INTEGER")
+            }
+        }
+    
+        /**
+         * 3 → 4: список друзей для обмена прогрессом. Только новая таблица —
+         * слова, прогресс и история не меняются.
+         */
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `friend` (`code` TEXT NOT NULL, `nick` TEXT NOT NULL, " +
+                        "`added_at` INTEGER NOT NULL, `fetched_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, " +
+                        "`today_words` INTEGER NOT NULL, `today_points` INTEGER NOT NULL, `week_words` INTEGER NOT NULL, " +
+                        "`week_points` INTEGER NOT NULL, `total_words` INTEGER NOT NULL, `total_points` INTEGER NOT NULL, " +
+                        "`streak` INTEGER NOT NULL, `week_key` INTEGER NOT NULL, `courses` TEXT NOT NULL, PRIMARY KEY(`code`))"
+                )
             }
         }
     }

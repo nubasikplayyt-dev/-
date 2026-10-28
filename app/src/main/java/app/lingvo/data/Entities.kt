@@ -220,3 +220,42 @@ data class DailyProgressEntity(
         fun from(d: app.lingvo.core.DayRecord) = DailyProgressEntity(d.epochDay, d.answers, d.remembered, d.goal, d.completedAt)
     }
 }
+
+/**
+ * Друг: его код и последняя полученная сводка (ник и счётчики). Слов и заметок друга здесь нет.
+ * Строка удаляется, когда друга убирают из списка или сводка устарела.
+ */
+@Entity(tableName = "friend")
+data class FriendEntity(
+    @PrimaryKey val code: String,
+    val nick: String,
+    @ColumnInfo(name = "added_at") val addedAt: Long,
+    @ColumnInfo(name = "fetched_at") val fetchedAt: Long,
+    @ColumnInfo(name = "updated_at") val updatedAt: Long,
+    @ColumnInfo(name = "today_words") val todayWords: Int,
+    @ColumnInfo(name = "today_points") val todayPoints: Int,
+    @ColumnInfo(name = "week_words") val weekWords: Int,
+    @ColumnInfo(name = "week_points") val weekPoints: Int,
+    @ColumnInfo(name = "total_words") val totalWords: Int,
+    @ColumnInfo(name = "total_points") val totalPoints: Int,
+    val streak: Int,
+    @ColumnInfo(name = "week_key") val weekKey: Int,
+    val courses: String,
+) {
+    fun toMap(): Map<String, Any> = mapOf(
+        "nick" to nick, "updatedAt" to updatedAt,
+        "todayWords" to todayWords, "todayPoints" to todayPoints,
+        "weekWords" to weekWords, "weekPoints" to weekPoints,
+        "totalWords" to totalWords, "totalPoints" to totalPoints,
+        "streak" to streak, "weekKey" to weekKey, "courses" to courses,
+    )
+
+    companion object {
+        fun from(code: String, p: app.lingvo.core.SharedProgress, addedAt: Long, fetchedAt: Long) = FriendEntity(
+            code = code, nick = p.nick, addedAt = addedAt, fetchedAt = fetchedAt, updatedAt = p.updatedAt,
+            todayWords = p.todayWords, todayPoints = p.todayPoints, weekWords = p.weekWords, weekPoints = p.weekPoints,
+            totalWords = p.totalWords, totalPoints = p.totalPoints, streak = p.streak, weekKey = p.weekKey,
+            courses = p.courses.joinToString("\u0001"),
+        )
+    }
+}

@@ -276,3 +276,21 @@ interface DailyDao {
     @Query("DELETE FROM daily_progress")
     suspend fun deleteAll()
 }
+
+@Dao
+interface FriendDao {
+    @Query("SELECT * FROM friend ORDER BY week_points DESC, nick")
+    fun observeAll(): Flow<List<FriendEntity>>
+
+    @Query("SELECT * FROM friend")
+    suspend fun all(): List<FriendEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(friend: FriendEntity)
+
+    @Query("DELETE FROM friend WHERE code = :code")
+    suspend fun delete(code: String)
+
+    @Query("DELETE FROM friend")
+    suspend fun deleteAll()
+}

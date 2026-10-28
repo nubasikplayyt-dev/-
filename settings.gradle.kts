@@ -11,6 +11,7 @@ pluginManagement {
         id("org.jetbrains.kotlin.plugin.compose") version "2.2.21"
         id("org.jetbrains.kotlin.plugin.serialization") version "2.2.21"
         id("com.google.devtools.ksp") version "2.2.21-2.0.5"
+        id("com.google.gms.google-services") version "4.4.3"
     }
 }
 

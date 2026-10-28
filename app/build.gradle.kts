@@ -4,6 +4,9 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
+    // Применяется ниже, только если в app/ лежит google-services.json (без него приложение
+    // просто работает без облачных функций, а сборка не ломается).
+    id("com.google.gms.google-services") apply false
 }
 
 android {
@@ -19,14 +22,30 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Свой ключ подписи берётся из переменных окружения (в репозитории ключей и паролей нет).
+    // Он нужен только для входа через Google: Firebase проверяет отпечаток SHA-1 приложения.
+    // Без переменных сборка подписывается обычным отладочным ключом, как раньше.
+    val keystorePath = System.getenv("LINGVO_KEYSTORE_FILE")
+    val hasKeystore = !keystorePath.isNullOrBlank() && file(keystorePath).exists()
+    if (hasKeystore) {
+        signingConfigs.create("lingvo") {
+            storeFile = file(keystorePath!!)
+            storePassword = System.getenv("LINGVO_KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("LINGVO_KEY_ALIAS") ?: "lingvo"
+            keyPassword = System.getenv("LINGVO_KEY_PASSWORD") ?: System.getenv("LINGVO_KEYSTORE_PASSWORD")
+        }
+    }
+    val appSigning = if (hasKeystore) signingConfigs.getByName("lingvo") else signingConfigs.getByName("debug")
+
     buildTypes {
+        debug {
+            signingConfig = appSigning
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            // Личное приложение для установки вручную: release подписывается debug-ключом,
-            // чтобы APK можно было сразу установить. Для Google Play замените на свой ключ.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = appSigning
         }
     }
 
@@ -84,9 +103,23 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.7")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
 
+    // Вход через Google (необязательный) и обмен прогрессом по коду.
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-database")
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
+
     testImplementation("junit:junit:4.13.2")
     testImplementation(kotlin("test"))
     // Robolectric: проверка миграции Room и сценариев репозитория на настоящем SQLite.
     testImplementation("org.robolectric:robolectric:4.14.1")
     testImplementation("androidx.test:core:1.6.1")
+}
+
+// Облачные функции подключаются только при наличии настроек Firebase.
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
 }

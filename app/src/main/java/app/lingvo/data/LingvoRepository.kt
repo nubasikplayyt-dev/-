@@ -630,6 +630,7 @@ class LingvoRepository(
     // ---------- Серии, достижения, карта, существа ----------
 
     fun observeDays(): Flow<List<DayRecord>> = daily.observeAll().map { l -> l.map { it.toDomain() } }
+    suspend fun days(): List<DayRecord> = daily.all().map { it.toDomain() }
     fun observeUnlocks(): Flow<List<UnlockEntity>> = unlocks.observeAll()
 
     suspend fun streak(): StreakState = DailyStreak.state(daily.all().map { it.toDomain() }, today(), settings.current().dailyGoal)

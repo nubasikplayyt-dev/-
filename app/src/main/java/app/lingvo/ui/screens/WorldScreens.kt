@@ -36,6 +36,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.EmojiEvents
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
@@ -189,6 +190,9 @@ fun WorldScreen(container: AppContainer, nav: NavHostController) {
                 "Получено ${s.owned.count { it.kind == UnlockKind.ACHIEVEMENT }} из ${Achievements.all.size}") { nav.navigate(Routes.ACHIEVEMENTS) }
             MenuRow(Icons.Filled.Apps, Palette.Ocean, "Иконки приложения",
                 "Доступно ${s.owned.count { it.kind == UnlockKind.ICON }} из ${AppIcons.all.size}") { nav.navigate(Routes.ICONS) }
+            MenuRow(Icons.Filled.Groups, Palette.Coral, "Друзья и соревнование",
+                if (s.settings.friendsEnabled) "Ваш код: ${app.lingvo.core.ShareCodes.pretty(s.settings.shareCode)}"
+                else "Сравните прогресс с друзьями по коду") { nav.navigate(Routes.FRIENDS) }
         }
         Spacer(Modifier.height(8.dp))
     }

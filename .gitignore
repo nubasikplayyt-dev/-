@@ -8,3 +8,6 @@ captures/
 .kotlin/
 *.keystore
 !debug-shared.keystore
+# Ключи подписи и настройки Firebase не попадают в репозиторий.
+*.jks
+app/google-services.json

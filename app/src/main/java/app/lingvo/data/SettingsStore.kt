@@ -12,6 +12,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import app.lingvo.core.AppIcons
 import app.lingvo.core.DailyStreak
 import app.lingvo.core.ReminderConfig
+import app.lingvo.core.SharePrivacy
 import app.lingvo.core.ReviewMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -69,6 +70,17 @@ data class AppSettings(
     /** Подбирать картинки к новым словам автоматически (по умолчанию выключено). */
     val imageGeneration: Boolean = false,
     val imageSource: ImageSource = ImageSource.WEB,
+    /** Режим друзей: обмен прогрессом по коду. Выключен, пока пользователь сам не включит. */
+    val friendsEnabled: Boolean = false,
+    val nick: String = "",
+    /** Мой код для обмена прогрессом. */
+    val shareCode: String = "",
+    val sharePublishedAt: Long = 0L,
+    val shareStats: Boolean = true,
+    val shareStreak: Boolean = true,
+    val shareCourses: Boolean = false,
+    /** Уведомлять, когда друг обошёл за неделю. */
+    val friendNotifications: Boolean = false,
     /** Адрес Stable Diffusion на компьютере в домашней сети (API Automatic1111/Forge/SD.Next). */
     val imageServerUrl: String = "",
     val capsuleEnabled: Boolean = false,
@@ -84,6 +96,8 @@ data class AppSettings(
     /** Последняя HTTPS-ссылка на словарь (например, raw-файл в GitHub). */
     val importUrl: String = "",
 ) {
+    fun privacy() = SharePrivacy(stats = shareStats, streak = shareStreak, courses = shareCourses)
+
     fun lang(code: String): LanguageSettings = languages[code] ?: LanguageSettings()
 
     fun withLang(code: String, f: (LanguageSettings) -> LanguageSettings) = copy(languages = languages + (code to f(lang(code))))
@@ -102,6 +116,14 @@ class SettingsStore(private val context: Context) {
         val imageGeneration = booleanPreferencesKey("image_generation")
         val imageServerUrl = stringPreferencesKey("image_server_url")
         val imageSource = stringPreferencesKey("image_source")
+        val friendsEnabled = booleanPreferencesKey("friends_enabled")
+        val nick = stringPreferencesKey("nick")
+        val shareCode = stringPreferencesKey("share_code")
+        val sharePublishedAt = stringPreferencesKey("share_published_at")
+        val shareStats = booleanPreferencesKey("share_stats")
+        val shareStreak = booleanPreferencesKey("share_streak")
+        val shareCourses = booleanPreferencesKey("share_courses")
+        val friendNotifications = booleanPreferencesKey("friend_notifications")
         fun newPerDay(code: String) = intPreferencesKey(NEW_PER_DAY + code)
         fun direction(code: String) = stringPreferencesKey(DIRECTION + code)
         fun remind(code: String) = booleanPreferencesKey(REMIND + code)
@@ -173,6 +195,14 @@ class SettingsStore(private val context: Context) {
             imageGeneration = p[K.imageGeneration] ?: false,
             imageServerUrl = p[K.imageServerUrl] ?: "",
             imageSource = p[K.imageSource]?.let { runCatching { ImageSource.valueOf(it) }.getOrNull() } ?: ImageSource.WEB,
+            friendsEnabled = p[K.friendsEnabled] ?: false,
+            nick = p[K.nick] ?: "",
+            shareCode = p[K.shareCode] ?: "",
+            sharePublishedAt = p[K.sharePublishedAt]?.toLongOrNull() ?: 0L,
+            shareStats = p[K.shareStats] ?: true,
+            shareStreak = p[K.shareStreak] ?: true,
+            shareCourses = p[K.shareCourses] ?: false,
+            friendNotifications = p[K.friendNotifications] ?: false,
             capsuleEnabled = p[K.capsule] ?: false,
             capsuleContent = p[K.capsuleContent]?.let { runCatching { CapsuleContent.valueOf(it) }.getOrNull() } ?: CapsuleContent.SESSION,
             animations = p[K.animations] ?: true,
@@ -225,6 +255,14 @@ class SettingsStore(private val context: Context) {
         p[K.imageGeneration] = s.imageGeneration
         p[K.imageServerUrl] = s.imageServerUrl
         p[K.imageSource] = s.imageSource.name
+        p[K.friendsEnabled] = s.friendsEnabled
+        p[K.nick] = s.nick
+        p[K.shareCode] = s.shareCode
+        p[K.sharePublishedAt] = s.sharePublishedAt.toString()
+        p[K.shareStats] = s.shareStats
+        p[K.shareStreak] = s.shareStreak
+        p[K.shareCourses] = s.shareCourses
+        p[K.friendNotifications] = s.friendNotifications
         p[K.capsule] = s.capsuleEnabled
         p[K.capsuleContent] = s.capsuleContent.name
         p[K.animations] = s.animations

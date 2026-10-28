@@ -48,6 +48,7 @@ import app.lingvo.ui.screens.CreatureScreen
 import app.lingvo.ui.screens.CreaturesScreen
 import app.lingvo.ui.screens.DictionaryScreen
 import app.lingvo.ui.screens.EntryScreen
+import app.lingvo.ui.screens.FriendsScreen
 import app.lingvo.ui.screens.HomeScreen
 import app.lingvo.ui.screens.IconsScreen
 import app.lingvo.ui.screens.ImportExportScreen
@@ -88,6 +89,7 @@ object Routes {
     const val CREATURES = "creatures"
     const val CREATURE = "creature/{id}"
     const val ICONS = "icons"
+    const val FRIENDS = "friends"
     const val SETTINGS_LEARNING = "settings/learning"
     const val SETTINGS_REMINDERS = "settings/reminders"
     const val SETTINGS_APPEARANCE = "settings/appearance"
@@ -198,6 +200,7 @@ fun LingvoNavHost(
             composable(Routes.CREATURES) { CreaturesScreen(container, nav) }
             composable(Routes.CREATURE) { CreatureScreen(container, nav, it.arguments?.getString("id").orEmpty()) }
             composable(Routes.ICONS) { IconsScreen(container, nav) }
+            composable(Routes.FRIENDS) { FriendsScreen(container, nav) }
             composable(Routes.SETTINGS_LEARNING) { SettingsLearningScreen(container, nav) }
             composable(Routes.SETTINGS_REMINDERS) { SettingsRemindersScreen(container, nav) }
             composable(Routes.SETTINGS_APPEARANCE) { SettingsAppearanceScreen(container, nav) }

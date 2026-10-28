@@ -28,6 +28,7 @@ object Notifications {
     /** Старый канал с низкой важностью — удаляется при запуске. */
     private const val LEGACY_CHANNEL_SESSION = "session"
     private const val ISLAND_ID = 4242
+    private const val FRIEND_ID = 4343
 
     private const val ID_REMINDER_COMBINED = 1000
     /** Стабильные ID уведомлений по ID курса (курсов может быть сколько угодно). */
@@ -285,6 +286,20 @@ object Notifications {
                 .invoke(builder, "${info.done}/${info.total}")
         }
         return builder.build()
+    }
+
+    /** Друг обошёл вас за неделю. Показывается только при включённых уведомлениях о друзьях. */
+    @SuppressLint("MissingPermission")
+    fun showFriendAhead(context: Context, nick: String, theirPoints: Int, myPoints: Int) {
+        if (!canPost(context)) return
+        val b = NotificationCompat.Builder(context, CHANNEL_REMINDERS)
+            .setSmallIcon(R.drawable.ic_stat_lingvo)
+            .setContentTitle("$nick впереди на этой неделе")
+            .setContentText("$theirPoints очков против ваших $myPoints. Пара занятий — и догоните!")
+            .setAutoCancel(true)
+            .setColor(ACCENT)
+            .setContentIntent(openIntent(context, "friends", 777_001))
+        NotificationManagerCompat.from(context).notify(FRIEND_ID, b.build())
     }
 
     fun cancelIsland(context: Context) {
