@@ -182,7 +182,7 @@ class CapsuleOverlay(
         private val openRect = RectF()
 
         // Размеры пилюли и карточки.
-        private val pillW get() = 230 * d
+        private val pillW get() = 290 * d
         private val pillH get() = 38 * d * fs
         private val cardW get() = (360 * d).coerceAtMost(resources.displayMetrics.widthPixels - 16 * d)
         private val cardH get() = 196 * d * fs
@@ -264,7 +264,10 @@ class CapsuleOverlay(
             val count = "${m.done}/${m.total}"
             val baseline = top + icon / 2 - (title.descent() + title.ascent()) / 2 - 2 * d
             canvas.drawText(count, right, baseline, counter)
-            val titleRight = right - counter.measureText(count) - 8 * d
+            // В пилюле центр оставлен пустым — там вырез камеры: название языка и существо слева от него,
+            // счётчик справа. В раскрытой карточке (ниже выреза) название занимает всю ширину.
+            val cameraGap = 26 * d
+            val titleRight = minOf(right - counter.measureText(count) - 8 * d, lerp(w / 2 - cameraGap, w))
             canvas.drawText(TextUtils.ellipsize(m.courseTitle, title, titleRight - left, TextUtils.TruncateAt.END).toString(),
                 left, baseline, title)
             val barY = top + icon / 2 + lerp(8 * d, 12 * d)

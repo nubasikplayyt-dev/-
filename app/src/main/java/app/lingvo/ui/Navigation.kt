@@ -204,9 +204,6 @@ fun LingvoNavHost(
             composable(Routes.SETTINGS_DATA) { SettingsDataScreen(container, nav) }
         }
     }
-    // Остров занятия — сверху по центру на любом экране, кроме самого занятия и знакомства со словами;
-    // нижнее меню не перекрывает.
-    if (destination?.route !in setOf(Routes.REVIEW, Routes.LEARN, Routes.ONBOARDING, null)) InAppIsland(container, nav)
     }
     // Праздничные окна для новых достижений, областей, существ и иконок — поверх любого экрана.
     if (currentTab != null || destination?.route == Routes.REVIEW) CelebrationHost(container, nav)
