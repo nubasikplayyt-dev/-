@@ -17,6 +17,7 @@ import app.lingvo.LingvoApp
 import app.lingvo.core.LanguageSpec
 import app.lingvo.core.VocabEntry
 import app.lingvo.core.WordImagePrompt
+import kotlinx.coroutines.flow.map
 import app.lingvo.data.AppSettings
 import app.lingvo.data.ImageSource
 import kotlinx.coroutines.Dispatchers
@@ -36,18 +37,48 @@ import java.util.concurrent.TimeUnit
  * - Любая ошибка (сервер выключен, модель не загружена) — картинки просто нет, приложение работает дальше.
  */
 class WordImages(private val context: Context) {
+    /** Для проверок возможностей устройства из интерфейса. */
+    val appContext: Context get() = context
+
     private val dir = File(context.filesDir, "word_images").apply { mkdirs() }
     private val _revision = MutableStateFlow(0)
     /** Меняется, когда появляется новая картинка, — экраны перечитывают кэш. */
     val revision: StateFlow<Int> = _revision
 
     fun fileFor(key: String) = File(dir, "$key.webp")
+
+    /** Состояние рисования слова — для индикатора и кнопки «Повторить» на карточке. */
+    enum class Status { NONE, QUEUED, RUNNING, FAILED }
+
+    private fun workName(key: String) = "word-image-$key"
+
+    fun keyFor(entry: VocabEntry, spec: LanguageSpec) = WordImagePrompt.cacheKey(spec.languageCode, entry)
+
+    /**
+     * Очередь живёт в WorkManager: она на диске, поэтому задачи продолжаются после закрытия
+     * приложения и переживают перезагрузку телефона.
+     */
+    fun observeStatus(key: String): kotlinx.coroutines.flow.Flow<Status> =
+        WorkManager.getInstance(context).getWorkInfosForUniqueWorkFlow(workName(key)).map { infos ->
+            when (infos.maxByOrNull { it.state.ordinal }?.state) {
+                androidx.work.WorkInfo.State.ENQUEUED, androidx.work.WorkInfo.State.BLOCKED -> Status.QUEUED
+                androidx.work.WorkInfo.State.RUNNING -> Status.RUNNING
+                androidx.work.WorkInfo.State.FAILED -> Status.FAILED
+                else -> Status.NONE
+            }
+        }
+
+    /** Повторить неудачную попытку вручную. */
+    fun retry(entry: VocabEntry, spec: LanguageSpec, settings: AppSettings) {
+        WorkManager.getInstance(context).cancelUniqueWork(workName(keyFor(entry, spec)))
+        request(entry, spec, settings, force = true)
+    }
     fun fileFor(entry: VocabEntry, spec: LanguageSpec) = fileFor(WordImagePrompt.cacheKey(spec.languageCode, entry))
 
     fun notifyChanged() { _revision.value++ }
 
     /** Ставит слово в очередь на рисование (если генерация включена и картинки ещё нет в кэше). */
-    fun request(entry: VocabEntry, spec: LanguageSpec, settings: AppSettings) {
+    fun request(entry: VocabEntry, spec: LanguageSpec, settings: AppSettings, force: Boolean = false) {
         if (!settings.imageGeneration) return
         if (settings.imageSource == ImageSource.AI_SERVER && settings.imageServerUrl.isBlank()) return
         val gloss = WordImagePrompt.glossEn(entry.extraJson)
@@ -64,7 +95,9 @@ class WordImages(private val context: Context) {
             .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
             .build()
         // Одна задача на слово: повторное добавление того же слова не запускает вторую генерацию.
-        WorkManager.getInstance(context).enqueueUniqueWork("word-image-${req.key}", ExistingWorkPolicy.KEEP, work)
+        WorkManager.getInstance(context).enqueueUniqueWork(
+            workName(req.key), if (force) ExistingWorkPolicy.REPLACE else ExistingWorkPolicy.KEEP, work,
+        )
     }
 
     /** Найти картинку в интернете прямо сейчас (кнопка на странице слова); заменяет прежнюю. */

@@ -208,11 +208,18 @@ private fun WordImagesGroup(container: AppContainer, settings: AppSettings, upda
     var url by remember(settings.imageServerUrl) { mutableStateOf(settings.imageServerUrl) }
     var status by remember { mutableStateOf<String?>(null) }
     var cache by remember { mutableStateOf(container.wordImages.cacheSize()) }
+    val device = remember { app.lingvo.images.DeviceCapability.check(container.wordImages.appContext) }
     val urlOk = url.isBlank() || app.lingvo.core.WordImagePrompt.isLocalAddress(url)
     Group("Картинки к словам",
         "Картинку к слову можно выбрать самому на странице слова (из галереи или поиском в интернете). " +
             "Здесь — автоматический подбор для новых слов: он идёт в фоне, карточка показывается сразу.") {
         SwitchRow("Подбирать картинки к новым словам", settings.imageGeneration) { v -> update { it.copy(imageGeneration = v) } }
+        Text(
+            "Рисование нейросетью прямо на телефоне не входит в приложение: модель весит больше гигабайта и " +
+                "требует мощного устройства. " + device.reasonRu + ". Поэтому картинки ищутся в интернете " +
+                "или рисуются на вашем компьютере.",
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             app.lingvo.data.ImageSource.entries.forEach { src ->
                 FilterChip(settings.imageSource == src, { update { it.copy(imageSource = src) } }, { Text(src.labelRu) })
