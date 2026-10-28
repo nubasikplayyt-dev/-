@@ -81,6 +81,17 @@ class AppLogicTest {
     }
 
     @Test
+    fun urlFetcherNormalizesGithubLinksAndRejectsHttp() {
+        assertEquals(
+            "https://raw.githubusercontent.com/me/repo/main/vocabulary/german_vocabulary.json",
+            app.lingvo.data.UrlFetcher.normalize("https://github.com/me/repo/blob/main/vocabulary/german_vocabulary.json"),
+        )
+        assertEquals("https://example.com/a.json", app.lingvo.data.UrlFetcher.normalize(" https://example.com/a.json "))
+        assertEquals("Поддерживаются только ссылки https://", app.lingvo.data.UrlFetcher.validate("http://example.com/a.json"))
+        assertNull(app.lingvo.data.UrlFetcher.validate("https://example.com/a.json"))
+    }
+
+    @Test
     fun overviewCountsDueNewTodayAndStreak() {
         val zone = ZoneId.of("UTC")
         val logs = listOf(

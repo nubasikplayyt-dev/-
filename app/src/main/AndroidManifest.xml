@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Только для необязательного импорта словаря по HTTPS-ссылке. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- Уведомления (Android 13+ спрашивает разрешение во время работы). -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Live Updates на Android 16+ (обычное разрешение, выдаётся автоматически). -->

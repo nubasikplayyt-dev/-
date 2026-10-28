@@ -48,6 +48,8 @@ data class AppSettings(
     val animations: Boolean = true,
     val motivation: Boolean = true,
     val onboardingDone: Boolean = false,
+    /** Последняя HTTPS-ссылка на словарь (например, raw-файл в GitHub). */
+    val importUrl: String = "",
 ) {
     fun lang(code: String): LanguageSettings = languages[code] ?: LanguageSettings()
 }
@@ -75,6 +77,7 @@ class SettingsStore(private val context: Context) {
         val animations = booleanPreferencesKey("animations")
         val motivation = booleanPreferencesKey("motivation")
         val onboarding = booleanPreferencesKey("onboarding_done")
+        val importUrl = stringPreferencesKey("import_url")
     }
 
     val flow: Flow<AppSettings> = context.dataStore.data
@@ -111,6 +114,7 @@ class SettingsStore(private val context: Context) {
             animations = p[K.animations] ?: true,
             motivation = p[K.motivation] ?: true,
             onboardingDone = p[K.onboarding] ?: false,
+            importUrl = p[K.importUrl] ?: "",
         )
     }
 
@@ -143,6 +147,7 @@ class SettingsStore(private val context: Context) {
         p[K.animations] = s.animations
         p[K.motivation] = s.motivation
         p[K.onboarding] = s.onboardingDone
+        p[K.importUrl] = s.importUrl
     }
 
     /** Плоское представление для резервной копии. */

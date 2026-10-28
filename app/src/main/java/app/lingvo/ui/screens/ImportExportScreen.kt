@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.filled.FolderOpen
@@ -31,6 +32,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
@@ -61,6 +63,7 @@ import app.lingvo.core.ImportPlan
 import app.lingvo.core.Languages
 import app.lingvo.core.ParsedVocabulary
 import app.lingvo.core.VocabularyFormatException
+import app.lingvo.data.UrlFetcher
 import app.lingvo.ui.components.BackTopBar
 import app.lingvo.ui.components.SectionTitle
 import app.lingvo.ui.rememberToast
@@ -97,6 +100,8 @@ fun ImportExportScreen(
     var busy by remember { mutableStateOf(false) }
     var pendingRestore by remember { mutableStateOf<Pair<String, String>?>(null) }
     var exportLang by remember { mutableStateOf<String?>(null) }
+    var url by remember { mutableStateOf("") }
+    LaunchedEffect(Unit) { url = container.settings.current().importUrl }
     val history by remember(repo) { repo.observeImportHistory() }.collectAsStateWithLifecycle(initialValue = emptyList())
 
     fun analyze(text: String, name: String) {
@@ -193,6 +198,32 @@ fun ImportExportScreen(
                     if (text.isNullOrBlank()) toast("Буфер обмена пуст") else analyze(text, "Буфер обмена")
                 }, modifier = Modifier.weight(1f)) { ButtonContent(Icons.Filled.ContentPaste, "Из буфера") }
             }
+
+            OutlinedTextField(
+                value = url,
+                onValueChange = { url = it },
+                label = { Text("Или HTTPS-ссылка на файл") },
+                placeholder = { Text("https://raw.githubusercontent.com/…/german_vocabulary.json") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            OutlinedButton(
+                enabled = url.isNotBlank() && !busy,
+                onClick = {
+                    UrlFetcher.validate(url)?.let { toast(it); return@OutlinedButton }
+                    scope.launch {
+                        busy = true
+                        try {
+                            val text = UrlFetcher.fetch(url)
+                            container.settings.update { it.copy(importUrl = url.trim()) }
+                            analyze(text, UrlFetcher.normalize(url).substringAfterLast('/'))
+                        } catch (e: Exception) {
+                            error = e.message ?: "Не удалось загрузить файл."
+                        } finally { busy = false }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+            ) { ButtonContent(Icons.Filled.CloudDownload, "Загрузить по ссылке") }
 
             if (busy) CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally))
             error?.let {
