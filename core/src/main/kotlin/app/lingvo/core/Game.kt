@@ -188,8 +188,8 @@ enum class Rarity(val labelRu: String, val color: Long) {
     LEGENDARY("Легендарное", 0xFFFFB703),
 }
 
-/** Форма тела — для векторной отрисовки существа в приложении. */
-enum class CreatureShape { BLOB, DROP, FLAME, ORB, STAR, CLOUD, BOOK, CRYSTAL }
+/** Вид существа — у каждого свой силуэт (уши, хвост, крылья, рога), рисуется в приложении. */
+enum class CreatureShape { CHICK, AXOLOTL, FOX, BUNNY, SQUIRREL, TURTLE, OWL, DEER, CAT }
 
 data class CreatureDef(
     val id: String,
@@ -208,6 +208,10 @@ data class CreatureDef(
     val colorB: Long,
     /** Область карты, где существо живёт. */
     val homeRegion: String,
+    /** Характер — как существо ведёт себя. */
+    val personality: String = "",
+    /** Подсказка для ещё не открытого существа: как его встретить (без точных чисел). */
+    val hint: String = "",
 ) {
     val maxLevel: Int get() = evolutionThresholds.size + 1
     fun level(s: ProgressSnapshot): Int = 1 + evolutionThresholds.count { evolutionMetric.value(s) >= it }
@@ -220,40 +224,58 @@ object Creatures {
         CreatureDef("lingvik", "Лингвик", "Первые шаги",
             "Пушистый проводник, который появляется у каждого, кто начал путь. Радуется любому новому слову.",
             Rarity.COMMON, listOf(Requirement(Metric.SESSIONS, 1)), Metric.ANSWERS, listOf(200, 1500),
-            listOf("Птенец", "Знаток", "Наставник"), CreatureShape.BLOB, 0xFFFFB4A2, 0xFFFF6B6B, "meadow"),
+            listOf("Птенец", "Знаток", "Наставник"), CreatureShape.CHICK, 0xFFFFE29A, 0xFFFFC46B, "meadow",
+            "Пушистый оптимист: подпрыгивает от каждого нового слова и никогда не ворчит.",
+            "Появляется после самого первого занятия."),
         CreatureDef("mnemo", "Мнемо", "Память",
             "Хранит вспомненные слова в светящихся каплях. Чем больше вспоминаете, тем ярче мерцает.",
             Rarity.RARE, listOf(Requirement(Metric.REMEMBERED, 100)), Metric.REMEMBERED, listOf(600, 3000),
-            listOf("Капля", "Ручей", "Озеро памяти"), CreatureShape.DROP, 0xFF4CC9F0, 0xFF4361EE, "grove"),
+            listOf("Капля", "Ручей", "Озеро памяти"), CreatureShape.AXOLOTL, 0xFFFFC9DE, 0xFFFF9EC4, "grove",
+            "Спокойный аксолотль-мечтатель: шевелит жабрами, когда вспоминает слово.",
+            "Любит, когда слова вспоминаются. Много-много раз."),
         CreatureDef("flaro", "Фларо", "Регулярность",
             "Огонёк, который живёт благодаря ежедневным занятиям. Каждый день серии подбрасывает в него искру.",
             Rarity.RARE, listOf(Requirement(Metric.STREAK, 3)), Metric.STREAK, listOf(14, 60),
-            listOf("Искра", "Пламя", "Феникс"), CreatureShape.FLAME, 0xFFFFD166, 0xFFFF6B35, "bridge"),
+            listOf("Искра", "Пламя", "Феникс"), CreatureShape.FOX, 0xFFFFC09A, 0xFFFF9A6B, "bridge",
+            "Тёплый лисёнок с хвостом-огоньком: верный и упрямый, ждёт тебя каждый день.",
+            "Приходит к тем, кто занимается несколько дней подряд."),
         CreatureDef("kyuri", "Кьюри", "Любознательность",
             "Собирает новые слова, как ракушки, и прячет их в бездонные карманы.",
             Rarity.COMMON, listOf(Requirement(Metric.WORDS_ADDED, 60)), Metric.WORDS_ADDED, listOf(250, 800),
-            listOf("Почемучка", "Собиратель", "Энциклопедист"), CreatureShape.CLOUD, 0xFFC8B6FF, 0xFF9381FF, "city"),
+            listOf("Почемучка", "Собиратель", "Энциклопедист"), CreatureShape.BUNNY, 0xFFE6DCFF, 0xFFC9B8FF, "city",
+            "Облачный зайчик-почемучка: всё хочет знать и прячет слова в пушистых облаках.",
+            "Любит, когда в словаре становится больше слов."),
         CreatureDef("zippy", "Зиппи", "Скорость освоения",
             "Молния на лапках: появляется после длинных занятий и обожает марафоны.",
             Rarity.RARE, listOf(Requirement(Metric.LONGEST_SESSION, 30)), Metric.LONGEST_SESSION, listOf(60, 120),
-            listOf("Шустрик", "Вихрь", "Комета"), CreatureShape.STAR, 0xFFFFE66D, 0xFFFFB703, "bridge"),
+            listOf("Шустрик", "Вихрь", "Комета"), CreatureShape.SQUIRREL, 0xFFFFE594, 0xFFF7C35F, "bridge",
+            "Белка-молния: суетливая, весёлая и обожает длинные занятия.",
+            "Появляется после очень длинного занятия на одном дыхании."),
         CreatureDef("globi", "Глоби", "Исследование",
             "Маленькая планета-путешественница. Появляется в новых областях карты раньше всех.",
             Rarity.EPIC, listOf(Requirement(Metric.REGIONS, 3)), Metric.REGIONS, listOf(5, 8),
-            listOf("Спутник", "Планета", "Галактика"), CreatureShape.ORB, 0xFF80ED99, 0xFF00B4D8, "archipelago"),
+            listOf("Спутник", "Планета", "Галактика"), CreatureShape.TURTLE, 0xFFBDF2CB, 0xFF94DDAE, "archipelago",
+            "Неторопливая черепашка с панцирем-глобусом: путешествует и всё запоминает.",
+            "Ищи её, открывая новые области карты."),
         CreatureDef("archivus", "Архивус", "Мастерство повторения",
             "Мудрый книжный страж. Помнит каждое устойчиво усвоенное слово.",
             Rarity.EPIC, listOf(Requirement(Metric.WORDS_LEARNED, 100)), Metric.MASTERED, listOf(150, 500),
-            listOf("Свиток", "Фолиант", "Великий архив"), CreatureShape.BOOK, 0xFFE9C46A, 0xFFF4A261, "city"),
+            listOf("Свиток", "Фолиант", "Великий архив"), CreatureShape.OWL, 0xFFEADBC4, 0xFFD2B48F, "city",
+            "Учёный совёнок в очках: серьёзный, но добрый, всегда с книгой.",
+            "Прилетает, когда много слов выучено надёжно."),
         CreatureDef("babeli", "Вавилия", "Новые языки",
             "Кристальное создание, которое звучит на всех языках сразу. Приходит к настоящим полиглотам.",
             Rarity.LEGENDARY, listOf(Requirement(Metric.COURSES, 3), Requirement(Metric.ACHIEVEMENTS, 12)),
             Metric.ACHIEVEMENTS, listOf(18, 24), listOf("Осколок", "Призма", "Звучащий кристалл"),
-            CreatureShape.CRYSTAL, 0xFFF72585, 0xFF7209B7, "ruins"),
+            CreatureShape.DEER, 0xFFF9CDEB, 0xFFDAB8FE, "ruins",
+            "Хрустальный оленёнок: нежный и звенящий, рога звучат на всех языках сразу.",
+            "Приходит к настоящим полиглотам с несколькими курсами и наградами."),
         CreatureDef("nebula", "Небула", "Путь к звёздам",
             "Хранительница Звёздной библиотеки. Появляется лишь у тех, кто открыл весь мир.",
             Rarity.LEGENDARY, listOf(Requirement(Metric.REGIONS, 8)), Metric.STREAK, listOf(100, 365),
-            listOf("Туманность", "Созвездие", "Сверхновая"), CreatureShape.STAR, 0xFF4CC9F0, 0xFF7209B7, "library"),
+            listOf("Туманность", "Созвездие", "Сверхновая"), CreatureShape.CAT, 0xFFA9B1FF, 0xFF7C72E0, "library",
+            "Космическая кошка: загадочная и ласковая, в шёрстке мерцают звёзды.",
+            "Показывается лишь тем, кто открыл весь мир."),
     )
 
     fun byId(id: String) = all.firstOrNull { it.id == id }
