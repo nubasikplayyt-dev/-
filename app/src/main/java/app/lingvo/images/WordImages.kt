@@ -89,6 +89,7 @@ class WordImages(private val context: Context) {
             .setInputData(workDataOf(
                 WordImageWorker.KEY to req.key, WordImageWorker.PROMPT to req.prompt,
                 WordImageWorker.WIKI_LANG to web.wikiLang, WordImageWorker.WIKI_QUERY to web.wikiQuery,
+                WordImageWorker.TR_LANG to web.translationLang, WordImageWorker.TR_QUERY to web.translationQuery,
                 WordImageWorker.EN_QUERY to web.englishQuery,
             ))
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
@@ -170,8 +171,11 @@ class WordImageWorker(context: Context, params: WorkerParameters) : CoroutineWor
         return try {
             val bytes = when (settings.imageSource) {
                 ImageSource.WEB -> WebImageSearch.find(WordImagePrompt.WebQuery(
-                    inputData.getString(WIKI_LANG) ?: "en", inputData.getString(WIKI_QUERY) ?: return Result.failure(),
-                    inputData.getString(EN_QUERY),
+                    wikiLang = inputData.getString(WIKI_LANG) ?: "en",
+                    wikiQuery = inputData.getString(WIKI_QUERY) ?: return Result.failure(),
+                    translationLang = inputData.getString(TR_LANG) ?: "ru",
+                    translationQuery = inputData.getString(TR_QUERY).orEmpty(),
+                    englishQuery = inputData.getString(EN_QUERY),
                 ))
                 ImageSource.AI_SERVER -> LocalSdServerBackend(settings.imageServerUrl).generate(prompt, WordImagePrompt.NEGATIVE)
             }
@@ -190,6 +194,8 @@ class WordImageWorker(context: Context, params: WorkerParameters) : CoroutineWor
         const val PROMPT = "prompt"
         const val WIKI_LANG = "wiki_lang"
         const val WIKI_QUERY = "wiki_query"
+        const val TR_LANG = "tr_lang"
+        const val TR_QUERY = "tr_query"
         const val EN_QUERY = "en_query"
     }
 }

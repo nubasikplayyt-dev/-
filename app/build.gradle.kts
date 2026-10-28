@@ -119,7 +119,22 @@ dependencies {
     testImplementation("androidx.test:core:1.6.1")
 }
 
-// Облачные функции подключаются только при наличии настроек Firebase.
-if (file("google-services.json").exists()) {
-    apply(plugin = "com.google.gms.google-services")
+// Облачные функции подключаются, только если в google-services.json есть приложение с нашим
+// именем пакета. Иначе плагин Google уронил бы сборку — вместо этого пишем понятное предупреждение,
+// а приложение собирается без облачной части.
+run {
+    val config = file("google-services.json")
+    if (!config.exists()) return@run
+    val appId = android.defaultConfig.applicationId
+    val registered = Regex("\"package_name\"\\s*:\\s*\"([^\"]+)\"")
+        .findAll(config.readText()).map { it.groupValues[1] }.toList()
+    if (appId in registered) {
+        apply(plugin = "com.google.gms.google-services")
+    } else {
+        logger.warn(
+            "Firebase: в google-services.json нет приложения с именем пакета \"$appId\" " +
+                "(есть: ${registered.joinToString()}). Зарегистрируйте \"$appId\" в консоли Firebase " +
+                "и обновите секрет GOOGLE_SERVICES_JSON. Пока облачные функции выключены."
+        )
+    }
 }
