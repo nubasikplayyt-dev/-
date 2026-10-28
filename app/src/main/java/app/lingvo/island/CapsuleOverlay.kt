@@ -56,10 +56,13 @@ class CapsuleOverlay(
 
     private val wm = context.getSystemService(WindowManager::class.java)
     private var view: IslandView? = null
+    /** Занятие, для которого пользователь закрыл остров кнопкой «×». */
+    private var dismissedSessionId: Long? = null
 
     /** Показывает или обновляет остров. Новый остров всегда появляется свёрнутым. */
     fun show(model: Model) {
         if (!IslandController.canDrawOverlays(context)) return
+        if (dismissedSessionId == model.sessionId) return
         val v = view ?: runCatching { createView() }.getOrNull()?.also { view = it } ?: return
         v.update(model)
     }
@@ -69,6 +72,12 @@ class CapsuleOverlay(
         val v = view ?: return
         view = null
         v.fadeOut { runCatching { wm.removeView(v) } }
+    }
+
+    /** Кнопка «×» и долгое нажатие: остров не появляется до следующего занятия. */
+    fun dismissUntilNextSession() {
+        dismissedSessionId = view?.model?.sessionId
+        hide()
     }
 
     private fun dp(v: Float) = v * context.resources.displayMetrics.density
@@ -98,19 +107,26 @@ class CapsuleOverlay(
         val slop = ViewConfiguration.get(context).scaledTouchSlop
         val swipe = dp(24f)
         var downX = 0f; var downY = 0f; var gesture = false
+        val longPress = Runnable { if (!gesture) dismissUntilNextSession() }
         // Только тап и вертикальный свайп; движения пальца НЕ двигают окно.
         v.setOnTouchListener { _, e ->
             when (e.actionMasked) {
-                MotionEvent.ACTION_DOWN -> { downX = e.rawX; downY = e.rawY; gesture = false }
+                MotionEvent.ACTION_DOWN -> {
+                    downX = e.rawX; downY = e.rawY; gesture = false
+                    v.postDelayed(longPress, ViewConfiguration.getLongPressTimeout().toLong())
+                }
                 MotionEvent.ACTION_MOVE -> {
                     val dy = e.rawY - downY
+                    if (abs(dy) > slop || abs(e.rawX - downX) > slop) v.removeCallbacks(longPress)
                     if (!gesture && dy < -swipe) { gesture = true; v.collapse() }
                     else if (!gesture && dy > swipe) { gesture = true; v.expand() }
                 }
                 MotionEvent.ACTION_UP -> {
+                    v.removeCallbacks(longPress)
                     val moved = abs(e.rawX - downX) > slop || abs(e.rawY - downY) > slop
                     if (!gesture && !moved) handleTap(v, e.x, e.y)
                 }
+                MotionEvent.ACTION_CANCEL -> v.removeCallbacks(longPress)
             }
             true
         }
