@@ -72,10 +72,10 @@ class MigrationTest {
         }
 
         val room = Room.databaseBuilder(context, AppDatabase::class.java, name)
-            .addMigrations(AppDatabase.MIGRATION_1_2, AppDatabase.MIGRATION_2_3)
+            .addMigrations(AppDatabase.MIGRATION_1_2, AppDatabase.MIGRATION_2_3, AppDatabase.MIGRATION_3_4)
             .allowMainThreadQueries()
             .build()
-        // Открытие проверяет, что схема после миграций 1→2→3 совпадает со схемой Room версии 3.
+        // Открытие проверяет, что схема после миграций 1→2→3→4 совпадает со схемой Room версии 4.
         val courses = room.courses().all()
         assertEquals(listOf("es", "de"), courses.map { it.id })
         assertEquals("Испанский", courses[0].name)
