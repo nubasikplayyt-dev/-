@@ -42,21 +42,43 @@ object WordImagePrompt {
         return Request(cacheKey(spec.languageCode, entry), s, prompt)
     }
 
-    /** Поиск картинки в интернете: язык Википедии, запрос в ней и английский запрос для Openverse. */
-    data class WebQuery(val wikiLang: String, val wikiQuery: String, val englishQuery: String?)
+    /**
+     * Поиск картинки в интернете. Чем больше вариантов запроса, тем реже слово остаётся без картинки:
+     * пробуем слово на языке курса, перевод на родном языке и английское слово.
+     */
+    data class WebQuery(
+        /** Язык курса и само слово без артикля: «Mutter» в de.wikipedia. */
+        val wikiLang: String,
+        val wikiQuery: String,
+        /** Язык перевода и первый вариант перевода: «мама» в ru.wikipedia. */
+        val translationLang: String,
+        val translationQuery: String,
+        /** Английское слово — для Викисклада и Openverse, где почти всё подписано по-английски. */
+        val englishQuery: String?,
+    ) {
+        /** Все запросы по убыванию точности — для поиска по картинкам (Викисклад, Openverse). */
+        val imageQueries: List<String>
+            get() = listOfNotNull(englishQuery, wikiQuery, translationQuery)
+                .map { it.trim() }.filter { it.isNotEmpty() }.distinct()
+    }
+
+    /** Первое значение из перевода: «мама; мать, матушка» → «мама». */
+    fun firstMeaning(text: String): String =
+        text.substringBefore(';').substringBefore(',').substringBefore('(').trim().trim('«', '»', '"')
 
     fun webQuery(entry: VocabEntry, spec: LanguageSpec, glossEn: String?): WebQuery {
         val bare = entry.term.trim().let { t ->
             if (entry.article.isNotEmpty()) t.removePrefix(entry.article).trimStart() else t
-        }.removePrefix("to ").trim().trim('¿', '?', '¡', '!')
+        }.removePrefix("to ").trim().trim('¿', '?', '¡', '!', '.')
+        val translation = firstMeaning(entry.translation)
         val english = when {
             spec.languageCode == "en" -> bare
-            !glossEn.isNullOrBlank() -> glossEn.trim()
-            spec.translationCode == "en" -> entry.translation.substringBefore(';').substringBefore(',').trim()
+            !glossEn.isNullOrBlank() -> firstMeaning(glossEn)
+            spec.translationCode == "en" -> translation
             else -> null
         }
-        val lang = spec.languageCode.lowercase().takeIf { it.matches(Regex("[a-z]{2,3}")) } ?: "en"
-        return WebQuery(lang, bare, english)
+        fun code(c: String) = c.lowercase().takeIf { it.matches(Regex("[a-z]{2,3}")) } ?: "en"
+        return WebQuery(code(spec.languageCode), bare, code(spec.translationCode), translation, english)
     }
 
     /** Английская подсказка из неизвестных полей карточки (`gloss_en`), если она есть. */

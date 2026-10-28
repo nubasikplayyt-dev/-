@@ -15,10 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -48,11 +45,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * Картинка к слову.
+ * Картинка к слову на карточке.
  *
- * - картинка есть — кнопка «Показать картинку», по нажатию открывается на весь экран;
- * - картинка рисуется — индикатор «рисуется…»;
- * - не получилось — кнопка «Повторить» (задача ставится в очередь заново);
+ * - картинка есть — она показана крупно; нажатие открывает её на весь экран;
+ * - картинка ещё ищется — короткий индикатор;
+ * - не нашлась — кнопка «Повторить» (задача ставится в очередь заново);
  * - ничего нет — ничего и не показывается.
  */
 @Composable
@@ -79,13 +76,17 @@ fun WordImage(entry: VocabEntry, modifier: Modifier = Modifier) {
     val b = bitmap
     when {
         b != null -> {
-            Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                TextButton(onClick = { open = true }) {
-                    Icon(Icons.Filled.Image, null, Modifier.size(18.dp))
-                    Spacer(Modifier.width(6.dp))
-                    Text("Показать картинку")
-                }
-            }
+            // Картинка видна всегда; нажатие открывает её на весь экран.
+            Image(
+                b, "Картинка к слову «${entry.displayTerm}»",
+                modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 140.dp, max = 260.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+                    .clickable { open = true },
+                contentScale = ContentScale.Crop,
+            )
             if (open) {
                 Dialog(onDismissRequest = { open = false }) {
                     Box(
@@ -103,7 +104,7 @@ fun WordImage(entry: VocabEntry, modifier: Modifier = Modifier) {
                 CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    if (status == WordImages.Status.RUNNING) "Картинка рисуется…" else "Картинка в очереди",
+                    if (status == WordImages.Status.RUNNING) "Картинка ищется…" else "Картинка в очереди",
                     style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -111,7 +112,7 @@ fun WordImage(entry: VocabEntry, modifier: Modifier = Modifier) {
         status == WordImages.Status.FAILED -> {
             Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text("Картинка не получилась", style = MaterialTheme.typography.labelMedium,
+                Text("Картинка не нашлась", style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
                 TextButton(onClick = { settings?.let { images.retry(entry, spec, it) } }) { Text("Повторить") }
             }

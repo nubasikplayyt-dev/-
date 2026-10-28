@@ -207,6 +207,7 @@ private fun WordImagesGroup(container: AppContainer, settings: AppSettings, upda
     val toast = rememberToast()
     var url by remember(settings.imageServerUrl) { mutableStateOf(settings.imageServerUrl) }
     var status by remember { mutableStateOf<String?>(null) }
+    var busyImages by remember { mutableStateOf(false) }
     var cache by remember { mutableStateOf(container.wordImages.cacheSize()) }
     val device = remember { app.lingvo.images.DeviceCapability.check(container.wordImages.appContext) }
     val urlOk = url.isBlank() || app.lingvo.core.WordImagePrompt.isLocalAddress(url)
@@ -237,6 +238,21 @@ private fun WordImagesGroup(container: AppContainer, settings: AppSettings, upda
         }
         Text("В кэше: ${cache.first} картинок, ${cache.second / 1024} КБ", style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (settings.imageGeneration) {
+            TextButton(enabled = !busyImages, onClick = {
+                busyImages = true
+                scope.launch {
+                    var total = 0
+                    container.repository.courses().forEach { c ->
+                        val spec = c.spec
+                        total += container.wordImages.requestMissing(container.repository.entriesOf(spec), spec, settings)
+                    }
+                    toast(if (total > 0) "Ищем картинки: $total слов" else "У всех слов уже есть картинки")
+                    cache = container.wordImages.cacheSize()
+                    busyImages = false
+                }
+            }) { Text("Подобрать картинки ко всем словам") }
+        }
         if (cache.first > 0) TextButton(onClick = {
             toast("Удалено картинок: ${container.wordImages.clearCache()}"); cache = container.wordImages.cacheSize()
         }) { Text("Очистить кэш картинок") }

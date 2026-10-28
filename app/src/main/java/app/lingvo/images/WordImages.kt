@@ -117,6 +117,16 @@ class WordImages(private val context: Context) {
         fileFor(entry, spec).delete(); notifyChanged()
     }
 
+    /** Ставит в очередь все слова курса, у которых картинки ещё нет. Возвращает, сколько добавлено. */
+    fun requestMissing(entries: List<VocabEntry>, spec: LanguageSpec, settings: AppSettings): Int {
+        if (!settings.imageGeneration) return 0
+        var queued = 0
+        entries.forEach { entry ->
+            if (!fileFor(entry, spec).exists()) { request(entry, spec, settings); queued++ }
+        }
+        return queued
+    }
+
     fun clearCache(): Int {
         val files = dir.listFiles().orEmpty()
         files.forEach { it.delete() }

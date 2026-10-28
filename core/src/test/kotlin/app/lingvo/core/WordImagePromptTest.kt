@@ -35,11 +35,23 @@ class WordImagePromptTest {
     }
 
     @Test
-    fun `web query uses the word without article in its own wikipedia`() {
-        val q = WordImagePrompt.webQuery(e("die Mutter", "мама", "die"), Languages.GERMAN, "mother")
+    fun `web query collects the word, its translation and the english hint`() {
+        val q = WordImagePrompt.webQuery(e("die Mutter", "мама; мать", "die"), Languages.GERMAN, "mother")
         assertEquals("de", q.wikiLang)
         assertEquals("Mutter", q.wikiQuery)
+        assertEquals("ru", q.translationLang)
+        assertEquals("мама", q.translationQuery)
         assertEquals("mother", q.englishQuery)
-        assertEquals(null, WordImagePrompt.webQuery(e("la mesa", "стол", "la"), Languages.SPANISH, null).englishQuery)
+        assertEquals(listOf("mother", "Mutter", "мама"), q.imageQueries)
     }
+
+    @Test
+    fun `without an english hint the translation is still searched`() {
+        val q = WordImagePrompt.webQuery(e("la mesa", "стол, столик", "la"), Languages.SPANISH, null)
+        assertEquals(null, q.englishQuery)
+        assertEquals("mesa", q.wikiQuery)
+        assertEquals("стол", q.translationQuery)
+        assertEquals(listOf("mesa", "стол"), q.imageQueries)
+    }
+
 }

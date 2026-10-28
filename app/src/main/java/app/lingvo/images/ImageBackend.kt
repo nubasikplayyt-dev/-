@@ -78,37 +78,72 @@ class LocalSdServerBackend(baseUrl: String) : ImageBackend {
 }
 
 /**
- * Поиск готовой картинки в интернете (не генерация):
- *  1) главная иллюстрация статьи Википедии на языке курса (например, «Mutter» в de.wikipedia.org);
- *  2) если там нет — открытая библиотека Openverse (картинки по свободным лицензиям, без ключа API) по-английски;
- *  3) последний шанс — английская Википедия.
- * Слово при этом уходит в Википедию/Openverse — об этом сказано в настройках.
+ * Поиск готовой картинки в интернете (не генерация). Источники перебираются по очереди,
+ * пока картинка не найдётся:
+ *
+ *  1) главная иллюстрация статьи Википедии на языке курса («Mutter» в de.wikipedia.org);
+ *  2) то же на языке перевода («мама» в ru.wikipedia.org) — выручает, когда у слова нет статьи
+ *     на изучаемом языке;
+ *  3) Викисклад (Wikimedia Commons) — огромная библиотека свободных фотографий; ищем по английскому
+ *     слову, затем по самому слову и переводу;
+ *  4) Openverse — ещё одна библиотека свободных картинок;
+ *  5) английская Википедия.
+ *
+ * Слово при этом уходит в Википедию, Викисклад и Openverse — об этом сказано в настройках.
  */
 object WebImageSearch {
     private const val UA = "LingvoWorld/1.0 (Android language-learning app)"
 
     suspend fun find(q: WordImagePrompt.WebQuery): ByteArray = withContext(Dispatchers.IO) {
-        val url = wikipedia(q.wikiLang, q.wikiQuery)
-            ?: q.englishQuery?.let { openverse(it) }
-            ?: q.englishQuery?.let { wikipedia("en", it) }
-            ?: throw IOException("Картинка не найдена")
+        val attempts: List<() -> String?> = buildList {
+            add { wikipedia(q.wikiLang, q.wikiQuery) }
+            if (q.translationLang != q.wikiLang && q.translationQuery.isNotBlank()) {
+                add { wikipedia(q.translationLang, q.translationQuery) }
+            }
+            q.imageQueries.forEach { query -> add { commons(query) } }
+            q.imageQueries.forEach { query -> add { openverse(query) } }
+            q.englishQuery?.takeIf { q.wikiLang != "en" }?.let { english -> add { wikipedia("en", english) } }
+        }
+        val url = attempts.firstNotNullOfOrNull { it() } ?: throw IOException("Картинка не найдена")
         download(url)
     }
 
     private fun enc(s: String) = java.net.URLEncoder.encode(s, "UTF-8")
 
+    /** Главная иллюстрация статьи. Миниатюра всегда в PNG/JPEG, даже если в статье векторный рисунок. */
     private fun wikipedia(lang: String, query: String): String? = runCatching {
+        if (query.isBlank()) return null
         val api = "https://$lang.wikipedia.org/w/api.php?action=query&format=json&redirects=1&generator=search" +
-            "&gsrlimit=1&gsrsearch=${enc(query)}&prop=pageimages&piprop=thumbnail&pithumbsize=512"
+            "&gsrlimit=3&gsrsearch=${enc(query)}&prop=pageimages&piprop=thumbnail&pithumbsize=640"
         val pages = JSONObject(get(api)).optJSONObject("query")?.optJSONObject("pages") ?: return null
-        val first = pages.keys().asSequence().firstOrNull()?.let { pages.getJSONObject(it) } ?: return null
-        first.optJSONObject("thumbnail")?.optString("source")?.takeIf { it.startsWith("https://") }
+        pages.keys().asSequence()
+            .mapNotNull { pages.optJSONObject(it)?.optJSONObject("thumbnail")?.optString("source") }
+            .firstOrNull { it.startsWith("https://") }
+    }.getOrNull()
+
+    /**
+     * Викисклад: ищем только растровые файлы и берём готовую миниатюру шириной 640 —
+     * так в приложение не попадут SVG, видео и PDF, которые Android не покажет.
+     */
+    private fun commons(query: String): String? = runCatching {
+        if (query.isBlank()) return null
+        val api = "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search" +
+            "&gsrnamespace=6&gsrlimit=5&gsrsearch=${enc("$query filetype:bitmap")}" +
+            "&prop=imageinfo&iiprop=url&iiurlwidth=640"
+        val pages = JSONObject(get(api)).optJSONObject("query")?.optJSONObject("pages") ?: return null
+        pages.keys().asSequence()
+            .mapNotNull { pages.optJSONObject(it)?.optJSONArray("imageinfo")?.optJSONObject(0)?.optString("thumburl") }
+            .firstOrNull { it.startsWith("https://") }
     }.getOrNull()
 
     private fun openverse(query: String): String? = runCatching {
-        val api = "https://api.openverse.org/v1/images/?q=${enc(query)}&page_size=1&mature=false"
-        val r = JSONObject(get(api)).optJSONArray("results")?.optJSONObject(0) ?: return null
-        (r.optString("thumbnail").ifEmpty { r.optString("url") }).takeIf { it.startsWith("https://") }
+        if (query.isBlank()) return null
+        val api = "https://api.openverse.org/v1/images/?q=${enc(query)}&page_size=3&mature=false"
+        val results = JSONObject(get(api)).optJSONArray("results") ?: return null
+        (0 until results.length()).asSequence()
+            .mapNotNull { results.optJSONObject(it) }
+            .mapNotNull { (it.optString("thumbnail").ifEmpty { it.optString("url") }).takeIf { u -> u.startsWith("https://") } }
+            .firstOrNull()
     }.getOrNull()
 
     private fun open(url: String): HttpURLConnection = (URL(url).openConnection() as HttpURLConnection).apply {
