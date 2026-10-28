@@ -1,0 +1,627 @@
+{
+  "schema_version": 1,
+  "language": "de",
+  "updated_at": "2026-10-28T11:07:40Z",
+  "entries": [
+    {
+      "id": "de-0001",
+      "german": "die Voraussetzung",
+      "russian": "предпосылка; условие",
+      "article": "die",
+      "plural": "Voraussetzungen",
+      "part_of_speech": "noun",
+      "example_de": "Gute Deutschkenntnisse sind eine Voraussetzung für diese Stelle.",
+      "example_ru": "Хорошее знание немецкого — условие для этой должности.",
+      "grammar_notes": "",
+      "collocations": [
+        "eine Voraussetzung erfüllen",
+        "unter der Voraussetzung, dass …"
+      ],
+      "level": "B2",
+      "tags": [
+        "академическая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0002",
+      "german": "eine Entscheidung treffen",
+      "russian": "принимать решение",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "phrase",
+      "example_de": "Wir müssen bald eine Entscheidung treffen.",
+      "example_ru": "Нам скоро нужно принять решение.",
+      "grammar_notes": "treffen — сильный глагол: traf, hat getroffen.",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "устойчивые выражения"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0003",
+      "german": "sich auf etwas verlassen",
+      "russian": "полагаться на что-либо",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "phrase",
+      "example_de": "Du kannst dich auf mich verlassen.",
+      "example_ru": "Ты можешь на меня положиться.",
+      "grammar_notes": "auf + Akkusativ. verlassen — verließ, hat verlassen.",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "устойчивые выражения"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0004",
+      "german": "aufgrund des erheblichen Preisanstiegs",
+      "russian": "вследствие значительного роста цен",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "phrase",
+      "example_de": "Aufgrund des erheblichen Preisanstiegs sinkt die Nachfrage.",
+      "example_ru": "Вследствие значительного роста цен спрос снижается.",
+      "grammar_notes": "aufgrund + Genitiv.",
+      "collocations": [],
+      "level": "C1",
+      "tags": [
+        "политика и экономика",
+        "академическая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0005",
+      "german": "der Termin",
+      "russian": "назначенная встреча; срок; запись",
+      "article": "der",
+      "plural": "Termine",
+      "part_of_speech": "noun",
+      "example_de": "Ich habe morgen einen Termin beim Arzt.",
+      "example_ru": "У меня завтра запись к врачу.",
+      "grammar_notes": "",
+      "collocations": [
+        "einen Termin vereinbaren",
+        "einen Termin absagen"
+      ],
+      "level": "A2",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0006",
+      "german": "die Erfahrung",
+      "russian": "опыт",
+      "article": "die",
+      "plural": "Erfahrungen",
+      "part_of_speech": "noun",
+      "example_de": "Sie hat viel Erfahrung im Vertrieb.",
+      "example_ru": "У неё большой опыт в продажах.",
+      "grammar_notes": "",
+      "collocations": [
+        "Erfahrungen sammeln",
+        "aus Erfahrung"
+      ],
+      "level": "B1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0007",
+      "german": "das Ergebnis",
+      "russian": "результат",
+      "article": "das",
+      "plural": "Ergebnisse",
+      "part_of_speech": "noun",
+      "example_de": "Das Ergebnis der Studie ist überraschend.",
+      "example_ru": "Результат исследования неожиданный.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "академическая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0008",
+      "german": "der Zusammenhang",
+      "russian": "взаимосвязь; контекст",
+      "article": "der",
+      "plural": "Zusammenhänge",
+      "part_of_speech": "noun",
+      "example_de": "In diesem Zusammenhang möchte ich betonen, dass die Kosten steigen.",
+      "example_ru": "В этой связи хочу подчеркнуть, что расходы растут.",
+      "grammar_notes": "",
+      "collocations": [
+        "im Zusammenhang mit (+ Dativ)"
+      ],
+      "level": "B2",
+      "tags": [
+        "академическая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0009",
+      "german": "sich beschäftigen mit",
+      "russian": "заниматься чем-либо",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "verb",
+      "example_de": "Ich beschäftige mich seit Jahren mit Geschichte.",
+      "example_ru": "Я много лет занимаюсь историей.",
+      "grammar_notes": "mit + Dativ.",
+      "collocations": [],
+      "level": "B1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0010",
+      "german": "an etwas teilnehmen",
+      "russian": "участвовать в чём-либо",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "phrase",
+      "example_de": "Wir nehmen an der Konferenz teil.",
+      "example_ru": "Мы участвуем в конференции.",
+      "grammar_notes": "Отделяемая приставка teil-; an + Dativ.",
+      "collocations": [],
+      "verb_forms": {
+        "präsens_3sg": "nimmt teil",
+        "präteritum": "nahm teil",
+        "perfekt": "hat teilgenommen"
+      },
+      "level": "B1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0011",
+      "german": "die Rechnung",
+      "russian": "счёт",
+      "article": "die",
+      "plural": "Rechnungen",
+      "part_of_speech": "noun",
+      "example_de": "Die Rechnung, bitte!",
+      "example_ru": "Счёт, пожалуйста!",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "A2",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0012",
+      "german": "der Haushalt",
+      "russian": "бюджет (государственный); домашнее хозяйство",
+      "article": "der",
+      "plural": "Haushalte",
+      "part_of_speech": "noun",
+      "example_de": "Der Bundestag hat den Haushalt verabschiedet.",
+      "example_ru": "Бундестаг принял бюджет.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B2",
+      "tags": [
+        "политика и экономика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0013",
+      "german": "die Verhandlung",
+      "russian": "переговоры; судебное разбирательство",
+      "article": "die",
+      "plural": "Verhandlungen",
+      "part_of_speech": "noun",
+      "example_de": "Die Verhandlungen dauern noch an.",
+      "example_ru": "Переговоры ещё продолжаются.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B2",
+      "tags": [
+        "деловая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0014",
+      "german": "das Rezept",
+      "russian": "рецепт (врачебный и кулинарный)",
+      "article": "das",
+      "plural": "Rezepte",
+      "part_of_speech": "noun",
+      "example_de": "Für dieses Medikament brauchen Sie ein Rezept.",
+      "example_ru": "Для этого лекарства вам нужен рецепт.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "A2",
+      "tags": [
+        "медицинская лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0015",
+      "german": "die Untersuchung",
+      "russian": "обследование; исследование",
+      "article": "die",
+      "plural": "Untersuchungen",
+      "part_of_speech": "noun",
+      "example_de": "Die Untersuchung hat nichts Ernstes ergeben.",
+      "example_ru": "Обследование не выявило ничего серьёзного.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "медицинская лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0016",
+      "german": "Bescheid sagen",
+      "russian": "сообщить, дать знать",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "phrase",
+      "example_de": "Sag mir bitte Bescheid, wenn du ankommst.",
+      "example_ru": "Дай мне знать, пожалуйста, когда приедешь.",
+      "grammar_notes": "jemandem (Dativ) Bescheid sagen.",
+      "collocations": [],
+      "level": "A2",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0017",
+      "german": "allerdings",
+      "russian": "однако; впрочем",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "adverb",
+      "example_de": "Das Hotel ist schön, allerdings ziemlich teuer.",
+      "example_ru": "Отель красивый, правда, довольно дорогой.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0018",
+      "german": "gemütlich",
+      "russian": "уютный",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "adjective",
+      "example_de": "Die Wohnung ist klein, aber gemütlich.",
+      "example_ru": "Квартира маленькая, но уютная.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "A2",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0019",
+      "german": "die Wahl",
+      "russian": "выбор; выборы (мн. ч.)",
+      "article": "die",
+      "plural": "Wahlen",
+      "part_of_speech": "noun",
+      "example_de": "Die Wahlen finden im September statt.",
+      "example_ru": "Выборы пройдут в сентябре.",
+      "grammar_notes": "",
+      "collocations": [
+        "keine andere Wahl haben"
+      ],
+      "level": "B1",
+      "tags": [
+        "политика и экономика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0020",
+      "german": "zur Verfügung stehen",
+      "russian": "быть в распоряжении",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "phrase",
+      "example_de": "Für Fragen stehe ich Ihnen gern zur Verfügung.",
+      "example_ru": "Буду рад ответить на ваши вопросы.",
+      "grammar_notes": "jemandem (Dativ) zur Verfügung stehen.",
+      "collocations": [],
+      "level": "B2",
+      "tags": [
+        "деловая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0021",
+      "german": "die Nachhaltigkeit",
+      "russian": "устойчивость (экологическая)",
+      "article": "die",
+      "plural": "",
+      "part_of_speech": "noun",
+      "example_de": "Nachhaltigkeit spielt eine immer größere Rolle.",
+      "example_ru": "Устойчивое развитие играет всё большую роль.",
+      "grammar_notes": "Обычно без множественного числа.",
+      "collocations": [],
+      "level": "B2",
+      "tags": [
+        "академическая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0022",
+      "german": "der Arbeitsplatz",
+      "russian": "рабочее место",
+      "article": "der",
+      "plural": "Arbeitsplätze",
+      "part_of_speech": "noun",
+      "example_de": "Die Firma schafft neue Arbeitsplätze.",
+      "example_ru": "Фирма создаёт новые рабочие места.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "политика и экономика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0023",
+      "german": "erledigen",
+      "russian": "выполнить, уладить",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "verb",
+      "example_de": "Ich muss noch ein paar Dinge erledigen.",
+      "example_ru": "Мне ещё нужно сделать пару дел.",
+      "grammar_notes": "",
+      "collocations": [],
+      "verb_forms": {
+        "präsens_3sg": "erledigt",
+        "präteritum": "erledigte",
+        "perfekt": "hat erledigt"
+      },
+      "level": "B1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0024",
+      "german": "sich Sorgen machen um",
+      "russian": "беспокоиться о",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "phrase",
+      "example_de": "Mach dir keine Sorgen um mich!",
+      "example_ru": "Не беспокойся обо мне!",
+      "grammar_notes": "um + Akkusativ; возвратное местоимение в дательном: ich mache mir Sorgen.",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "устойчивые выражения"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0025",
+      "german": "ausreichend",
+      "russian": "достаточный",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "adjective",
+      "example_de": "Es gibt keine ausreichenden Beweise.",
+      "example_ru": "Нет достаточных доказательств.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B2",
+      "tags": [
+        "академическая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0026",
+      "german": "die Behörde",
+      "russian": "ведомство, учреждение",
+      "article": "die",
+      "plural": "Behörden",
+      "part_of_speech": "noun",
+      "example_de": "Sie müssen den Antrag bei der zuständigen Behörde stellen.",
+      "example_ru": "Заявление нужно подать в соответствующее ведомство.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B2",
+      "tags": [
+        "политика и экономика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0027",
+      "german": "einen Antrag stellen",
+      "russian": "подать заявление",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "phrase",
+      "example_de": "Ich habe einen Antrag auf Elterngeld gestellt.",
+      "example_ru": "Я подал заявление на родительское пособие.",
+      "grammar_notes": "Antrag auf + Akkusativ.",
+      "collocations": [],
+      "level": "B2",
+      "tags": [
+        "деловая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0028",
+      "german": "das Gehalt",
+      "russian": "зарплата, оклад",
+      "article": "das",
+      "plural": "Gehälter",
+      "part_of_speech": "noun",
+      "example_de": "Das Gehalt wird am Monatsende überwiesen.",
+      "example_ru": "Зарплата перечисляется в конце месяца.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "деловая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0029",
+      "german": "vorhaben",
+      "russian": "планировать, намереваться",
+      "article": "",
+      "plural": "",
+      "part_of_speech": "verb",
+      "example_de": "Was hast du am Wochenende vor?",
+      "example_ru": "Что ты планируешь на выходные?",
+      "grammar_notes": "Отделяемая приставка vor-.",
+      "collocations": [],
+      "verb_forms": {
+        "präsens_3sg": "hat vor",
+        "präteritum": "hatte vor",
+        "perfekt": "hat vorgehabt"
+      },
+      "level": "B1",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "de-0030",
+      "german": "die Gelegenheit",
+      "russian": "возможность, случай",
+      "article": "die",
+      "plural": "Gelegenheiten",
+      "part_of_speech": "noun",
+      "example_de": "Bei dieser Gelegenheit möchte ich mich bedanken.",
+      "example_ru": "Пользуясь случаем, хочу поблагодарить.",
+      "grammar_notes": "",
+      "collocations": [
+        "eine Gelegenheit nutzen",
+        "bei Gelegenheit"
+      ],
+      "level": "B1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    }
+  ]
+}

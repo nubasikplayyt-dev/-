@@ -1,0 +1,593 @@
+{
+  "schema_version": 1,
+  "language": "es",
+  "updated_at": "2026-10-28T11:07:40Z",
+  "entries": [
+    {
+      "id": "es-0001",
+      "spanish": "la cita",
+      "russian": "встреча; запись (к врачу)",
+      "article": "la",
+      "part_of_speech": "noun",
+      "example_es": "Tengo una cita con el médico a las tres.",
+      "example_ru": "У меня запись к врачу на три часа.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "A2",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0002",
+      "spanish": "el compromiso",
+      "russian": "обязательство; помолвка",
+      "article": "el",
+      "part_of_speech": "noun",
+      "example_es": "No puedo ir, tengo otro compromiso.",
+      "example_ru": "Не могу пойти, у меня другое обязательство.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0003",
+      "spanish": "darse cuenta de algo",
+      "russian": "осознать, заметить что-либо",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "Me di cuenta de que había olvidado las llaves.",
+      "example_ru": "Я понял, что забыл ключи.",
+      "grammar_notes": "Возвратный глагол: me doy cuenta, te das cuenta… Управление: de + существительное / de que + придаточное.",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "устойчивые выражения"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0004",
+      "spanish": "echar de menos",
+      "russian": "скучать по",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "Echo de menos a mi familia.",
+      "example_ru": "Я скучаю по своей семье.",
+      "grammar_notes": "Перед одушевлённым дополнением ставится предлог a.",
+      "collocations": [],
+      "regional_usage": "Испания; в Латинской Америке чаще говорят extrañar.",
+      "level": "B1",
+      "tags": [
+        "устойчивые выражения",
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0005",
+      "spanish": "aprovechar",
+      "russian": "воспользоваться, использовать (возможность)",
+      "article": "",
+      "part_of_speech": "verb",
+      "example_es": "Hay que aprovechar el buen tiempo.",
+      "example_ru": "Нужно пользоваться хорошей погодой.",
+      "grammar_notes": "Правильный глагол на -ar. aprovechar algo / aprovecharse de algo (воспользоваться, часто с оттенком злоупотребления).",
+      "collocations": [
+        "aprovechar la ocasión"
+      ],
+      "level": "B1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0006",
+      "spanish": "el desarrollo",
+      "russian": "развитие",
+      "article": "el",
+      "part_of_speech": "noun",
+      "example_es": "El desarrollo sostenible es una prioridad.",
+      "example_ru": "Устойчивое развитие — приоритет.",
+      "grammar_notes": "",
+      "collocations": [
+        "país en vías de desarrollo"
+      ],
+      "level": "B2",
+      "tags": [
+        "академическая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0007",
+      "spanish": "sin embargo",
+      "russian": "однако",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "Es caro; sin embargo, vale la pena.",
+      "example_ru": "Это дорого; однако оно того стоит.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "академическая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0008",
+      "spanish": "llevar a cabo",
+      "russian": "осуществлять, проводить",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "El equipo llevó a cabo un estudio detallado.",
+      "example_ru": "Команда провела подробное исследование.",
+      "grammar_notes": "",
+      "collocations": [
+        "llevar a cabo un proyecto"
+      ],
+      "level": "B2",
+      "tags": [
+        "академическая лексика",
+        "деловая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0009",
+      "spanish": "la empresa",
+      "russian": "компания, предприятие",
+      "article": "la",
+      "part_of_speech": "noun",
+      "example_es": "Trabajo en una empresa pequeña.",
+      "example_ru": "Я работаю в небольшой компании.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "A2",
+      "tags": [
+        "деловая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0010",
+      "spanish": "el presupuesto",
+      "russian": "бюджет; смета",
+      "article": "el",
+      "part_of_speech": "noun",
+      "example_es": "El presupuesto del proyecto es limitado.",
+      "example_ru": "Бюджет проекта ограничен.",
+      "grammar_notes": "",
+      "collocations": [
+        "pedir un presupuesto"
+      ],
+      "level": "B1",
+      "tags": [
+        "деловая лексика",
+        "политика и экономика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0011",
+      "spanish": "la receta",
+      "russian": "рецепт (кулинарный и врачебный)",
+      "article": "la",
+      "part_of_speech": "noun",
+      "example_es": "El médico me dio una receta.",
+      "example_ru": "Врач выписал мне рецепт.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "A2",
+      "tags": [
+        "медицинская лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0012",
+      "spanish": "el dolor de cabeza",
+      "russian": "головная боль",
+      "article": "el",
+      "part_of_speech": "noun",
+      "example_es": "Tengo un dolor de cabeza terrible.",
+      "example_ru": "У меня ужасная головная боль.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "A2",
+      "tags": [
+        "медицинская лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0013",
+      "spanish": "¡Ojalá!",
+      "russian": "хоть бы; дай бог",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "¡Ojalá llueva mañana!",
+      "example_ru": "Хоть бы завтра пошёл дождь!",
+      "grammar_notes": "После ojalá (que) используется subjuntivo.",
+      "collocations": [],
+      "level": "A2",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0014",
+      "spanish": "¿Qué tal?",
+      "russian": "как дела?; как?",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "¿Qué tal el viaje?",
+      "example_ru": "Как поездка?",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "A1",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0015",
+      "spanish": "tener ganas de",
+      "russian": "хотеть, иметь желание",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "Tengo ganas de ir a la playa.",
+      "example_ru": "Мне хочется пойти на пляж.",
+      "grammar_notes": "tener ganas de + infinitivo; tener ganas de que + subjuntivo.",
+      "collocations": [],
+      "level": "A2",
+      "tags": [
+        "устойчивые выражения"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0016",
+      "spanish": "la huelga",
+      "russian": "забастовка",
+      "article": "la",
+      "part_of_speech": "noun",
+      "example_es": "Los trabajadores están en huelga.",
+      "example_ru": "Рабочие бастуют.",
+      "grammar_notes": "",
+      "collocations": [
+        "estar en huelga; hacer huelga"
+      ],
+      "level": "B1",
+      "tags": [
+        "политика и экономика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0017",
+      "spanish": "las elecciones",
+      "russian": "выборы",
+      "article": "las",
+      "part_of_speech": "noun",
+      "example_es": "Las elecciones serán en noviembre.",
+      "example_ru": "Выборы пройдут в ноябре.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "политика и экономика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0018",
+      "spanish": "el crecimiento económico",
+      "russian": "экономический рост",
+      "article": "el",
+      "part_of_speech": "noun",
+      "example_es": "El crecimiento económico se ha ralentizado.",
+      "example_ru": "Экономический рост замедлился.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B2",
+      "tags": [
+        "политика и экономика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0019",
+      "spanish": "a pesar de",
+      "russian": "несмотря на",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "Salimos a pesar de la lluvia.",
+      "example_ru": "Мы вышли, несмотря на дождь.",
+      "grammar_notes": "a pesar de + существительное / infinitivo; a pesar de que + придаточное.",
+      "collocations": [],
+      "level": "B1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0020",
+      "spanish": "quedar",
+      "russian": "договориться о встрече; оставаться; подходить (об одежде)",
+      "article": "",
+      "part_of_speech": "verb",
+      "example_es": "¿Quedamos a las ocho?",
+      "example_ru": "Встретимся в восемь?",
+      "grammar_notes": "quedar con alguien — встречаться с кем-то; quedarse — оставаться; quedar bien/mal — хорошо/плохо сидеть.",
+      "collocations": [],
+      "verb_forms": {
+        "presente_yo": "quedo",
+        "indefinido_yo": "quedé",
+        "participio": "quedado"
+      },
+      "level": "A2",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0021",
+      "spanish": "el ordenador",
+      "russian": "компьютер",
+      "article": "el",
+      "part_of_speech": "noun",
+      "example_es": "Mi ordenador es muy lento.",
+      "example_ru": "Мой компьютер очень медленный.",
+      "grammar_notes": "",
+      "collocations": [],
+      "regional_usage": "Испания; в Латинской Америке — la computadora.",
+      "level": "A1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0022",
+      "spanish": "coger",
+      "russian": "брать; садиться на (транспорт)",
+      "article": "",
+      "part_of_speech": "verb",
+      "example_es": "Voy a coger el autobús.",
+      "example_ru": "Я поеду на автобусе.",
+      "grammar_notes": "Перед a/o — j: cojo, coja.",
+      "collocations": [],
+      "verb_forms": {
+        "presente_yo": "cojo",
+        "indefinido_yo": "cogí",
+        "participio": "cogido"
+      },
+      "regional_usage": "Нейтрально в Испании; во многих странах Латинской Америки — грубое слово, там говорят tomar.",
+      "level": "A2",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0023",
+      "spanish": "la vivienda",
+      "russian": "жильё",
+      "article": "la",
+      "part_of_speech": "noun",
+      "example_es": "El precio de la vivienda ha subido mucho.",
+      "example_ru": "Цены на жильё сильно выросли.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "политика и экономика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0024",
+      "spanish": "sostenible",
+      "russian": "устойчивый, экологичный",
+      "article": "",
+      "part_of_speech": "adjective",
+      "example_es": "Buscamos soluciones sostenibles.",
+      "example_ru": "Мы ищем устойчивые решения.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B2",
+      "tags": [
+        "академическая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0025",
+      "spanish": "hacer falta",
+      "russian": "быть нужным",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "No hace falta que vengas.",
+      "example_ru": "Тебе не нужно приходить.",
+      "grammar_notes": "hace falta + infinitivo; hace falta que + subjuntivo.",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "устойчивые выражения"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0026",
+      "spanish": "el plazo",
+      "russian": "срок",
+      "article": "el",
+      "part_of_speech": "noun",
+      "example_es": "El plazo termina el viernes.",
+      "example_ru": "Срок истекает в пятницу.",
+      "grammar_notes": "",
+      "collocations": [
+        "a plazos — в рассрочку"
+      ],
+      "level": "B1",
+      "tags": [
+        "деловая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0027",
+      "spanish": "ponerse en contacto con",
+      "russian": "связаться с",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "Me pondré en contacto con usted mañana.",
+      "example_ru": "Я свяжусь с вами завтра.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "деловая лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0028",
+      "spanish": "el reto",
+      "russian": "вызов, сложная задача",
+      "article": "el",
+      "part_of_speech": "noun",
+      "example_es": "Aprender un idioma es un reto.",
+      "example_ru": "Выучить язык — это вызов.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B2",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0029",
+      "spanish": "de hecho",
+      "russian": "на самом деле, фактически",
+      "article": "",
+      "part_of_speech": "phrase",
+      "example_es": "De hecho, ya lo sabía.",
+      "example_ru": "На самом деле я уже это знал.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    },
+    {
+      "id": "es-0030",
+      "spanish": "madrugar",
+      "russian": "рано вставать",
+      "article": "",
+      "part_of_speech": "verb",
+      "example_es": "Mañana tengo que madrugar.",
+      "example_ru": "Завтра мне надо рано вставать.",
+      "grammar_notes": "",
+      "collocations": [],
+      "level": "B1",
+      "tags": [
+        "разговорная лексика"
+      ],
+      "notes": "",
+      "source": "Стартовый набор",
+      "created_at": "2026-10-28T11:07:40Z",
+      "updated_at": "2026-10-28T11:07:40Z"
+    }
+  ]
+}
