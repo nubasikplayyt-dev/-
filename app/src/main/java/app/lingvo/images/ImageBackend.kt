@@ -78,73 +78,110 @@ class LocalSdServerBackend(baseUrl: String) : ImageBackend {
 }
 
 /**
- * Поиск готовой картинки в интернете (не генерация). Источники перебираются по очереди,
- * пока картинка не найдётся:
+ * Поиск готовой картинки к слову.
  *
- *  1) главная иллюстрация статьи Википедии на языке курса («Mutter» в de.wikipedia.org);
- *  2) то же на языке перевода («мама» в ru.wikipedia.org) — выручает, когда у слова нет статьи
- *     на изучаемом языке;
- *  3) Викисклад (Wikimedia Commons) — огромная библиотека свободных фотографий; ищем по английскому
- *     слову, затем по самому слову и переводу;
- *  4) Openverse — ещё одна библиотека свободных картинок;
- *  5) английская Википедия.
+ * Главное требование — картинка должна подходить слову, поэтому поиск идёт не по тексту статей,
+ * а по понятиям:
  *
- * Слово при этом уходит в Википедию, Викисклад и Openverse — об этом сказано в настройках.
+ *  1) **Викиданные**: слово ищется как название понятия на языке курса, затем на языке перевода,
+ *     затем по-английски. У понятия берётся свойство «изображение» (P18) — это выверенная людьми
+ *     картинка именно для этого значения, а не первая попавшаяся из поиска.
+ *  2) **Статья Википедии с точным названием** (а не поиск по тексту): заглавная иллюстрация статьи.
+ *     Страницы значений («Мута может означать…») отбрасываются.
+ *  3) **Openverse** — только если ничего не нашлось и известно английское слово.
+ *
+ * Если подходящего не нашлось, картинки просто не будет: это лучше, чем случайное фото.
  */
 object WebImageSearch {
     private const val UA = "LingvoWorld/1.0 (Android language-learning app)"
+    /** Форматы, которые Android не покажет или покажет как схему, а не картинку. */
+    private val badFiles = listOf(".svg", ".ogv", ".webm", ".ogg", ".pdf", ".tif", ".tiff", ".gif")
+    /** Служебные страницы Викиданных: списки, категории, значения — у них картинки не по смыслу. */
+    private val serviceDescriptions = listOf("wikimedia", "википеди", "disambiguation", "значени")
 
-    suspend fun find(q: WordImagePrompt.WebQuery): ByteArray = withContext(Dispatchers.IO) {
-        val attempts: List<() -> String?> = buildList {
-            add { wikipedia(q.wikiLang, q.wikiQuery) }
-            if (q.translationLang != q.wikiLang && q.translationQuery.isNotBlank()) {
-                add { wikipedia(q.translationLang, q.translationQuery) }
-            }
-            q.imageQueries.forEach { query -> add { commons(query) } }
-            q.imageQueries.forEach { query -> add { openverse(query) } }
-            q.englishQuery?.takeIf { q.wikiLang != "en" }?.let { english -> add { wikipedia("en", english) } }
+    suspend fun find(q: WordImagePrompt.WebQuery, skip: Int = 0): ByteArray = withContext(Dispatchers.IO) {
+        val sources: List<() -> List<String>> = buildList {
+            add { wikidata(q.wikiLang, q.wikiQuery) }
+            if (q.translationLang != q.wikiLang) add { wikidata(q.translationLang, q.translationQuery) }
+            q.englishQuery?.let { english -> add { wikidata("en", english) } }
+            add { listOfNotNull(article(q.wikiLang, q.wikiQuery)) }
+            if (q.translationLang != q.wikiLang) add { listOfNotNull(article(q.translationLang, q.translationQuery)) }
+            q.englishQuery?.let { english -> add { listOfNotNull(article("en", english)) } }
+            q.englishQuery?.let { english -> add { openverse(english) } }
         }
-        val url = attempts.firstNotNullOfOrNull { it() } ?: throw IOException("Картинка не найдена")
+        // Нужен (skip + 1)-й подходящий вариант: так кнопка «другая картинка» показывает следующий.
+        val found = ArrayList<String>()
+        for (source in sources) {
+            source().forEach { url -> if (url !in found) found += url }
+            if (found.size > skip) break
+        }
+        val url = found.getOrNull(skip) ?: found.lastOrNull() ?: throw IOException("Подходящей картинки не нашлось")
         download(url)
     }
 
     private fun enc(s: String) = java.net.URLEncoder.encode(s, "UTF-8")
 
-    /** Главная иллюстрация статьи. Миниатюра всегда в PNG/JPEG, даже если в статье векторный рисунок. */
-    private fun wikipedia(lang: String, query: String): String? = runCatching {
-        if (query.isBlank()) return null
-        val api = "https://$lang.wikipedia.org/w/api.php?action=query&format=json&redirects=1&generator=search" +
-            "&gsrlimit=3&gsrsearch=${enc(query)}&prop=pageimages&piprop=thumbnail&pithumbsize=640"
-        val pages = JSONObject(get(api)).optJSONObject("query")?.optJSONObject("pages") ?: return null
-        pages.keys().asSequence()
-            .mapNotNull { pages.optJSONObject(it)?.optJSONObject("thumbnail")?.optString("source") }
-            .firstOrNull { it.startsWith("https://") }
-    }.getOrNull()
+    private fun usable(file: String) = badFiles.none { file.lowercase().endsWith(it) }
+
+    /** Ссылка на миниатюру файла Викисклада шириной 640 точек. */
+    private fun commonsThumb(file: String) = "https://commons.wikimedia.org/wiki/Special:FilePath/" +
+        enc(file.removePrefix("File:").replace(' ', '_')) + "?width=640"
 
     /**
-     * Викисклад: ищем только растровые файлы и берём готовую миниатюру шириной 640 —
-     * так в приложение не попадут SVG, видео и PDF, которые Android не покажет.
+     * Викиданные: ищем понятие с таким названием и берём его картинку (P18).
+     * Берём только те понятия, чьё название совпадает со словом — иначе легко попасть
+     * на фамилию, деревню или песню с похожим написанием.
      */
-    private fun commons(query: String): String? = runCatching {
-        if (query.isBlank()) return null
-        val api = "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search" +
-            "&gsrnamespace=6&gsrlimit=5&gsrsearch=${enc("$query filetype:bitmap")}" +
-            "&prop=imageinfo&iiprop=url&iiurlwidth=640"
-        val pages = JSONObject(get(api)).optJSONObject("query")?.optJSONObject("pages") ?: return null
-        pages.keys().asSequence()
-            .mapNotNull { pages.optJSONObject(it)?.optJSONArray("imageinfo")?.optJSONObject(0)?.optString("thumburl") }
-            .firstOrNull { it.startsWith("https://") }
+    private fun wikidata(lang: String, query: String): List<String> = runCatching {
+        if (query.isBlank()) return emptyList()
+        val search = "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&origin=*" +
+            "&type=item&limit=7&language=$lang&uselang=$lang&search=${enc(query)}"
+        val results = JSONObject(get(search)).optJSONArray("search") ?: return emptyList()
+        val wanted = query.lowercase()
+        val ids = (0 until results.length()).mapNotNull { results.optJSONObject(it) }
+            .filter { item ->
+                val label = item.optString("label").lowercase()
+                val description = item.optString("description").lowercase()
+                val matched = item.optJSONObject("match")?.optString("text").orEmpty().lowercase()
+                (label == wanted || matched == wanted) && serviceDescriptions.none { description.contains(it) }
+            }
+            .mapNotNull { it.optString("id").takeIf { id -> id.startsWith("Q") } }
+            .take(5)
+        if (ids.isEmpty()) return emptyList()
+        val entities = "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&origin=*" +
+            "&props=claims&ids=${ids.joinToString("|")}"
+        val all = JSONObject(get(entities)).optJSONObject("entities") ?: return emptyList()
+        // Порядок важен: сначала понятие, которое поиск Викиданных счёл самым подходящим.
+        ids.mapNotNull { id ->
+            all.optJSONObject(id)?.optJSONObject("claims")?.optJSONArray("P18")
+                ?.optJSONObject(0)?.optJSONObject("mainsnak")?.optJSONObject("datavalue")?.optString("value")
+                ?.takeIf { it.isNotBlank() && usable(it) }
+        }.map(::commonsThumb)
+    }.getOrElse { emptyList() }
+
+    /**
+     * Заглавная иллюстрация статьи с точным названием. Поиск по тексту не используется:
+     * именно он приводил к случайным картинкам.
+     */
+    private fun article(lang: String, title: String): String? = runCatching {
+        if (title.isBlank()) return null
+        val api = "https://$lang.wikipedia.org/api/rest_v1/page/summary/" +
+            enc(title.replace(' ', '_')).replace("+", "%20")
+        val json = JSONObject(get(api))
+        // "standard" — обычная статья; страницы значений и перенаправления на списки пропускаем.
+        if (json.optString("type") != "standard") return null
+        val source = json.optJSONObject("thumbnail")?.optString("source")
+            ?: json.optJSONObject("originalimage")?.optString("source")
+        source?.takeIf { it.startsWith("https://") && usable(it.substringBefore('?')) }
     }.getOrNull()
 
-    private fun openverse(query: String): String? = runCatching {
-        if (query.isBlank()) return null
-        val api = "https://api.openverse.org/v1/images/?q=${enc(query)}&page_size=3&mature=false"
-        val results = JSONObject(get(api)).optJSONArray("results") ?: return null
-        (0 until results.length()).asSequence()
-            .mapNotNull { results.optJSONObject(it) }
+    private fun openverse(query: String): List<String> = runCatching {
+        if (query.isBlank()) return emptyList()
+        val api = "https://api.openverse.org/v1/images/?q=${enc(query)}&page_size=5&mature=false"
+        val results = JSONObject(get(api)).optJSONArray("results") ?: return emptyList()
+        (0 until results.length()).mapNotNull { results.optJSONObject(it) }
             .mapNotNull { (it.optString("thumbnail").ifEmpty { it.optString("url") }).takeIf { u -> u.startsWith("https://") } }
-            .firstOrNull()
-    }.getOrNull()
+    }.getOrElse { emptyList() }
 
     private fun open(url: String): HttpURLConnection = (URL(url).openConnection() as HttpURLConnection).apply {
         connectTimeout = 8_000; readTimeout = 20_000

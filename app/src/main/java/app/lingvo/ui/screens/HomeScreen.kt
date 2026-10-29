@@ -25,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.NotificationsActive
@@ -176,6 +177,21 @@ fun HomeScreen(container: AppContainer, nav: NavHostController) {
                 }
                 else -> BigActionButton("Всё повторено 🎉", g.mint, subtitle = "Можно добавить новые слова", icon = Icons.Filled.Add) {
                     nav.navigate(Routes.add(course.id))
+                }
+            }
+        }
+
+        // Тест по пройденным словам — доступен в любой момент, не влияет на расписание.
+        if ((o?.introduced ?: 0) >= app.lingvo.core.Practice.MIN_WORDS) {
+            SoftCard(onClick = { nav.navigate(Routes.test(course.id)) }, padding = 14.dp) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Filled.Quiz, null, tint = Palette.Violet)
+                    Spacer(Modifier.width(12.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text("Тест по пройденным словам", style = MaterialTheme.typography.titleSmall)
+                        Text("Все изученные слова вперемешку · можно в любой момент",
+                            style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
                 }
             }
         }

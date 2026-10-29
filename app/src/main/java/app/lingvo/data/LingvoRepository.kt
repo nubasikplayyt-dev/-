@@ -146,6 +146,14 @@ class LingvoRepository(
         )
     }
 
+    /**
+     * Пройденные слова курса — те, с которыми пользователь уже знакомился и которые не приостановлены.
+     * Для теста «по всем пройденным словам».
+     */
+    suspend fun learnedCards(language: String): List<Card> =
+        toCards(entries.allWithState().filter { it.entry.language == language }, recentRatingsByEntry())
+            .filter { it.state.introducedAt != null && !it.state.suspended }
+
     suspend fun counts(language: String) = reviews.counts(language, now())
     suspend fun dueCount(language: String) = reviews.dueCount(language, now())
     suspend fun lastActivity(): Long? = logs.lastActivity()

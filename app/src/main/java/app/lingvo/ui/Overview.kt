@@ -22,6 +22,8 @@ data class LanguageOverview(
     val mastered: Int,
     val learning: Int,
     val suspended: Int,
+    /** Слова, с которыми пользователь уже знакомился, — по ним идёт тест. */
+    val introduced: Int,
     val reviewsToday: Int,
     val correctToday: Int,
     val introducedToday: Int,
@@ -74,6 +76,7 @@ object OverviewCalculator {
             mastered = own.count { it.status == LearningStatus.MASTERED },
             learning = own.count { it.status == LearningStatus.LEARNING || it.status == LearningStatus.REVIEW },
             suspended = own.count { it.state.suspended },
+            introduced = active.count { it.state.introducedAt != null },
             reviewsToday = todayLogs.size,
             correctToday = todayLogs.count { it.rating != Rating.AGAIN.value },
             introducedToday = own.count { (it.state.introducedAt ?: 0L) >= todayStart },

@@ -63,6 +63,7 @@ import app.lingvo.ui.screens.SettingsRemindersScreen
 import app.lingvo.ui.screens.SettingsScreen
 import app.lingvo.ui.screens.StatsScreen
 import app.lingvo.ui.screens.StreakScreen
+import app.lingvo.ui.screens.TestScreen
 import app.lingvo.ui.screens.WorldScreen
 import kotlinx.coroutines.flow.StateFlow
 
@@ -80,6 +81,7 @@ object Routes {
     const val LANGUAGE = "language/{lang}"
     const val LEARN = "learn/{lang}"
     const val REVIEW = "review/{lang}"
+    const val TEST = "test/{lang}"
     const val ENTRY = "entry/{id}"
     const val ADD = "add/{lang}"
     const val BULK = "bulk/{lang}"
@@ -99,6 +101,7 @@ object Routes {
     fun language(lang: String) = "language/$lang"
     fun learn(lang: String) = "learn/$lang"
     fun review(lang: String) = "review/$lang"
+    fun test(lang: String) = "test/$lang"
     fun entry(id: String) = "entry/${android.net.Uri.encode(id)}"
     fun add(lang: String) = "add/$lang"
     fun bulk(lang: String) = "bulk/$lang"
@@ -189,6 +192,7 @@ fun LingvoNavHost(
             composable(Routes.LANGUAGE) { LanguageScreen(container, nav, it.arguments?.getString("lang").orEmpty()) }
             composable(Routes.LEARN) { LearnNewScreen(container, nav, it.arguments?.getString("lang").orEmpty()) }
             composable(Routes.REVIEW) { ReviewScreen(container, nav, it.arguments?.getString("lang").orEmpty()) }
+            composable(Routes.TEST) { TestScreen(container, nav, it.arguments?.getString("lang").orEmpty()) }
             composable(Routes.ENTRY) { EntryScreen(container, nav, android.net.Uri.decode(it.arguments?.getString("id").orEmpty())) }
             composable(Routes.ADD) { AddEntryScreen(container, nav, it.arguments?.getString("lang").orEmpty()) }
             composable(Routes.BULK) { BulkAddScreen(container, nav, it.arguments?.getString("lang").orEmpty()) }

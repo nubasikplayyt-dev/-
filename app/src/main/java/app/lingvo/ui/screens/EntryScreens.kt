@@ -330,6 +330,8 @@ private fun WordPictureControls(container: AppContainer, entry: VocabEntry, spec
     val revision by images.revision.collectAsState()
     val has = remember(revision, entry.id, entry.term) { images.fileFor(entry, spec).exists() }
     var busy by remember { mutableStateOf(false) }
+    // Сколько найденных вариантов уже отвергли: каждое нажатие «Другая картинка» берёт следующий.
+    var skip by remember(entry.id) { mutableStateOf(0) }
     val pick = androidx.activity.compose.rememberLauncherForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia(),
     ) { uri ->
@@ -347,13 +349,14 @@ private fun WordPictureControls(container: AppContainer, entry: VocabEntry, spec
         }) { Text(if (has) "Своя картинка" else "Добавить картинку") }
         OutlinedButton(enabled = !busy, onClick = {
             busy = true
+            val next = if (has) skip + 1 else skip
             scope.launch {
-                runCatching { images.searchNow(entry, spec) }
-                    .onSuccess { toast("Картинка найдена") }
-                    .onFailure { toast("Не нашлось картинки: ${it.message}") }
+                runCatching { images.searchNow(entry, spec, next) }
+                    .onSuccess { skip = next; toast("Картинка найдена") }
+                    .onFailure { skip = 0; toast("Больше картинок не нашлось") }
                 busy = false
             }
-        }) { Text(if (busy) "Ищу…" else "Найти в интернете") }
+        }) { Text(if (busy) "Ищу…" else if (has) "Другая картинка" else "Найти в интернете") }
         if (has) TextButton(enabled = !busy, onClick = { images.remove(entry, spec) }) { Text("Убрать") }
     }
 }

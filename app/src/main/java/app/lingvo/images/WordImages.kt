@@ -101,10 +101,14 @@ class WordImages(private val context: Context) {
         )
     }
 
-    /** Найти картинку в интернете прямо сейчас (кнопка на странице слова); заменяет прежнюю. */
-    suspend fun searchNow(entry: VocabEntry, spec: LanguageSpec) {
+    /**
+     * Найти картинку в интернете прямо сейчас (кнопка на странице слова); заменяет прежнюю.
+     * [skip] — сколько подходящих вариантов пропустить: так кнопка «Другая картинка»
+     * показывает следующий вариант, а не тот же самый.
+     */
+    suspend fun searchNow(entry: VocabEntry, spec: LanguageSpec, skip: Int = 0) {
         val gloss = WordImagePrompt.glossEn(entry.extraJson)
-        val bytes = WebImageSearch.find(WordImagePrompt.webQuery(entry, spec, gloss))
+        val bytes = WebImageSearch.find(WordImagePrompt.webQuery(entry, spec, gloss), skip)
         withContext(Dispatchers.IO) { save(WordImagePrompt.cacheKey(spec.languageCode, entry), bytes) }
     }
 

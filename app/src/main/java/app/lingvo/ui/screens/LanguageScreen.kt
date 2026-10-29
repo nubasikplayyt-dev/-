@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ImportExport
@@ -121,6 +122,8 @@ fun LanguageScreen(container: AppContainer, nav: NavHostController, lang: String
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             SoftCard(padding = 8.dp) {
+                Item(Icons.Filled.Quiz, Palette.Violet, "Тест по пройденным словам",
+                    "Все изученные слова вперемешку, без влияния на расписание") { nav.navigate(Routes.test(course.id)) }
                 Item(Icons.AutoMirrored.Filled.MenuBook, Palette.Ocean, "Мой словарь", "${o.total} карточек") { nav.navigate(Routes.dictionary(course.id)) }
                 Item(Icons.Filled.Add, Palette.Mint, "Добавить слово", "С переводом, примером и заметками") { nav.navigate(Routes.add(course.id)) }
                 Item(Icons.Filled.ImportExport, Palette.Sun, "Импорт и экспорт", spec.fileName) { nav.navigate(Routes.import(course.id)) }
