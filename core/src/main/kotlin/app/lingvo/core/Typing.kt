@@ -68,12 +68,34 @@ object AnswerChecker {
         return main.map { it to false } + alts.map { it to true }
     }
 
-    fun check(typedRaw: String, entry: VocabEntry, spec: LanguageSpec): AnswerCheck {
+    /**
+     * Варианты перевода: «мама; мать, матушка» → целиком и каждое значение отдельно.
+     * Нужно, когда проверяется написанный перевод (вопрос на изучаемом языке).
+     */
+    fun translationVariants(entry: VocabEntry): List<Pair<String, Boolean>> {
+        val whole = normalize(entry.translation)
+        val parts = entry.translation.split(';', ',').map(::normalize).filter { it.isNotEmpty() }
+        val all = (listOf(whole) + parts).filter { it.isNotEmpty() }.distinct()
+        return all.mapIndexed { index, v -> v to (index > 0) }
+    }
+
+    /** Проверка написанного слова на изучаемом языке. */
+    fun check(typedRaw: String, entry: VocabEntry, spec: LanguageSpec): AnswerCheck =
+        checkVariants(typedRaw, variants(entry), spec.languageCode in caseSignificant, spec.articles)
+
+    /** Проверка написанного перевода (регистр не важен, артиклей нет). */
+    fun checkTranslation(typedRaw: String, entry: VocabEntry): AnswerCheck =
+        checkVariants(typedRaw, translationVariants(entry), caseMatters = false, articles = emptySet())
+
+    private fun checkVariants(
+        typedRaw: String,
+        variants: List<Pair<String, Boolean>>,
+        caseMatters: Boolean,
+        articles: Set<String>,
+    ): AnswerCheck {
         val typed = normalize(typedRaw)
-        val variants = variants(entry)
         val primary = variants.firstOrNull()?.first.orEmpty()
         if (typed.isEmpty()) return AnswerCheck(typed, primary, AutoResult.EMPTY, listOf(DiffPart(primary, DiffKind.MISSING)))
-        val caseMatters = spec.languageCode in caseSignificant
         var best: Pair<AutoResult, String>? = null
         fun consider(r: AutoResult, v: String) {
             if (best == null || r.ordinal < best!!.first.ordinal) best = r to v
@@ -86,7 +108,7 @@ object AnswerChecker {
                 lowerTyped == lv -> consider(
                     if (caseMatters) AutoResult.CASE else if (isAlt) AutoResult.ALTERNATIVE else AutoResult.EXACT, v,
                 )
-                missingArticle(lowerTyped, lv, spec) -> consider(AutoResult.MISSING_ARTICLE, v)
+                missingArticle(lowerTyped, lv, articles) -> consider(AutoResult.MISSING_ARTICLE, v)
                 Normalizer.searchKey(typed) == Normalizer.searchKey(v) -> consider(AutoResult.DIACRITICS, v)
                 levenshtein(lowerTyped, lv) <= maxOf(1, lv.length / 6) -> consider(AutoResult.CLOSE, v)
                 else -> consider(AutoResult.WRONG, v)
@@ -97,10 +119,10 @@ object AnswerChecker {
         return AnswerCheck(typed, shownExpected, result, diff(typed, shownExpected))
     }
 
-    private fun missingArticle(typed: String, variant: String, spec: LanguageSpec): Boolean {
-        if (spec.articles.isEmpty()) return false
+    private fun missingArticle(typed: String, variant: String, articles: Set<String>): Boolean {
+        if (articles.isEmpty()) return false
         val first = variant.substringBefore(' ', "")
-        if (first !in spec.articles) return false
+        if (first !in articles) return false
         return typed == variant.substringAfter(' ')
     }
 

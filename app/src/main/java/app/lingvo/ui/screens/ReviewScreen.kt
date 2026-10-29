@@ -108,6 +108,7 @@ import app.lingvo.ui.components.CreatureArt
 import app.lingvo.ui.components.EmptyState
 import app.lingvo.ui.components.Mood
 import app.lingvo.ui.components.TermHeader
+import app.lingvo.ui.components.TypingAnswer
 import app.lingvo.ui.components.formatInterval
 import app.lingvo.ui.rememberAppState
 import app.lingvo.ui.rememberToast
@@ -259,9 +260,11 @@ fun ReviewScreen(container: AppContainer, nav: NavHostController, lang: String) 
                 is ReviewUi.Finished -> FinishedView(spec, state.session, appState!!.streak.current, dayJustCompleted, appState!!.companion?.let { it.first to it.second }) {
                     nav.popBackStack()
                 }
-                is ReviewUi.Active -> if (reviewMode.taskFor(state.card.id, state.card.state.reps) == TaskType.TYPING) TypingCard(
+                is ReviewUi.Active -> if (reviewMode.taskFor(state.card.id, state.card.state.reps) == TaskType.TYPING) TypingAnswer(
                     spec = spec,
-                    state = state,
+                    entry = state.card.entry,
+                    // В занятии письменный режим всегда просит написать слово на изучаемом языке.
+                    askTerm = true,
                     busy = busy,
                     onSpeak = { container.speaker.speak(state.card.entry.displayTerm, spec)?.let(toast) },
                     onSwitchToButtons = { setMode(ReviewMode.BUTTONS) },
@@ -484,136 +487,5 @@ private fun FinishedView(
         }
         Text("Прогресс сохранён.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         BigActionButton("Готово", LocalGradients.current.mint, onClick = onDone)
-    }
-}
-
-/**
- * Письменный режим: показан перевод, пользователь пишет слово и нажимает «Проверить».
- * Автопроверка — только подсказка (пробелы, регистр там, где он не важен, сохранённые варианты;
- * диакритика не игнорируется). Окончательно решает пользователь: «Ответ правильный» / «Ответ неправильный».
- * Набранный текст и этап проверки переживают сворачивание и поворот экрана (rememberSaveable).
- */
-@Composable
-private fun TypingCard(
-    spec: LanguageSpec,
-    state: ReviewUi.Active,
-    busy: Boolean,
-    onSpeak: () -> Unit,
-    onSwitchToButtons: () -> Unit,
-    onConfirm: (AnswerCheck, Boolean, Boolean) -> Unit,
-) {
-    val entry = state.card.entry
-    var typed by rememberSaveable(state.card.id) { mutableStateOf("") }
-    var checked by rememberSaveable(state.card.id) { mutableStateOf(false) }
-    var saveAlt by rememberSaveable(state.card.id) { mutableStateOf(false) }
-    val check = remember(checked, typed, state.card.id) { if (checked) AnswerChecker.check(typed, entry, spec) else null }
-    val focus = remember { FocusRequester() }
-    LaunchedEffect(state.card.id, checked) { if (!checked) runCatching { focus.requestFocus() } }
-
-    Column(
-        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        Column(
-            Modifier.fillMaxWidth().shadow(8.dp, RoundedCornerShape(26.dp), spotColor = Color(0x333D5AFE))
-                .clip(RoundedCornerShape(26.dp)).background(MaterialTheme.colorScheme.surface).padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text("Напишите на языке «${spec.nameRu}»", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text(entry.translation, style = CardTermStyle)
-            if (spec.articles.isNotEmpty() && entry.article.isNotEmpty() && !checked) {
-                Text("Вместе с артиклем.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-        }
-        if (check == null) {
-            OutlinedTextField(
-                value = typed,
-                onValueChange = { typed = it },
-                modifier = Modifier.fillMaxWidth().focusRequester(focus),
-                label = { Text("Ваш ответ") },
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false, imeAction = ImeAction.Done,
-                ),
-                keyboardActions = KeyboardActions(onDone = { checked = true }),
-                textStyle = MaterialTheme.typography.titleLarge,
-            )
-            BigActionButton("Проверить", LocalGradients.current.hero, icon = Icons.Filled.Check, enabled = !busy) { checked = true }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                TextButton(onClick = { typed = ""; checked = true }) { Text("Не знаю — показать") }
-                TextButton(onClick = onSwitchToButtons) { Text("К кнопкам «Помню»") }
-            }
-        } else {
-            ConfirmCard(check, entry, saveAlt, { saveAlt = it }, onSpeak)
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
-                ConfirmButton("Ответ неправильный", false, !busy, Modifier.weight(1f)) { onConfirm(check, false, false) }
-                ConfirmButton("Ответ правильный", true, !busy, Modifier.weight(1f)) { onConfirm(check, true, saveAlt) }
-            }
-            if (!check.result.looksCorrect) {
-                Text(
-                    "Решаете вы: если ваш вариант тоже верен — нажмите «Ответ правильный».",
-                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-        Spacer(Modifier.height(6.dp))
-    }
-}
-
-@Composable
-private fun ConfirmCard(check: AnswerCheck, entry: app.lingvo.core.VocabEntry, saveAlt: Boolean, onSaveAlt: (Boolean) -> Unit, onSpeak: () -> Unit) {
-    val ok = check.result.looksCorrect
-    val tone = if (ok) Color(0xFF1FB87F) else if (check.result == AutoResult.WRONG || check.result == AutoResult.EMPTY) Color(0xFFFF8A5B) else Color(0xFFE8A20C)
-    Column(
-        Modifier.fillMaxWidth().clip(RoundedCornerShape(24.dp)).background(MaterialTheme.colorScheme.surface)
-            .border(2.dp, tone.copy(alpha = 0.6f), RoundedCornerShape(24.dp)).padding(18.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        Text(check.result.labelRu, style = MaterialTheme.typography.titleMedium, color = tone)
-        Text("Твой ответ", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        if (check.typed.isEmpty()) Text("—", style = MaterialTheme.typography.titleLarge)
-        else Text(
-            buildAnnotatedString {
-                check.diff.forEach { part ->
-                    when (part.kind) {
-                        DiffKind.SAME -> append(part.text)
-                        DiffKind.WRONG -> withStyle(SpanStyle(color = Color(0xFFE8590C), textDecoration = TextDecoration.Underline)) { append(part.text) }
-                        DiffKind.EXTRA -> withStyle(SpanStyle(color = Color(0xFFE8590C), textDecoration = TextDecoration.LineThrough)) { append(part.text) }
-                        DiffKind.MISSING -> withStyle(SpanStyle(color = Color(0xFF1FB87F), fontWeight = FontWeight.Bold)) { append(part.text) }
-                    }
-                }
-            },
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.semantics { contentDescription = "Ваш ответ: ${check.typed}" },
-        )
-        Text("Ожидаемый вариант", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        TermHeader(entry, onSpeak)
-        if (entry.transcription.isNotEmpty()) Text(entry.transcription, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        if (entry.alternatives.isNotEmpty()) {
-            Text("Тоже подходит: " + entry.alternatives.joinToString(", "), style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        if (!ok && check.typed.isNotEmpty()) {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { onSaveAlt(!saveAlt) }) {
-                Checkbox(saveAlt, onSaveAlt)
-                Text("Мой вариант тоже верный — запомнить его", style = MaterialTheme.typography.bodyMedium)
-            }
-        }
-    }
-}
-
-@Composable
-private fun ConfirmButton(text: String, correct: Boolean, enabled: Boolean, modifier: Modifier, onClick: () -> Unit) {
-    val brush = if (correct) Brush.linearGradient(listOf(Color(0xFF3DD68C), Color(0xFF1FB87F)))
-    else Brush.linearGradient(listOf(Color(0xFFFF8A7A), Color(0xFFFF5A5F)))
-    Box(
-        modifier.heightIn(min = 64.dp).clip(RoundedCornerShape(22.dp)).background(brush).clickable(enabled = enabled, onClick = onClick).padding(10.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(if (correct) Icons.Filled.Check else Icons.Filled.Close, null, tint = Color.White, modifier = Modifier.size(22.dp))
-            Spacer(Modifier.width(6.dp))
-            Text(text, color = Color.White, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
-        }
     }
 }

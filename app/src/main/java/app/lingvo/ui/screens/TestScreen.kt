@@ -44,6 +44,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import app.lingvo.AppContainer
+import kotlin.math.abs
+import app.lingvo.ui.components.TypingAnswer
+import app.lingvo.data.Direction
+import app.lingvo.core.TaskType
+import app.lingvo.core.ReviewMode
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material.icons.filled.MoreVert
 import app.lingvo.core.Practice
 import app.lingvo.core.PracticeState
 import app.lingvo.core.SessionText
@@ -80,6 +90,15 @@ fun TestScreen(container: AppContainer, nav: NavHostController, lang: String) {
     val scope = rememberCoroutineScope()
     val toast = rememberToast()
 
+    val settings = appState?.settings
+    val courseSettings = settings?.lang(lang)
+    val direction = courseSettings?.direction ?: Direction.MIXED
+    val mode = courseSettings?.reviewMode ?: ReviewMode.BUTTONS
+    var menu by remember { mutableStateOf(false) }
+    fun update(f: (app.lingvo.data.LanguageSettings) -> app.lingvo.data.LanguageSettings) {
+        scope.launch { container.settings.update { st -> st.withLang(lang) { f(it) } } }
+    }
+
     var cards by remember(lang) { mutableStateOf<Map<String, Card>?>(null) }
     var state by rememberSaveable(lang, stateSaver = PracticeSaver) { mutableStateOf<PracticeState?>(null) }
     var revealed by rememberSaveable(lang) { mutableStateOf(false) }
@@ -95,7 +114,34 @@ fun TestScreen(container: AppContainer, nav: NavHostController, lang: String) {
         revealed = false
     }
 
-    Scaffold(topBar = { BackTopBar("Тест · ${spec.flag} ${spec.nameRu}", onBack = { nav.popBackStack() }) }) { padding ->
+    Scaffold(topBar = {
+        BackTopBar("Тест · ${spec.flag} ${spec.nameRu}", onBack = { nav.popBackStack() }, actions = {
+            Box {
+                IconButton(onClick = { menu = true }) { Icon(Icons.Filled.MoreVert, "Настройки теста") }
+                DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                    Text("Как спрашивать", style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Direction.entries.forEach { d ->
+                        DropdownMenuItem(
+                            text = { Text((if (d == direction) "✓ " else "    ") + d.labelRu) },
+                            onClick = { menu = false; update { it.copy(direction = d) } },
+                        )
+                    }
+                    HorizontalDivider()
+                    Text("Как отвечать", style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    ReviewMode.entries.forEach { m ->
+                        DropdownMenuItem(
+                            text = { Text((if (m == mode) "✓ " else "    ") + m.labelRu) },
+                            onClick = { menu = false; update { it.copy(reviewMode = m) } },
+                        )
+                    }
+                }
+            }
+        })
+    }) { padding ->
         val all = cards
         val s = state
         if (all == null || s == null) { Centered { CircularProgressIndicator() }; return@Scaffold }
@@ -142,6 +188,39 @@ fun TestScreen(container: AppContainer, nav: NavHostController, lang: String) {
                 Centered { CircularProgressIndicator() }
                 return@Scaffold
             }
+            val entry = card.entry
+            // Направление вопроса: как в настройках курса. «Вперемешку» — стабильно для слова.
+            val askTerm = when (direction) {
+                Direction.TARGET_TO_RU -> false
+                Direction.RU_TO_TARGET -> true
+                Direction.MIXED -> abs(entry.id.hashCode() + s.answered) % 2 == 1
+            }
+            if (mode.taskFor(entry.id, s.answered) == TaskType.TYPING) {
+                TypingAnswer(
+                    spec = spec,
+                    entry = entry,
+                    askTerm = askTerm,
+                    busy = false,
+                    modifier = Modifier.weight(1f),
+                    onSpeak = { container.speaker.speak(entry.displayTerm, spec)?.let(toast) },
+                    onSwitchToButtons = { update { it.copy(reviewMode = ReviewMode.BUTTONS) } },
+                    onConfirm = { check, correct, saveAlternative ->
+                        scope.launch {
+                            if (askTerm && correct && saveAlternative && check.typed.isNotBlank()) {
+                                repo.addAlternative(entry.id, check.typed)
+                            }
+                            answer(correct)
+                        }
+                    },
+                )
+                Text(
+                    "Ответы в тесте не меняют расписание повторений и не засчитываются в цель дня.",
+                    style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center,
+                )
+                Spacer(Modifier.height(6.dp))
+                return@Scaffold
+            }
 
             Column(
                 Modifier.weight(1f).fillMaxWidth().clip(RoundedCornerShape(28.dp))
@@ -149,10 +228,20 @@ fun TestScreen(container: AppContainer, nav: NavHostController, lang: String) {
                     .verticalScroll(rememberScrollState()).padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                Text("Вспомните перевод", style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant)
-                TermHeader(card.entry) { container.speaker.speak(card.entry.displayTerm, spec)?.let(toast) }
-                if (revealed) CardBody(card.entry)
+                Text(
+                    if (askTerm) "Вспомните слово на языке «${spec.nameRu}»" else "Вспомните перевод",
+                    style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                if (askTerm) {
+                    Text(entry.translation, style = app.lingvo.ui.theme.CardTermStyle)
+                    if (revealed) {
+                        TermHeader(entry) { container.speaker.speak(entry.displayTerm, spec)?.let(toast) }
+                        CardBody(entry, showTranslation = false)
+                    }
+                } else {
+                    TermHeader(entry) { container.speaker.speak(entry.displayTerm, spec)?.let(toast) }
+                    if (revealed) CardBody(entry)
+                }
             }
 
             Spacer(Modifier.height(14.dp))

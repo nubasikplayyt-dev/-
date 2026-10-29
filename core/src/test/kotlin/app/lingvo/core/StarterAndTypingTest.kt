@@ -104,6 +104,18 @@ class AnswerCheckerTest {
     }
 
     @Test
+    fun `typed translation accepts any of its meanings`() {
+        val entry = VocabEntry(id = "x", language = "de", term = "die Mutter", translation = "мама; мать, матушка",
+            article = "die", createdAt = 0, updatedAt = 0)
+        assertEquals(AutoResult.EXACT, AnswerChecker.checkTranslation("мама; мать, матушка", entry).result)
+        assertEquals(AutoResult.ALTERNATIVE, AnswerChecker.checkTranslation("мать", entry).result)
+        assertEquals(AutoResult.ALTERNATIVE, AnswerChecker.checkTranslation("Матушка", entry).result, "регистр перевода не важен")
+        assertEquals(AutoResult.CLOSE, AnswerChecker.checkTranslation("мамв", entry).result, "одна опечатка")
+        assertEquals(AutoResult.WRONG, AnswerChecker.checkTranslation("отец", entry).result)
+        assertEquals(AutoResult.EMPTY, AnswerChecker.checkTranslation("  ", entry).result)
+    }
+
+    @Test
     fun `manual confirmation decides the FSRS grade`() {
         assertEquals(Answer.REMEMBERED, AnswerChecker.answerFor(true))
         assertEquals(Answer.FORGOT, AnswerChecker.answerFor(false))
