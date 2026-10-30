@@ -1,0 +1,63 @@
+# Сборка APK мини-приложения «Портфель по критериям».
+# Запускается только на изменения в portfolio-android/ — сборка Lingvo World
+# живёт в отдельном workflow и этого не касается.
+name: Portfolio APK
+
+on:
+  push:
+    paths:
+      - 'portfolio-android/**'
+      - '.github/workflows/portfolio-android.yml'
+  pull_request:
+    paths:
+      - 'portfolio-android/**'
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: portfolio-android
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Тесты ядра
+        run: ./gradlew --no-daemon :core:test
+
+      - name: Lint
+        run: ./gradlew --no-daemon :app:lintDebug
+
+      - name: Сборка APK
+        run: ./gradlew --no-daemon :app:assembleDebug
+
+      - name: Переименовать APK понятно
+        run: |
+          mkdir -p artifact
+          cp app/build/outputs/apk/debug/app-debug.apk artifact/portfel-po-kriteriyam.apk
+
+      - name: Выложить APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-apk
+          path: portfolio-android/artifact/portfel-po-kriteriyam.apk
+          if-no-files-found: error
+
+      - name: Выложить отчёты при падении
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-reports
+          path: |
+            portfolio-android/core/build/reports/
+            portfolio-android/app/build/reports/
+          if-no-files-found: ignore

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Портфель</string>
+    <string name="notification_channel_name">События по бумагам</string>
+    <string name="notification_channel_description">Отчёты, дивиденды, изменения критериев</string>
+</resources>

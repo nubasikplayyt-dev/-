@@ -20,3 +20,9 @@ miniapp/worker/.wrangler/
 
 __pycache__/
 miniapp/*.tsbuildinfo
+
+# Portfolio Android
+portfolio-android/.gradle/
+portfolio-android/build/
+portfolio-android/*/build/
+portfolio-android/local.properties
