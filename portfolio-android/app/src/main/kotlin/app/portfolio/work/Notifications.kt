@@ -1,5 +1,6 @@
 package app.portfolio.work
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -39,6 +40,8 @@ object Notifications {
                 android.Manifest.permission.POST_NOTIFICATIONS,
             ) == PackageManager.PERMISSION_GRANTED
 
+    // Разрешение проверяется строкой ниже, но lint этого не видит.
+    @SuppressLint("MissingPermission")
     fun show(context: Context, event: MonitorEvent, asset: Asset?) {
         if (!canPost(context)) return
 
