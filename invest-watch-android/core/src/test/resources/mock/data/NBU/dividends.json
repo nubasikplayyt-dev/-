@@ -1,0 +1,80 @@
+{
+  "asset_id": "NBU",
+  "currency": "USD",
+  "by_year": [
+    {
+      "year": 2017,
+      "total": 1.52
+    },
+    {
+      "year": 2018,
+      "total": 1.6
+    },
+    {
+      "year": 2019,
+      "total": 1.68
+    },
+    {
+      "year": 2020,
+      "total": 1.74
+    },
+    {
+      "year": 2021,
+      "total": 1.8
+    },
+    {
+      "year": 2022,
+      "total": 1.88
+    },
+    {
+      "year": 2023,
+      "total": 1.96
+    },
+    {
+      "year": 2024,
+      "total": 2.08
+    },
+    {
+      "year": 2025,
+      "total": 2.2
+    },
+    {
+      "year": 2026,
+      "total": 2.33
+    }
+  ],
+  "payments": [
+    {
+      "record_date": "2026-08-14",
+      "amount": 0.59
+    },
+    {
+      "record_date": "2026-05-15",
+      "amount": 0.58
+    },
+    {
+      "record_date": "2026-02-13",
+      "amount": 0.58
+    },
+    {
+      "record_date": "2025-11-14",
+      "amount": 0.56
+    },
+    {
+      "record_date": "2025-08-15",
+      "amount": 0.55
+    },
+    {
+      "record_date": "2025-05-16",
+      "amount": 0.55
+    },
+    {
+      "record_date": "2025-02-14",
+      "amount": 0.54
+    },
+    {
+      "record_date": "2024-11-15",
+      "amount": 0.53
+    }
+  ]
+}

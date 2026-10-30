@@ -1,0 +1,51 @@
+# Сборка APK приложения invest-watch.
+# Запускается только на изменения в invest-watch-android/ — сборки Lingvo World
+# и portfolio-android живут в своих workflow и этого не касаются.
+name: InvestWatch APK
+
+on:
+  push:
+    paths:
+      - 'invest-watch-android/**'
+      - '.github/workflows/invest-watch-android.yml'
+  pull_request:
+    paths:
+      - 'invest-watch-android/**'
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: invest-watch-android
+
+env:
+  # В именах тестов есть кириллица, а Kotlin пишет её в имена файлов классов.
+  # Без UTF-8 локали компиляция падает на InvalidPathException.
+  LANG: C.UTF-8
+  LC_ALL: C.UTF-8
+
+jobs:
+  core:
+    name: Тесты ядра
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # Ядро не зависит от Android SDK — проверяем его отдельно и быстро.
+      - name: Тесты
+        run: ./gradlew --no-daemon -PcoreOnly=true :core:test
+
+      - name: Отчёты при падении
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: core-reports
+          path: invest-watch-android/core/build/reports/
+          if-no-files-found: ignore
