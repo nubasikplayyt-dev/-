@@ -112,8 +112,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("io.coil-kt:coil-svg:2.7.0")
 
-    // Графики: линия цены и столбцы дивидендов. Свечей в интерфейсе нет.
-    implementation("com.patrykandpatrick.vico:compose-m3:3.3.1")
+    // Графики (линия цены и столбцы дивидендов) рисуются на Compose Canvas:
+    // актуальные версии Vico требуют Compose 1.10+, а он тянет AGP 9.1 и
+    // compileSdk 37 — это перетряхнуло бы весь тулчейн проекта.
 
     // Перетаскивание карточек в избранном.
     implementation("sh.calvin.reorderable:reorderable:3.1.0")
