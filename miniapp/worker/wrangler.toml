@@ -1,0 +1,22 @@
+name = "portfolio-miniapp"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+# Список заглушённых бумаг и chat_id подписчиков.
+# Создать: npx wrangler kv namespace create STATE
+[[kv_namespaces]]
+binding = "STATE"
+id = "ЗАМЕНИТЬ_НА_ID_ИЗ_wrangler_kv_namespace_create"
+
+[vars]
+# Репозиторий с данными — тот же, что в .env фронтенда.
+DATA_OWNER = "nubasikplayyt-dev"
+DATA_REPO = "invest-watch"
+DATA_BRANCH = "main"
+# Домен фронтенда: с него разрешены запросы к прокси (CORS).
+ALLOWED_ORIGIN = "https://nubasikplayyt-dev.github.io"
+
+# Секреты задаются отдельно и в коде не хранятся:
+#   npx wrangler secret put GITHUB_TOKEN           — fine-grained токен, только Contents: Read
+#   npx wrangler secret put TELEGRAM_BOT_TOKEN     — токен бота из @BotFather
+#   npx wrangler secret put TELEGRAM_WEBHOOK_SECRET — любая длинная случайная строка

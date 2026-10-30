@@ -1,0 +1,40 @@
+# Этот файл кладётся в РЕПОЗИТОРИЙ ДАННЫХ как .github/workflows/notify.yml
+# (не в репозиторий мини-приложения).
+#
+# На каждый push в main он находит строки, добавленные в data/*/events.jsonl
+# этим пушем, и отправляет те из них, где notify: true, в Telegram.
+name: Уведомления о событиях
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/*/events.jsonl'
+  workflow_dispatch:
+
+concurrency:
+  group: notify-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Нужны оба конца диапазона пуша, чтобы увидеть добавленные строки.
+          fetch-depth: 0
+
+      - name: Отправить новые события
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Необязательные: без них команды /mute просто не учитываются.
+          MUTES_URL: ${{ secrets.MUTES_URL }}
+          MUTES_SECRET: ${{ secrets.MUTES_SECRET }}
+          # Ссылка «Открыть» ведёт в Mini App: t.me/<бот>/<короткое имя>
+          MINIAPP_LINK: ${{ secrets.MINIAPP_LINK }}
+          EVENT_BEFORE: ${{ github.event.before }}
+          EVENT_AFTER: ${{ github.sha }}
+        run: python3 .github/scripts/notify.py

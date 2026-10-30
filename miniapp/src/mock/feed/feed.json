@@ -1,0 +1,9 @@
+{
+  "updated_at": "2026-10-28",
+  "events": [
+    {"id":"sber-2026-10-28-msfo","asset_id":"sber","date":"2026-10-28","type":"report","importance":"high","title":"Сбербанк: прибыль за 9 месяцев 1,32 трлн ₽","summary":"Рост 11% год к году, ROE 24,1%.","notify":true,"metrics":{"ROE":"24,1%"},"sources":[{"title":"sberbank.com","url":"https://www.sberbank.com/ru/investor-relations"}]},
+    {"id":"gmkn-2026-10-21-capex","asset_id":"gmkn","date":"2026-10-21","type":"guidance","importance":"critical","title":"Норникель продлил инвестпрограмму до 2029 года","summary":"Дивиденды в ближайшие годы маловероятны.","notify":true,"metrics":{"CAPEX 2027":"3,4 млрд $"},"sources":[{"title":"nornickel.ru","url":"https://www.nornickel.ru/investors/"}]},
+    {"id":"lkoh-2026-10-09-buyback","asset_id":"lkoh","date":"2026-10-09","type":"buyback","importance":"high","title":"ЛУКОЙЛ выкупит до 2% акций","summary":"Программа на 12 месяцев за счёт свободного денежного потока.","notify":true,"metrics":{"Объём":"до 2%"},"sources":[{"title":"e-disclosure.ru","url":"https://www.e-disclosure.ru"}]},
+    {"id":"sber-2026-09-12-div","asset_id":"sber","date":"2026-09-12","type":"dividend","importance":"critical","title":"Сбербанк: дивиденд 36,8 ₽ на акцию","summary":"Доходность 12,4%, отсечка 14 ноября.","notify":true,"metrics":{"Дивиденд":"36,8 ₽"},"sources":[{"title":"e-disclosure.ru","url":"https://www.e-disclosure.ru"}]}
+  ]
+}

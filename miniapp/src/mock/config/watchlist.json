@@ -1,0 +1,37 @@
+{
+  "sections": [
+    {
+      "id": "ru",
+      "title": "Российские акции",
+      "country": "RU",
+      "currency": "RUB",
+      "yield_floor_pct": 8,
+      "assets": [
+        {
+          "id": "sber",
+          "ticker": "SBER",
+          "name": "Сбербанк России",
+          "short_name": "Сбербанк",
+          "isin": "RU0009029540",
+          "logo": "assets/logos/sber.png"
+        },
+        {
+          "id": "lkoh",
+          "ticker": "LKOH",
+          "name": "ЛУКОЙЛ",
+          "short_name": "ЛУКОЙЛ",
+          "isin": "RU0009024277",
+          "logo": "assets/logos/lkoh.png"
+        },
+        {
+          "id": "gmkn",
+          "ticker": "GMKN",
+          "name": "ГМК «Норильский никель»",
+          "short_name": "Норникель",
+          "isin": "RU0007288411",
+          "logo": "assets/logos/gmkn.png"
+        }
+      ]
+    }
+  ]
+}

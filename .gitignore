@@ -11,3 +11,11 @@ captures/
 # Ключи подписи и настройки Firebase не попадают в репозиторий.
 *.jks
 app/google-services.json
+
+# Mini App
+miniapp/node_modules/
+miniapp/dist/
+miniapp/worker/node_modules/
+miniapp/worker/.wrangler/
+
+__pycache__/

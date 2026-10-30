@@ -1,0 +1,74 @@
+# Сборка и публикация мини-приложения на GitHub Pages.
+# Запускается только на изменения в miniapp/ — сборка Android-проекта живёт
+# в отдельном workflow и этого не касается.
+name: Mini App (Pages)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'miniapp/**'
+      - '.github/workflows/miniapp-pages.yml'
+  pull_request:
+    paths:
+      - 'miniapp/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: miniapp
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: miniapp/package-lock.json
+
+      - run: npm ci
+
+      - name: Тесты
+        run: npm test
+
+      - name: Сборка
+        env:
+          # Сайт живёт в подпапке /<repo>/ — иначе ассеты не найдутся.
+          PAGES_BASE: /${{ github.event.repository.name }}/
+          VITE_DATA_OWNER: ${{ vars.DATA_OWNER || github.repository_owner }}
+          VITE_DATA_REPO: ${{ vars.DATA_REPO }}
+          VITE_DATA_BRANCH: ${{ vars.DATA_BRANCH || 'main' }}
+          # Пусто для публичного репозитория данных; для приватного —
+          # адрес Cloudflare Worker (переменная репозитория, не секрет).
+          VITE_DATA_PROXY: ${{ vars.DATA_PROXY }}
+        run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: miniapp/dist
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
