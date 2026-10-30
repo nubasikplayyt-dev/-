@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { displayTicker } from '../data/schema'
 import { formatDate } from '../lib/date'
 import { flagOf } from '../lib/flag'
 import { markSeen } from '../lib/readState'
@@ -73,11 +74,11 @@ export function AssetScreen({ data, assetId, onBack }: Props) {
 
       <div className="card" style={{ marginTop: 12 }}>
         <div className="row">
-          <Logo ticker={asset.ticker} logo={asset.logo} large />
+          <Logo ticker={displayTicker(asset)} logo={asset.logo} large />
           <div style={{ minWidth: 0 }}>
             <div style={{ fontSize: 17, fontWeight: 700 }}>{asset.name}</div>
             <div className="small muted">
-              {flagOf(section.country)} {asset.ticker}
+              {flagOf(section.country)} {displayTicker(asset)}
               {asset.isin ? ` · ${asset.isin}` : ''}
             </div>
           </div>
@@ -86,6 +87,25 @@ export function AssetScreen({ data, assetId, onBack }: Props) {
           <VerdictBadge verdict={status?.verdict} />
           <span className="small muted">Обновлено {formatDate(status?.updated_at)}</span>
         </div>
+
+        {(asset.qualified_only || asset.is_commodity) && (
+          <div className="chips" style={{ marginTop: 10 }}>
+            {asset.qualified_only && <span className="chip">Только для квалифицированных</span>}
+            {asset.is_commodity && (
+              <span className="chip">
+                <span className="muted">Сырьевая</span>
+                {asset.commodity && <b>{commodityLabel(asset.commodity)}</b>}
+              </span>
+            )}
+          </div>
+        )}
+
+        {(asset.ir_url || asset.disclosure_url) && (
+          <div className="sources" style={{ marginTop: 10 }}>
+            {asset.ir_url && <SourceLink url={asset.ir_url} title="Страница для инвесторов" />}
+            {asset.disclosure_url && <SourceLink url={asset.disclosure_url} title="Раскрытие" />}
+          </div>
+        )}
       </div>
 
       <div className="section-title">Критерии</div>
@@ -95,7 +115,15 @@ export function AssetScreen({ data, assetId, onBack }: Props) {
 
       <div className="section-title">Что отслеживаем</div>
       <div className="card small">
-        {status?.watch ? status.watch : <span className="muted">Пока ничего не отмечено.</span>}
+        {status && status.watch.length > 0 ? (
+          <ul className="watch-list">
+            {status.watch.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        ) : (
+          <span className="muted">Пока ничего не отмечено.</span>
+        )}
       </div>
 
       <div className="tabs" role="tablist">
@@ -143,6 +171,34 @@ export function AssetScreen({ data, assetId, onBack }: Props) {
         )}
       </div>
     </div>
+  )
+}
+
+const COMMODITIES: Record<string, string> = {
+  oil: 'нефть',
+  gas: 'газ',
+  fertilizers: 'удобрения',
+  metals: 'металлы',
+  gold: 'золото',
+  coal: 'уголь',
+}
+
+function commodityLabel(commodity: string): string {
+  return COMMODITIES[commodity] ?? commodity
+}
+
+function SourceLink({ url, title }: { url: string; title: string }) {
+  return (
+    <a
+      href={url}
+      className="small"
+      onClick={(nativeEvent) => {
+        nativeEvent.preventDefault()
+        openExternal(url)
+      }}
+    >
+      {title} ↗
+    </a>
   )
 }
 

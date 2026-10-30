@@ -1,3 +1,4 @@
+import { displayTicker } from '../data/schema'
 import { flagOf } from '../lib/flag'
 import { hasUnread } from '../lib/readState'
 import { formatDate } from '../lib/date'
@@ -19,7 +20,7 @@ export function HomeScreen({ data, onOpenAsset, onRefresh, loading }: Props) {
     .filter((event) => event.importance === 'critical' || event.importance === 'high')
     .slice(0, 5)
 
-  const nameById = new Map(data.refs.map(({ asset }) => [asset.id, asset.short_name ?? asset.ticker]))
+  const nameById = new Map(data.refs.map(({ asset }) => [asset.id, displayTicker(asset)]))
 
   return (
     <div className="app">
@@ -77,10 +78,10 @@ export function HomeScreen({ data, onOpenAsset, onRefresh, loading }: Props) {
                     onClick={() => onOpenAsset(asset.id)}
                   >
                     {hasUnread(asset.id, notifyIds) && <span className="unread-dot" />}
-                    <Logo ticker={asset.ticker} logo={asset.logo} />
+                    <Logo ticker={displayTicker(asset)} logo={asset.logo} />
                     <div>
-                      <div className="ticker">{asset.ticker}</div>
-                      <div className="name">{asset.short_name ?? asset.name}</div>
+                      <div className="ticker">{displayTicker(asset)}</div>
+                      <div className="name">{asset.name}</div>
                     </div>
                     <VerdictBadge verdict={status?.verdict} />
                   </button>

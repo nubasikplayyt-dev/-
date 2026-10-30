@@ -1,35 +1,59 @@
 {
+  "version": 1,
   "sections": [
     {
       "id": "ru",
       "title": "Российские акции",
       "country": "RU",
       "currency": "RUB",
-      "yield_floor_pct": 8,
+      "yield_floor_pct": 5.0,
       "assets": [
         {
-          "id": "sber",
+          "id": "SBER",
           "ticker": "SBER",
-          "name": "Сбербанк России",
-          "short_name": "Сбербанк",
+          "name": "Сбербанк",
+          "type": "stock",
           "isin": "RU0009029540",
-          "logo": "assets/logos/sber.png"
+          "is_commodity": false,
+          "logo": "logos/SBER.svg",
+          "ir_url": null,
+          "disclosure_url": null
         },
         {
-          "id": "lkoh",
-          "ticker": "LKOH",
-          "name": "ЛУКОЙЛ",
-          "short_name": "ЛУКОЙЛ",
-          "isin": "RU0009024277",
-          "logo": "assets/logos/lkoh.png"
+          "id": "SIBN",
+          "ticker": "SIBN",
+          "name": "Газпром нефть",
+          "type": "stock",
+          "isin": "RU0009062467",
+          "is_commodity": true,
+          "commodity": "oil",
+          "logo": "logos/SIBN.svg",
+          "ir_url": null,
+          "disclosure_url": null
         },
         {
-          "id": "gmkn",
-          "ticker": "GMKN",
-          "name": "ГМК «Норильский никель»",
-          "short_name": "Норникель",
-          "isin": "RU0007288411",
-          "logo": "assets/logos/gmkn.png"
+          "id": "PHOR",
+          "ticker": "PHOR",
+          "name": "ФосАгро",
+          "type": "stock",
+          "isin": "RU000A0JRKT8",
+          "is_commodity": true,
+          "commodity": "fertilizers",
+          "logo": "logos/PHOR.svg",
+          "ir_url": null,
+          "disclosure_url": null
+        },
+        {
+          "id": "PARUS-SBL",
+          "ticker": "RU000A104172",
+          "name": "ЗПИФ Парус-СБЛ",
+          "type": "real_estate_fund",
+          "isin": "RU000A104172",
+          "is_commodity": false,
+          "qualified_only": true,
+          "logo": "logos/PARUS-SBL.svg",
+          "ir_url": null,
+          "disclosure_url": "https://investfunds.ru/funds/7279/"
         }
       ]
     }

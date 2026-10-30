@@ -1,5 +1,6 @@
 import type { Verdict } from '../../data/schema'
 
+// Значения вердиктов описаны в AGENT.md репозитория данных.
 const LABELS: Record<Verdict, string> = {
   buy_zone: 'Зона покупки',
   hold: 'Держать',

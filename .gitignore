@@ -19,3 +19,4 @@ miniapp/worker/node_modules/
 miniapp/worker/.wrangler/
 
 __pycache__/
+miniapp/*.tsbuildinfo

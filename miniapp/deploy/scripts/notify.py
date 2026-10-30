@@ -14,6 +14,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+# Уровни важности из schema/event.schema.json. "low" схемой не предусмотрен,
+# но если он когда-нибудь появится — пусть у него тоже будет значок.
 IMPORTANCE_EMOJI = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "⚪️"}
 EMPTY_TREE = "4b825dc642cb6eb9a060e54bf8d69288fbee4904"
 # Предохранитель: один запуск не должен превратиться в поток сообщений,
@@ -94,13 +96,17 @@ def escape(value: str) -> str:
     return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def shorten(text: str, limit: int = 240) -> str:
+def shorten(text: str, limit: int = 180) -> str:
     text = " ".join(text.split())
     return text if len(text) <= limit else text[: limit - 1].rstrip() + "…"
 
 
 def asset_titles() -> dict[str, str]:
-    """id бумаги → как её называть в сообщении."""
+    """id бумаги → как её называть в сообщении.
+
+    У ЗПИФ в поле ticker лежит ISIN (PARUS-SBL → RU000A104172), показывать
+    его бессмысленно — в таком случае берём id, как и мини-приложение.
+    """
     try:
         with open("config/watchlist.json", encoding="utf-8") as handle:
             watchlist = json.load(handle)
@@ -113,9 +119,11 @@ def asset_titles() -> dict[str, str]:
             asset_id = str(asset.get("id") or asset.get("ticker") or "")
             if not asset_id:
                 continue
-            ticker = asset.get("ticker", asset_id)
-            name = asset.get("short_name") or asset.get("name") or ticker
-            titles[asset_id] = f"{ticker} · {name}" if ticker != name else str(ticker)
+            ticker = str(asset.get("ticker") or asset_id)
+            if asset.get("isin") and ticker == asset.get("isin"):
+                ticker = asset_id
+            name = str(asset.get("name") or ticker)
+            titles[asset_id] = f"{ticker} · {name}" if ticker != name else ticker
     return titles
 
 

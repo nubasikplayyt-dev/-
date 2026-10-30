@@ -68,7 +68,7 @@ function isAllowedPath(path: string): boolean {
     path === 'schema/event.schema.json' ||
     /^data\/[\w.-]+\/(status\.json|events\.jsonl)$/.test(path) ||
     /^digests\/[\w.-]+\.md$/.test(path) ||
-    /^assets\/logos\/[\w.-]+\.(png|jpg|jpeg|svg|webp)$/.test(path)
+    /^logos\/[\w.-]+\.(png|jpg|jpeg|svg|webp)$/.test(path)
   )
 }
 

@@ -407,3 +407,16 @@ a {
   padding: 16px;
   font-size: 14px;
 }
+
+.watch-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.watch-list li {
+  margin-bottom: 4px;
+}
+
+.watch-list li:last-child {
+  margin-bottom: 0;
+}

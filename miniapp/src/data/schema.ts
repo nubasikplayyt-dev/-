@@ -1,20 +1,43 @@
 import { z } from 'zod'
 
-// Схемы намеренно терпимые: неизвестные поля сохраняются, а у полей,
-// названия которых в репозитории данных могут отличаться, разобраны синонимы.
-// Вся подгонка под реальный формат делается здесь и больше нигде.
+// Формат описан в репозитории данных: schema/event.schema.json, AGENT.md и
+// CRITERIA.md. Схемы здесь терпимые: неизвестные поля сохраняются, а у полей,
+// которые агент может записать иначе, разобраны синонимы. Вся подгонка под
+// формат делается в этом файле и больше нигде.
 
-export const VERDICTS = ['buy_zone', 'hold', 'watch', 'do_not_buy', 'sell_candidate'] as const
+export const VERDICTS = ['hold', 'watch', 'buy_zone', 'do_not_buy', 'sell_candidate'] as const
 export type Verdict = (typeof VERDICTS)[number]
 
 export const CRITERION_STATES = ['pass', 'warn', 'fail', 'n/a'] as const
 export type CriterionState = (typeof CRITERION_STATES)[number]
 
-export const IMPORTANCES = ['critical', 'high', 'medium', 'low'] as const
+/** schema/event.schema.json допускает только эти три уровня важности. */
+export const IMPORTANCES = ['critical', 'high', 'medium'] as const
 export type Importance = (typeof IMPORTANCES)[number]
 
+/** Типы событий из schema/event.schema.json. */
+export const EVENT_TYPES = [
+  'financial_report',
+  'dividend',
+  'debt',
+  'management',
+  'shareholder',
+  'sanctions',
+  'regulation',
+  'commodity_cycle',
+  'nav_rent',
+  'price_filter',
+  'other',
+] as const
+
 const verdict = z.enum(VERDICTS).catch('watch')
-const importance = z.enum(IMPORTANCES).catch('low')
+
+// «low» схемой не предусмотрен, но если агент его когда-нибудь запишет —
+// показываем как medium, а не роняем строку.
+const importance = z.preprocess(
+  (value) => (value === 'low' ? 'medium' : value),
+  z.enum(IMPORTANCES).catch('medium'),
+)
 
 const criterionState = z.preprocess((value) => {
   if (typeof value !== 'string') return value
@@ -41,10 +64,14 @@ export const assetSchema = z
     id: z.string().min(1),
     ticker: z.string().min(1),
     name: z.string().min(1),
-    short_name: z.string().optional(),
     isin: z.string().optional(),
+    type: z.string().optional(),
     logo: z.string().optional(),
-    currency: z.string().optional(),
+    is_commodity: z.boolean().optional(),
+    commodity: z.string().optional(),
+    qualified_only: z.boolean().optional(),
+    ir_url: z.string().url().nullish(),
+    disclosure_url: z.string().url().nullish(),
   })
   .passthrough()
 export type Asset = z.infer<typeof assetSchema>
@@ -69,9 +96,9 @@ export const watchlistSchema = z
 export type Watchlist = z.infer<typeof watchlistSchema>
 
 /**
- * Разбирает watchlist.json. Поддержаны две раскладки:
- *   1) assets вложены в каждый раздел (основной вариант);
- *   2) общий массив assets верхнего уровня, где у каждой бумаги есть section.
+ * Разбирает config/watchlist.json. Поддержаны две раскладки:
+ *   1) assets вложены в каждый раздел — так пишет агент;
+ *   2) общий массив assets верхнего уровня, где у бумаги указан section.
  * Раздел с битой записью не теряется целиком: отбрасывается только эта запись.
  */
 export function parseWatchlist(raw: unknown): Watchlist {
@@ -92,12 +119,12 @@ export function parseWatchlist(raw: unknown): Watchlist {
     for (const candidate of [...own, ...inherited]) {
       const parsed = assetSchema.safeParse(normalizeAsset(candidate))
       if (parsed.success) assets.push(parsed.data)
-      else warn('asset', candidate, parsed.error)
+      else warn('бумага', candidate, parsed.error)
     }
 
     const parsed = sectionSchema.safeParse({ ...record, assets })
     if (parsed.success) sections.push(parsed.data)
-    else warn('section', rawSection, parsed.error)
+    else warn('раздел', rawSection, parsed.error)
   }
 
   return watchlistSchema.parse({ ...root, sections })
@@ -109,10 +136,18 @@ function normalizeAsset(raw: unknown): unknown {
   return {
     ...record,
     id: pickFirst(record, ['id', 'asset_id']) ?? ticker,
-    ticker,
+    ticker: ticker ?? pickFirst(record, ['id', 'asset_id']),
     name: pickFirst(record, ['name', 'title', 'full_name']) ?? ticker,
-    short_name: pickFirst(record, ['short_name', 'shortName', 'short']),
   }
+}
+
+/**
+ * Как подписывать бумагу крупно. У ЗПИФ в `ticker` лежит ISIN — показывать
+ * его вместо тикера бессмысленно, поэтому в таком случае берём `id`.
+ */
+export function displayTicker(asset: Asset): string {
+  if (asset.isin && asset.ticker === asset.isin) return asset.id
+  return asset.ticker
 }
 
 // ────────────────────────────── status.json ───────────────────────────────
@@ -131,52 +166,69 @@ export const statusSchema = z
     asset_id: z.string().optional(),
     verdict,
     updated_at: z.string().optional(),
-    watch: z.string().default(''),
+    watch: z.array(z.string()).default([]),
     criteria: z.array(criterionSchema).default([]),
   })
   .passthrough()
 export type Status = z.infer<typeof statusSchema>
 
 /**
- * Разбирает status.json. criteria принимается и объектом {"C1": {...}},
- * и массивом [{code, status, note}]; значение критерия может быть
- * просто строкой статуса.
+ * Разбирает data/<id>/status.json.
+ *
+ * Вердикт и дата лежат во вложенном объекте `status` — так пишет агент;
+ * плоская раскладка тоже принимается. `watch` в репозитории — массив строк,
+ * одиночная строка тоже понимается. Критерии бывают неполными: у ЗПИФ,
+ * например, заполнены только C1, C2, C3, C6, P1 и P3.
  */
 export function parseStatus(raw: unknown): Status {
   const record = asRecord(raw)
+  const nested = asRecord(record.status)
+
+  return statusSchema.parse({
+    ...record,
+    verdict: pickFirst(nested, ['verdict']) ?? pickFirst(record, ['verdict', 'decision']) ?? 'watch',
+    updated_at:
+      pickFirst(nested, ['updated', 'updated_at']) ??
+      pickFirst(record, ['updated_at', 'updated', 'date', 'as_of']),
+    watch: normalizeWatch(pickFirst(record, ['watch', 'watching', 'watch_items'])),
+    criteria: parseCriteria(record.criteria).sort(compareCriteriaCodes),
+  })
+}
+
+function normalizeWatch(raw: unknown): string[] {
+  if (Array.isArray(raw)) return raw.map((item) => String(item).trim()).filter(Boolean)
+  if (typeof raw === 'string' && raw.trim()) return [raw.trim()]
+  return []
+}
+
+/** Критерии принимаются объектом {"C1": {...}} и массивом [{code, status}]. */
+export function parseCriteria(raw: unknown): Criterion[] {
   const criteria: Criterion[] = []
 
   const push = (code: string, value: unknown) => {
     const body = typeof value === 'string' ? { status: value } : asRecord(value)
     const parsed = criterionSchema.safeParse({
       ...body,
-      code,
+      code: code.trim().toUpperCase(),
       status: pickFirst(body, ['status', 'state', 'result']) ?? 'n/a',
       note: pickFirst(body, ['note', 'comment', 'reason', 'text']) ?? '',
     })
     if (parsed.success) criteria.push(parsed.data)
-    else warn('criterion', value, parsed.error)
+    else warn('критерий', value, parsed.error)
   }
 
-  const rawCriteria = record.criteria
-  if (Array.isArray(rawCriteria)) {
-    for (const item of rawCriteria) {
+  if (Array.isArray(raw)) {
+    for (const item of raw) {
       const body = asRecord(item)
       const code = pickFirst(body, ['code', 'id', 'criterion'])
       if (typeof code === 'string') push(code, body)
-      else warn('criterion', item, new Error('нет кода критерия'))
+      else warn('критерий', item, new Error('нет кода критерия'))
     }
-  } else if (rawCriteria && typeof rawCriteria === 'object') {
-    for (const [code, value] of Object.entries(rawCriteria)) push(code, value)
+  } else if (raw && typeof raw === 'object') {
+    for (const [code, value] of Object.entries(raw as Record<string, unknown>)) push(code, value)
   }
 
-  return statusSchema.parse({
-    ...record,
-    verdict: pickFirst(record, ['verdict', 'decision', 'rating']) ?? 'watch',
-    updated_at: pickFirst(record, ['updated_at', 'updatedAt', 'date', 'as_of']),
-    watch: pickFirst(record, ['watch', 'watching', 'watch_items']) ?? '',
-    criteria: criteria.sort(compareCriteriaCodes),
-  })
+  return criteria
 }
 
 /** C1…C8 идут перед P1…P3, внутри группы — по номеру. */
@@ -212,12 +264,15 @@ export const eventSchema = z
     id: z.string().min(1),
     asset_id: z.string().min(1),
     date: z.string().min(1),
+    detected_at: z.string().optional(),
     type: z.string().min(1),
     importance,
     title: z.string().min(1),
     summary: z.string().default(''),
+    verdict: verdict.optional(),
     notify: z.boolean().default(false),
     metrics: z.array(metricSchema).default([]),
+    criteria: z.array(criterionSchema).default([]),
     sources: z.array(sourceSchema).default([]),
   })
   .passthrough()
@@ -232,11 +287,12 @@ export function parseEvent(raw: unknown, fallbackAssetId?: string): MonitorEvent
     asset_id: pickFirst(record, ['asset_id', 'asset', 'ticker']) ?? fallbackAssetId,
     date,
     type: pickFirst(record, ['type', 'event_type', 'kind']) ?? 'other',
-    importance: pickFirst(record, ['importance', 'severity', 'priority']) ?? 'low',
+    importance: pickFirst(record, ['importance', 'severity', 'priority']) ?? 'medium',
     title: pickFirst(record, ['title', 'headline', 'name']),
     summary: pickFirst(record, ['summary', 'description', 'text', 'body']) ?? '',
     notify: toBoolean(pickFirst(record, ['notify', 'should_notify'])),
     metrics: normalizeMetrics(record.metrics),
+    criteria: parseCriteria(record.criteria).sort(compareCriteriaCodes),
     sources: normalizeSources(pickFirst(record, ['sources', 'links', 'refs'])),
   })
 }
@@ -267,13 +323,13 @@ export function parseEventsJsonl(text: string, fallbackAssetId?: string): Parsed
     }
   })
 
-  events.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
-  return { events, skipped }
+  return { events: sortByDateDesc(events), skipped }
 }
 
-/** feed/feed.json — массив событий или объект {events: [...]}. */
+/** feed/feed.json — объект {generated_at, items: [...]}; массив тоже принимается. */
 export function parseFeed(raw: unknown): ParsedEvents {
-  const list = Array.isArray(raw) ? raw : (asRecord(raw).events ?? asRecord(raw).items)
+  const record = asRecord(raw)
+  const list = Array.isArray(raw) ? raw : (record.items ?? record.events)
   const events: MonitorEvent[] = []
   const skipped: number[] = []
 
@@ -288,8 +344,11 @@ export function parseFeed(raw: unknown): ParsedEvents {
     })
   }
 
-  events.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
-  return { events, skipped }
+  return { events: sortByDateDesc(events), skipped }
+}
+
+function sortByDateDesc(events: MonitorEvent[]): MonitorEvent[] {
+  return [...events].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
 }
 
 // ───────────────────────────────── утилиты ────────────────────────────────
@@ -331,9 +390,12 @@ function normalizeMetrics(raw: unknown): Metric[] {
   return []
 }
 
+/** Схема допускает number, string и null. null означает «числа нет». */
 function formatMetricValue(value: unknown): string {
   if (value === undefined || value === null) return ''
-  if (typeof value === 'number') return new Intl.NumberFormat('ru-RU').format(value)
+  if (typeof value === 'number') {
+    return new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 2 }).format(value)
+  }
   if (typeof value === 'boolean') return value ? 'да' : 'нет'
   return String(value)
 }

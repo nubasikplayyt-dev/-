@@ -1,20 +1,7 @@
 import { useState } from 'react'
-import type { Criterion, CriterionState } from '../../data/schema'
+import type { Criterion } from '../../data/schema'
 import type { CriteriaDictionary } from '../../lib/criteria'
-
-const STATE_ICON: Record<CriterionState, string> = {
-  pass: '✓',
-  warn: '!',
-  fail: '✕',
-  'n/a': '–',
-}
-
-const STATE_CLASS: Record<CriterionState, string> = {
-  pass: 'state-pass',
-  warn: 'state-warn',
-  fail: 'state-fail',
-  'n/a': 'state-na',
-}
+import { STATE_CLASS, STATE_ICON } from './Chips'
 
 interface Props {
   criteria: Criterion[]
