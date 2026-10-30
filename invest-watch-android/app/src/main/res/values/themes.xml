@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Цвета задаются в Compose; здесь только база без системной панели. -->
+    <style name="Theme.InvestWatch" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

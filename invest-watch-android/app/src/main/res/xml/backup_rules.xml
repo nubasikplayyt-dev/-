@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Настройки переносятся на новый телефон. Токены не переносим: они
+     зашифрованы ключом из Keystore, который на новом устройстве другой. -->
+<full-backup-content>
+    <include domain="file" path="datastore/" />
+    <exclude domain="sharedpref" path="secure_store.xml" />
+</full-backup-content>

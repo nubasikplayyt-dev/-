@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Значок приложения: столбик графика и галочка — «портфель по критериям». -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,64h8v14h-8z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,52h8v26h-8z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M66,40h8v38h-8z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,46l6,-6l8,8l16,-16l6,6l-22,22z" />
+</vector>

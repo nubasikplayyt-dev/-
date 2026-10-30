@@ -1,0 +1,116 @@
+{
+  "generated_at": "2026-10-30T13:30:00+03:00",
+  "items": [
+    {
+      "id": "NBU-20261029-tariff",
+      "asset_id": "NBU",
+      "date": "2026-10-29",
+      "type": "regulation",
+      "importance": "high",
+      "title": "Регулятор вынес тариф на 2027 год на слушания",
+      "summary": "Заявка компании предполагает рост тарифа на 4,1%. Решение ожидается в феврале. По C7 это подтверждает зависимость выручки от регулятора.",
+      "metrics": {
+        "tariff_change_pct": 4.1
+      },
+      "criteria": {
+        "C7": {
+          "status": "warn",
+          "note": "Тариф решает регулятор"
+        }
+      },
+      "verdict": "buy_zone",
+      "sources": [
+        {
+          "title": "Пресс-релиз компании",
+          "url": "https://northbayutilities.example/ir"
+        }
+      ],
+      "notify": true
+    },
+    {
+      "id": "2899-20261028-nav",
+      "asset_id": "2899",
+      "date": "2026-10-28",
+      "type": "nav_rent",
+      "importance": "medium",
+      "title": "Дисконт к СЧА сократился до 4%",
+      "summary": "Цена пая выросла до 4,12 HK$ при СЧА 4,29 HK$. По P3 интересен дисконт около 10%, поэтому бумага остаётся в наблюдении.",
+      "metrics": {
+        "price_hkd": 4.12,
+        "discount_pct": 4.0
+      },
+      "criteria": {
+        "P3": {
+          "status": "warn",
+          "note": "Дисконт 4% вместо ≈10%"
+        }
+      },
+      "verdict": "watch",
+      "sources": [
+        {
+          "title": "Отчёт фонда",
+          "url": "https://pearlriverreit.example/reports"
+        }
+      ],
+      "notify": false
+    },
+    {
+      "id": "HRF-20261027-price",
+      "asset_id": "HRF",
+      "date": "2026-10-27",
+      "type": "price_filter",
+      "importance": "high",
+      "title": "Дивдоходность опустилась ниже порога рынка",
+      "summary": "После роста котировок до 88,10 $ доходность составляет 0,9% при пороге 1% для доллара. По P1 — отказ от покупки.",
+      "metrics": {
+        "price_usd": 88.1,
+        "yield_pct": 0.9
+      },
+      "criteria": {
+        "P1": {
+          "status": "fail",
+          "note": "0,9% против порога 1%"
+        }
+      },
+      "verdict": "do_not_buy",
+      "sources": [
+        {
+          "title": "Данные биржи",
+          "url": "https://harborfoods.example/investors"
+        }
+      ],
+      "notify": true
+    },
+    {
+      "id": "NBU-20260814-div",
+      "asset_id": "NBU",
+      "date": "2026-08-14",
+      "type": "dividend",
+      "importance": "critical",
+      "title": "Квартальный дивиденд повышен до 0,59 $",
+      "summary": "Двадцать второе повышение подряд. Доходность к цене 61,40 $ — 3,8%, порог рынка США 1% пройден.",
+      "metrics": {
+        "dividend_usd": 0.59,
+        "yield_pct": 3.8
+      },
+      "criteria": {
+        "C6": {
+          "status": "pass",
+          "note": "Серия повышений не прервана"
+        },
+        "P1": {
+          "status": "pass",
+          "note": "3,8% против порога 1%"
+        }
+      },
+      "verdict": "buy_zone",
+      "sources": [
+        {
+          "title": "Пресс-релиз компании",
+          "url": "https://northbayutilities.example/ir"
+        }
+      ],
+      "notify": true
+    }
+  ]
+}

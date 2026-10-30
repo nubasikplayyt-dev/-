@@ -1,0 +1,145 @@
+{
+  "version": 2,
+  "markets": [
+    {
+      "id": "RU",
+      "title": "Россия",
+      "flag": "🇷🇺",
+      "currency": "RUB",
+      "yield_floor_pct": 5.0,
+      "yield_floor_note": "Порог в рублях: 1% + премия за страновой риск (допущение, принято владельцем)"
+    },
+    {
+      "id": "US",
+      "title": "США",
+      "flag": "🇺🇸",
+      "currency": "USD",
+      "yield_floor_pct": 1.0,
+      "yield_floor_note": "Порог владельца для USD"
+    },
+    {
+      "id": "CN",
+      "title": "Китай",
+      "flag": "🇨🇳",
+      "currency": "HKD/CNY",
+      "yield_floor_pct": 3.0,
+      "yield_floor_note": "Порог для HKD/CNY: 1% (база USD) + страновая премия Китая ~1,2 п.п. по Дамодарану + ~0,5–1 п.п. за риски вмешательства государства, санкций и делистинга; округлено вверх до 3% (расчёт принят владельцем)"
+    }
+  ],
+  "kinds": [
+    {
+      "id": "stock",
+      "title": "Акции"
+    },
+    {
+      "id": "real_estate",
+      "title": "Фонды недвижимости"
+    }
+  ],
+  "assets": [
+    {
+      "id": "SBER",
+      "ticker": "SBER",
+      "name": "Сбербанк",
+      "type": "stock",
+      "isin": "RU0009029540",
+      "is_commodity": false,
+      "ir_url": null,
+      "disclosure_url": null,
+      "market": "RU",
+      "kind": "stock",
+      "domain": "sberbank.com"
+    },
+    {
+      "id": "SIBN",
+      "ticker": "SIBN",
+      "name": "Газпром нефть",
+      "type": "stock",
+      "isin": "RU0009062467",
+      "is_commodity": true,
+      "commodity": "oil",
+      "ir_url": null,
+      "disclosure_url": null,
+      "market": "RU",
+      "kind": "stock",
+      "domain": "gazprom-neft.ru"
+    },
+    {
+      "id": "PHOR",
+      "ticker": "PHOR",
+      "name": "ФосАгро",
+      "type": "stock",
+      "isin": "RU000A0JRKT8",
+      "is_commodity": true,
+      "commodity": "fertilizers",
+      "ir_url": null,
+      "disclosure_url": null,
+      "market": "RU",
+      "kind": "stock",
+      "domain": "phosagro.ru"
+    },
+    {
+      "id": "PARUS-SBL",
+      "ticker": "RU000A104172",
+      "name": "ЗПИФ Парус-СБЛ",
+      "type": "real_estate_fund",
+      "isin": "RU000A104172",
+      "is_commodity": false,
+      "qualified_only": true,
+      "ir_url": null,
+      "disclosure_url": "https://investfunds.ru/funds/7279/",
+      "market": "RU",
+      "kind": "real_estate",
+      "domain": "parus-am.ru"
+    },
+    {
+      "id": "NBU",
+      "ticker": "NBU",
+      "name": "Northbay Utilities",
+      "type": "stock",
+      "isin": "US6541230987",
+      "is_commodity": false,
+      "ir_url": null,
+      "disclosure_url": null,
+      "market": "US",
+      "kind": "stock",
+      "exchange": "NYSE",
+      "currency": "USD",
+      "domain": "northbayutilities.example",
+      "in_universe": true
+    },
+    {
+      "id": "HRF",
+      "ticker": "HRF",
+      "name": "Harbor Foods",
+      "type": "stock",
+      "isin": "US1122334455",
+      "is_commodity": false,
+      "ir_url": null,
+      "disclosure_url": null,
+      "market": "US",
+      "kind": "stock",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "domain": "harborfoods.example",
+      "in_universe": false
+    },
+    {
+      "id": "2899",
+      "ticker": "2899",
+      "name": "Pearl River REIT",
+      "type": "real_estate_fund",
+      "isin": "HK0028990011",
+      "is_commodity": false,
+      "qualified_only": false,
+      "ir_url": null,
+      "disclosure_url": null,
+      "market": "CN",
+      "kind": "real_estate",
+      "exchange": "HKEX",
+      "currency": "HKD",
+      "domain": "pearlriverreit.example",
+      "in_universe": true
+    }
+  ]
+}

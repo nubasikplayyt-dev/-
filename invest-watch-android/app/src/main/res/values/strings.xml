@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Портфель</string>
+    <string name="channel_critical_name">Критичные события</string>
+    <string name="channel_critical_description">Критерий ушёл в fail, объявлен или отменён дивиденд</string>
+    <string name="channel_high_name">Важные события</string>
+    <string name="channel_high_description">Новый warn, отчёт с крупным сдвигом</string>
+</resources>

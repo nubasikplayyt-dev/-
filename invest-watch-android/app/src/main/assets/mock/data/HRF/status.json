@@ -1,0 +1,52 @@
+{
+  "status": {
+    "verdict": "do_not_buy",
+    "updated": "2026-10-27"
+  },
+  "criteria": {
+    "C1": {
+      "status": "pass",
+      "note": "Еда"
+    },
+    "C2": {
+      "status": "pass"
+    },
+    "C3": {
+      "status": "warn",
+      "note": "Нет господдержки, сектор конкурентный"
+    },
+    "C4": {
+      "status": "pass"
+    },
+    "C5": {
+      "status": "pass",
+      "note": "Семья основателей, 31%"
+    },
+    "C6": {
+      "status": "pass",
+      "note": "Платит 15 лет, payout 48%"
+    },
+    "C7": {
+      "status": "pass",
+      "note": "Бренды позволяют поднимать цены"
+    },
+    "C8": {
+      "status": "n/a"
+    },
+    "P1": {
+      "status": "fail",
+      "note": "0,9% при цене 88,10 $ — ниже порога 1%"
+    }
+  },
+  "watch": [
+    "Дивиденд за 2026",
+    "Маржа после подорожания сырья"
+  ],
+  "metrics": {
+    "price_usd": 88.1,
+    "yield_pct": 0.9,
+    "payout_pct": 48,
+    "date": "2026-10-27"
+  },
+  "asset_id": "HRF"
+}
