@@ -174,7 +174,10 @@ fun SettingsScreen(model: MainViewModel) {
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth(),
                     )
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
                         Button(
                             onClick = {
                                 model.saveGitHubToken(gitHubToken.trim())
@@ -214,7 +217,12 @@ fun SettingsScreen(model: MainViewModel) {
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth(),
                     )
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    // Три кнопки в одну строку не влезают на узком экране,
+                    // поэтому переносим их, а не рвём подпись по слогам.
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
                         Button(
                             onClick = {
                                 model.savePriceKey(priceKey.trim())
