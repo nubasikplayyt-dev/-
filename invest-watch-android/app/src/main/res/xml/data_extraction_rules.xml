@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- См. комментарий в backup_rules.xml: переносятся только настройки. -->
 <data-extraction-rules>
     <cloud-backup>
         <include domain="file" path="datastore/" />
-        <exclude domain="sharedpref" path="secure_store.xml" />
     </cloud-backup>
     <device-transfer>
         <include domain="file" path="datastore/" />
-        <exclude domain="sharedpref" path="secure_store.xml" />
     </device-transfer>
 </data-extraction-rules>
