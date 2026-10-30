@@ -74,17 +74,31 @@ class MoexPriceSource @Inject constructor(
         val marketData = fetchTable(url, "marketdata")
         val securities = fetchTable(url, "securities")
 
-        val row = marketData?.rows?.firstOrNull { marketData.string(it, "LAST") != null }
-            ?: marketData?.rows?.firstOrNull()
-        val price = row?.let { marketData.number(it, "LAST") ?: marketData.number(it, "MARKETPRICE") }
-            ?: securities?.rows?.firstNotNullOfOrNull { securities.number(it, "PREVPRICE") }
-            ?: return null
+        // Строка с последней ценой; если торгов не было — первая доступная.
+        val row = marketData?.let { table ->
+            table.rows.firstOrNull { table.string(it, "LAST") != null } ?: table.rows.firstOrNull()
+        }
+
+        val fromMarket = if (marketData != null && row != null) {
+            marketData.number(row, "LAST") ?: marketData.number(row, "MARKETPRICE")
+        } else {
+            null
+        }
+        val fromSecurities = securities?.let { table ->
+            table.rows.firstNotNullOfOrNull { table.number(it, "PREVPRICE") }
+        }
+        val price = fromMarket ?: fromSecurities ?: return null
 
         return QuoteResult(
             price = price,
-            changePct = row?.let { marketData?.number(it, "LASTTOPREVPRICE") },
-            currency = securities?.rows?.firstNotNullOfOrNull { securities.string(it, "CURRENCYID") }
-                ?: asset.currency ?: "RUB",
+            changePct = if (marketData != null && row != null) {
+                marketData.number(row, "LASTTOPREVPRICE")
+            } else {
+                null
+            },
+            currency = securities?.let { table ->
+                table.rows.firstNotNullOfOrNull { table.string(it, "CURRENCYID") }
+            } ?: asset.currency ?: "RUB",
         )
     }
 
